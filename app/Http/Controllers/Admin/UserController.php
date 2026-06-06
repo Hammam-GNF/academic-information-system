@@ -37,22 +37,37 @@ class UserController extends Controller
         ->with('success', 'User created successfully.');
     }
 
-    public function show(string $id)
+    public function show(User $user)
     {
         //
     }
 
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('admin.users.edit', compact('user'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'password' => ['nullable', Password::defaults()],
+            'role' => ['required', 'in:admin,user'],
+        ]);
+
+        if (empty($validated['password'])) {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'User updated successfully.');
     }
 
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
         //
     }

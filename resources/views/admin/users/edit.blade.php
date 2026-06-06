@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Create User
+            Edit User
         </h2>
     </x-slot>
 
@@ -10,8 +10,9 @@
 
             <div class="bg-white shadow-sm rounded-lg p-6">
 
-                <form method="POST" action="{{ route('admin.users.store') }}">
+                <form method="POST" action="{{ route('admin.users.update', $user) }}">
                     @csrf
+                    @method('PUT')
 
                     <div class="mb-4">
                         <x-input-label for="name" value="Name" />
@@ -21,8 +22,9 @@
                             name="name"
                             type="text"
                             class="mt-1 block w-full"
-                            :value="old('name')"
+                            :value="old('name', $user->name)"
                             required
+                            autofocus
                         />
 
                         <x-input-error
@@ -39,7 +41,7 @@
                             name="email"
                             type="email"
                             class="mt-1 block w-full"
-                            :value="old('email')"
+                            :value="old('email', $user->email)"
                             required
                         />
 
@@ -57,7 +59,7 @@
                             name="password"
                             type="password"
                             class="mt-1 block w-full"
-                            required
+                            placeholder="Leave blank to keep current password"
                         />
 
                         <x-input-error
@@ -72,24 +74,11 @@
                         <select
                             id="role"
                             name="role"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             required
                         >
-                            <option value="">Select Role</option>
-
-                            <option
-                                value="admin"
-                                @selected(old('role') === 'admin')
-                            >
-                                Admin
-                            </option>
-
-                            <option
-                                value="user"
-                                @selected(old('role') === 'user')
-                            >
-                                User
-                            </option>
+                            <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>User</option>
                         </select>
 
                         <x-input-error

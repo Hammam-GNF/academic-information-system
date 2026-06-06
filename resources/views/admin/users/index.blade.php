@@ -22,20 +22,24 @@
                     <table class="w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th >
+                                <th>
                                     No
                                 </th>
 
-                                <th >
+                                <th>
                                     Name
                                 </th>
 
-                                <th >
+                                <th>
                                     Email
                                 </th>
 
-                                <th >
+                                <th>
                                     Role
+                                </th>
+
+                                <th>
+                                    Action
                                 </th>
                             </tr>
                         </thead>
@@ -57,6 +61,15 @@
 
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         {{ $user->role }}
+                                    </td>
+
+                                    <td class="center px-6 py-4 whitespace-nowrap">
+                                        <a
+                                            href="{{ route('admin.users.edit', $user) }}"
+                                            class="inline-flex items-center px-3 py-1 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500"
+                                        >
+                                            Edit
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
