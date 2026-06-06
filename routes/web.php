@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,7 +21,10 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+        return view('admin.dashboard', [
+            'totalUsers' => User::count(),
+            'totalAdmins' => User::where('role', 'admin')->count(),
+        ]);
     })->name('dashboard');
 
     Route::resource('users', UserController::class);

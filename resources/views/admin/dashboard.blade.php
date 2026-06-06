@@ -9,9 +9,31 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    Welcome Admin
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h3 class="text-sm font-medium text-gray-500">
+                                Total Users
+                            </h3>
+
+                            <p class="mt-2 text-3xl font-bold text-gray-900">
+                                {{ $totalUsers }}
+                            </p>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h3 class="text-sm font-medium text-gray-500">
+                                Total Admins
+                            </h3>
+
+                            <p class="mt-2 text-3xl font-bold text-gray-900">
+                                {{ $totalAdmins }}
+                            </p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout> 
+</x-app-layout>
