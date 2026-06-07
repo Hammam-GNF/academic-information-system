@@ -2,10 +2,13 @@
     <div
         x-data="{ show: true }"
         x-show="show"
+        x-transition
         x-init="setTimeout(() => show = false, 3000)"
-        class="mb-4 rounded-lg bg-green-100 border border-green-400 text-green-700 px-4 py-3"
+        class="fixed top-4 right-4 z-50"
     >
-        {{ session('success') }}
+        <div class="bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg">
+            {{ session('success') }}
+        </div>
     </div>
 @endif
 
@@ -13,10 +16,13 @@
     <div
         x-data="{ show: true }"
         x-show="show"
+        x-transition
         x-init="setTimeout(() => show = false, 3000)"
-        class="mb-4 rounded-lg bg-red-100 border border-red-400 text-red-700 px-4 py-3"
+        class="fixed top-4 right-4 z-50"
     >
-        {{ session('error') }}
+        <div class="bg-red-600 text-white px-4 py-3 rounded-lg shadow-lg">
+            {{ session('error') }}
+        </div>
     </div>
 @endif
 
@@ -24,9 +30,12 @@
     <div
         x-data="{ show: true }"
         x-show="show"
+        x-transition
         x-init="setTimeout(() => show = false, 3000)"
-        class="mb-4 rounded-lg bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3"
+        class="fixed top-4 right-4 z-50"
     >
-        {{ session('warning') }}
+        <div class="bg-yellow-600 text-white px-4 py-3 rounded-lg shadow-lg">
+            {{ session('warning') }}
+        </div>
     </div>
 @endif

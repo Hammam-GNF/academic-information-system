@@ -77,23 +77,17 @@
                         >
                             <option value="">Select Role</option>
 
-                            <option
-                                value="admin"
-                                @selected($user->hasRole('admin'))
-                            >
+                            <option value="admin">
                                 Admin
                             </option>
 
-                            <option
-                                value="user"
-                                @selected($user->hasRole('user'))
-                            >
+                            <option value="user">
                                 User
                             </option>
                         </select>
 
                         <x-input-error
-                            :messages="$errors->get($user->hasRole('admin') ? 'admin' : 'user')"
+                            :messages="$errors->get('role')"
                             class="mt-2"
                         />
                     </div>
