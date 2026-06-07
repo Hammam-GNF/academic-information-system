@@ -19,6 +19,27 @@
                             placeholder="Search name or email..."
                         />
 
+                        <select
+                            name="role"
+                            class="border-gray-300 rounded-md shadow-sm"
+                        >
+                            <option value="">All Roles</option>
+
+                            <option
+                                value="admin"
+                                @selected($role === 'admin')
+                            >
+                                Admin
+                            </option>
+
+                            <option
+                                value="user"
+                                @selected($role === 'user')
+                            >
+                                User
+                            </option>
+                        </select>
+
                         <x-primary-button>
                             Search
                         </x-primary-button>
