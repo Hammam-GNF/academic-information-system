@@ -71,6 +71,13 @@
                                             Edit
                                         </a>
 
+                                        <a
+                                            href="{{ route('admin.users.change-password', $user) }}"
+                                            class="inline-flex items-center px-3 py-1 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500"
+                                        >
+                                            Password
+                                        </a>
+
                                         <form
                                             method="POST"
                                             action="{{ route('admin.users.destroy', $user) }}"

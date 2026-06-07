@@ -51,23 +51,6 @@
                         />
                     </div>
 
-                    <div class="mb-4">
-                        <x-input-label for="password" value="Password" />
-
-                        <x-text-input
-                            id="password"
-                            name="password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            placeholder="Leave blank to keep current password"
-                        />
-
-                        <x-input-error
-                            :messages="$errors->get('password')"
-                            class="mt-2"
-                        />
-                    </div>
-
                     <div class="mb-6">
                         <x-input-label for="role" value="Role" />
 
