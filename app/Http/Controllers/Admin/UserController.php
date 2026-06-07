@@ -54,6 +54,13 @@ class UserController extends Controller
 
         $user->assignRole($request->role);
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->event('created')
+            ->withProperties(['name' => $user->name, 'email' => $user->email])
+            ->log('User has been created.');
+
         return redirect()
             ->route('admin.users.index')
             ->with('success', 'User created successfully.');
@@ -81,6 +88,13 @@ class UserController extends Controller
 
         $user->syncRoles($request->role);
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->event('updated')
+            ->withProperties(['name' => $user->name, 'email' => $user->email])
+            ->log('User has been updated.');
+
         return redirect()
             ->route('admin.users.index')
             ->with('success', 'User updated successfully.');
@@ -101,6 +115,13 @@ class UserController extends Controller
             'password' => Hash::make($request->validated()['password']),
         ]);
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->event('updated')
+            ->withProperties(['name' => $user->name, 'email' => $user->email])
+            ->log('Password has been updated.');
+
         return redirect()
             ->route('admin.users.index')
             ->with('success', 'Password updated successfully.');
@@ -119,6 +140,13 @@ class UserController extends Controller
             })->count() === 1) {
             return back()->with('error', 'You cannot delete the last admin account.');
         }
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->event('deleted')
+            ->withProperties(['name' => $user->name, 'email' => $user->email])
+            ->log('User has been deleted.');
 
         $user->delete();
 
