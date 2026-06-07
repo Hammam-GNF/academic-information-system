@@ -53,12 +53,14 @@
                     </div>
                 </form>
 
+                @can('create', App\Models\User::class)
                 <a
                     href="{{ route('admin.users.create') }}"
                     class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700"
                 >
                     Create User
                 </a>
+                @endcan
             </div>
             
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -117,6 +119,7 @@
                                                 @csrf
                                                 @method('DELETE')
 
+                                                @can('delete', $user)
                                                 <button
                                                     type="submit"
                                                     class="inline-flex items-center px-3 py-1 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500"
@@ -124,6 +127,7 @@
                                                 >
                                                     Delete
                                                 </button>
+                                                @endcan
                                             </form>
                                         @endif
                                     </td>

@@ -15,6 +15,8 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('viewAny', User::class);
+
         $search = $request->search;
         $role = $request->role;
 
@@ -37,11 +39,15 @@ class UserController extends Controller
 
     public function create()
     {
+        $this->authorize('create', User::class);
+
         return view('admin.users.create');
     }
 
     public function store(StoreUserRequest $request)
     {
+        $this->authorize('create', User::class);
+        
         User::create($request->validated());
 
         return redirect()
@@ -56,11 +62,15 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
+
         return view('admin.users.edit', compact('user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        $this->authorize('update', $user);
+
         $user->update($request->validated());
 
         return redirect()
@@ -86,6 +96,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
+        
         if ($user->id === Auth::id()) {
             return back()->with('error', 'You cannot delete your own account.');
         }
