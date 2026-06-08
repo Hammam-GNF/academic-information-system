@@ -19,13 +19,33 @@ class SettingSeeder extends Seeder
         );
 
         Setting::updateOrCreate(
-            ['key' => 'app_email'],
+            ['key' => 'app_description'],
+            ['value' => 'A Laravel template with admin panel, activity log, and settings management.']
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'company_email'],
             ['value' => 'admin@gmail.com']
         );
 
         Setting::updateOrCreate(
-            ['key' => 'app_phone'],
+            ['key' => 'company_phone'],
             ['value' => '081234567890']
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'company_address'],
+            ['value' => 'Indonesia']
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'pagination_per_page'],
+            ['value' => '10']
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'registration_enabled'],
+            ['value' => '1']
         );
     }
 }
