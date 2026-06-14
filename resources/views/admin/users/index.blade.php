@@ -72,37 +72,13 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     @endpush
 
-    <x-modal name="confirm-delete-user" focusable>
-        <form
-            id="delete-user-form"
-            method="POST"
-            class="p-6"
-        >
-            @csrf
-            @method('DELETE')
-
-            <h2 class="text-lg font-medium text-gray-900">
-                Delete User
-            </h2>
-
-            <p class="mt-2 text-sm text-gray-600">
-                Are you sure you want to delete this user?
-            </p>
-
-            <div class="mt-6 flex justify-end gap-2">
-                <x-secondary-button
-                    x-on:click="$dispatch('close')"
-                    type="button"
-                >
-                    Cancel
-                </x-secondary-button>
-
-                <x-danger-button>
-                    Delete
-                </x-danger-button>
-            </div>
-        </form>
-    </x-modal>
+    <x-confirm-modal
+        name="confirm-delete-user"
+        title="Delete User"
+        message="Are you sure you want to delete this user?"
+        method="DELETE"
+        submit-text="Delete"
+    />
 
     @push('scripts')
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -158,7 +134,7 @@
 
                 let action = $(this).data('url');
 
-                $('#delete-user-form').attr('action', action);
+                $('#confirm-delete-user-form').attr('action', action);
 
                 window.dispatchEvent(
                     new CustomEvent('open-modal', {

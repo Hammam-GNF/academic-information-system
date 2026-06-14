@@ -44,37 +44,13 @@
         </div>
     </div>
 
-    <x-modal name="confirm-delete-media" focusable>
-        <form
-            id="delete-media-form"
-            method="POST"
-            class="p-6"
-        >
-            @csrf
-            @method('DELETE')
-
-            <h2 class="text-lg font-medium text-gray-900">
-                Delete Media
-            </h2>
-
-            <p class="mt-2 text-sm text-gray-600">
-                Are you sure you want to delete this media?
-            </p>
-
-            <div class="mt-6 flex justify-end gap-2">
-                <x-secondary-button
-                    x-on:click="$dispatch('close')"
-                    type="button"
-                >
-                    Cancel
-                </x-secondary-button>
-
-                <x-danger-button>
-                    Delete
-                </x-danger-button>
-            </div>
-        </form>
-    </x-modal>
+    <x-confirm-modal
+        name="confirm-delete-media"
+        title="Delete Media"
+        message="Are you sure you want to delete this media?"
+        method="DELETE"
+        submit-text="Delete"
+    />
 
     @push('scripts')
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -83,7 +59,7 @@
 
             let action = $(this).data('url');
 
-            $('#delete-media-form').attr('action', action);
+            $('#confirm-delete-media-form').attr('action', action);
 
             window.dispatchEvent(
                 new CustomEvent('open-modal', {
