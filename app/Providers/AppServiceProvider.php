@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Policies\UserPolicy;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\UserRepository;
+use App\Services\AuthService;
+use App\Services\Contracts\AuthServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Gate;
@@ -26,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UserServiceInterface::class,
             UserService::class
+        );
+
+        $this->app->bind(
+            AuthServiceInterface::class,
+            AuthService::class
         );
     }
 

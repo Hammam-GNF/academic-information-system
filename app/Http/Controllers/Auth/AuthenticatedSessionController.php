@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Services\Contracts\AuthServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,9 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
+    public function __construct(
+        protected AuthServiceInterface $authService,
+    ) {}
     /**
      * Display the login view.
      */
@@ -24,17 +28,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        $user = $request->user();
-
-        if ($user->hasRole('admin')) {
-            return redirect()->intended(route('admin.dashboard'));
-        }
-
-        return redirect()->intended(route('dashboard'));
+        return $this->authService->login($request);
     }
 
     /**
@@ -42,12 +36,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        $this->authService->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')
+            ->with('success', 'Logged out successfully.');
     }
 }
