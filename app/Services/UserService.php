@@ -158,9 +158,21 @@ class UserService implements UserServiceInterface
 
     public function updatePassword(User $user, string $password): User
     {
-        return $this->userRepository->update($user, [
+        $updated = $this->userRepository->update($user, [
             'password' => Hash::make($password),
         ]);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($updated)
+            ->event('updated')
+            ->withProperties([
+                'name' => $updated->name,
+                'email' => $updated->email,
+            ])
+            ->log('Password has been updated.');
+
+        return $updated;
     }
     public function getAdminsCount(): int
     {

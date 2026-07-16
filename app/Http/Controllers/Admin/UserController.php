@@ -10,7 +10,6 @@ use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\Contracts\UserServiceInterface;
@@ -135,16 +134,10 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $user->update([
-            'password' => Hash::make($request->validated()['password']),
-        ]);
-
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($user)
-            ->event('updated')
-            ->withProperties(['name' => $user->name, 'email' => $user->email])
-            ->log('Password has been updated.');
+        $this->userService->updatePassword(
+            $user,
+            $request->validated('password')
+        );
 
         return redirect()
             ->route('admin.users.index')
