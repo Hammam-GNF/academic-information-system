@@ -94,27 +94,13 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $data = $request->safe()->except('role');
-
-        $user = User::create($data);
-
-        $user->assignRole($request->role);
-
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($user)
-            ->event('created')
-            ->withProperties(['name' => $user->name, 'email' => $user->email])
-            ->log('User has been created.');
+        $this->userService->create(
+            $request->validated()
+        );
 
         return redirect()
             ->route('admin.users.index')
             ->with('success', 'User created successfully.');
-    }
-
-    public function show(User $user)
-    {
-        //
     }
 
     public function edit(User $user)
@@ -128,18 +114,10 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $data = $request->safe()->except('role');
-
-        $user->update($data);
-
-        $user->syncRoles($request->role);
-
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($user)
-            ->event('updated')
-            ->withProperties(['name' => $user->name, 'email' => $user->email])
-            ->log('User has been updated.');
+        $this->userService->update(
+            $user,
+            $request->validated()
+        );
 
         return redirect()
             ->route('admin.users.index')

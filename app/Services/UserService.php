@@ -8,6 +8,7 @@ use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserService implements UserServiceInterface
@@ -53,6 +54,16 @@ class UserService implements UserServiceInterface
             $user->assignRole($role);
         }
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->event('created')
+            ->withProperties([
+                'name' => $user->name,
+                'email' => $user->email,
+            ])
+            ->log('User has been created.');
+
         return $user;
     }
 
@@ -67,6 +78,16 @@ class UserService implements UserServiceInterface
         if ($role) {
             $updated->syncRoles($role);
         }
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($updated)
+            ->event('updated')
+            ->withProperties([
+                'name' => $updated->name,
+                'email' => $updated->email,
+            ])
+            ->log('User has been updated.');
 
         return $updated;
     }
