@@ -3,12 +3,21 @@
 namespace App\Services;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\AuthServiceInterface;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class AuthService implements AuthServiceInterface
 {
+    public function __construct(
+        protected UserRepositoryInterface $userRepository,
+    ) {}
+
     public function login(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
@@ -24,6 +33,46 @@ class AuthService implements AuthServiceInterface
         return redirect()
             ->intended($redirect)
             ->with('success', "Welcome back, {$user->name}.");
+    }
+
+    public function register(RegisterRequest $request): RedirectResponse
+    {
+        $user = $this->userRepository->createUser([
+            'name' => $request->validated('name'),
+            'email' => $request->validated('email'),
+            'password' => $request->validated('password'),
+        ]);
+
+        $user->assignRole('user');
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect(route('dashboard'))
+            ->with(
+                'success',
+                "Welcome {$user->name}, your account has been created."
+            );
+    }
+
+    public function sendPasswordResetLink(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with('success', __($status))
+            : back()
+                ->withInput($request->only('email'))
+                ->withErrors([
+                    'email' => __($status),
+                ]);
     }
 
     public function logout(): void
