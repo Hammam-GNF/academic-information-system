@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Contracts;
+namespace App\Services\Contracts;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-interface UserRepositoryInterface extends BaseRepositoryInterface
+interface UserServiceInterface
 {
     public function query(): Builder;
 
@@ -18,6 +18,18 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function findById(int $id): ?User;
 
     public function findByEmail(string $email): ?User;
+
+    public function create(array $data): User;
+
+    public function update(User $user, array $data): User;
+
+    public function delete(User $user): bool;
+
+    public function restore(User $user): bool;
+
+    public function forceDelete(User $user): bool;
+
+    public function updatePassword(User $user, string $password): User;
 
     public function getAdminsCount(): int;
 }
