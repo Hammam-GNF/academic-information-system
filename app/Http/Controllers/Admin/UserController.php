@@ -13,9 +13,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
+use App\Services\Contracts\UserServiceInterface;
 
 class UserController extends Controller
 {
+    public function __construct(
+        protected UserServiceInterface $userService,
+    ) {}
     public function index(Request $request)
     {
         $this->authorize('viewAny', User::class);
