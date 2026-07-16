@@ -88,7 +88,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $this->authorize('create', User::class);
-        
+
         $data = $request->safe()->except('role');
 
         $user = User::create($data);
@@ -151,7 +151,7 @@ class UserController extends Controller
     public function updatePassword(UpdateUserPasswordRequest $request, User $user)
     {
         $this->authorize('update', $user);
-        
+
         $user->update([
             'password' => Hash::make($request->validated()['password']),
         ]);
@@ -170,7 +170,7 @@ class UserController extends Controller
 
     public function export()
     {
-        return Excel::download(new UsersExport(), 'users.xlsx');
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 
     public function trash(Request $request)
@@ -261,14 +261,14 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
-        
+
         if ($user->id === Auth::id()) {
             return back()->with('error', 'You cannot delete your own account.');
         }
 
         if ($user->hasRole('admin') && User::whereHas('roles', function ($query) {
-                $query->where('name', 'admin');
-            })->count() === 1) {
+            $query->where('name', 'admin');
+        })->count() === 1) {
             return back()->with('error', 'You cannot delete the last admin account.');
         }
 
