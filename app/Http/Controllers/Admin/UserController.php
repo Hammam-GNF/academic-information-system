@@ -26,7 +26,8 @@ class UserController extends Controller
 
         if ($request->ajax()) {
 
-            $users = User::query()->with('roles');
+            $users = $this->userService->query();
+
             if ($request->filled('role')) {
                 $users->role($request->role);
             }
