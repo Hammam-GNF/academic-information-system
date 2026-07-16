@@ -92,19 +92,68 @@ class UserService implements UserServiceInterface
         return $updated;
     }
 
-    public function delete(User $user): bool
+    public function delete(User $user): void
     {
-        return $this->userRepository->delete($user);
+        if ($user->id === Auth::id()) {
+            throw new \RuntimeException(
+                'You cannot delete your own account.'
+            );
+        }
+
+        if (
+            $user->hasRole('admin') &&
+            $this->userRepository->getAdminsCount() === 1
+        ) {
+            throw new \RuntimeException(
+                'You cannot delete the last admin account.'
+            );
+        }
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->event('deleted')
+            ->withProperties([
+                'name' => $user->name,
+                'email' => $user->email,
+            ])
+            ->log('User has been deleted.');
+
+        $this->userRepository->delete($user);
     }
 
-    public function restore(User $user): bool
+    public function restore(int $id): void
     {
-        return $this->userRepository->restore($user);
+        $user = $this->userRepository->findTrashedById($id);
+
+        if (! $user) {
+            abort(404);
+        }
+
+        $this->userRepository->restore($user);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->event('restored')
+            ->log('User has been restored.');
     }
 
-    public function forceDelete(User $user): bool
+    public function forceDelete(int $id): void
     {
-        return $this->userRepository->forceDelete($user);
+        $user = $this->userRepository->findTrashedById($id);
+
+        if (! $user) {
+            abort(404);
+        }
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->event('force deleted')
+            ->log('User has been force deleted.');
+
+        $this->userRepository->forceDelete($user);
     }
 
     public function updatePassword(User $user, string $password): User

@@ -213,59 +213,40 @@ class UserController extends Controller
 
     public function restore($id)
     {
-        $user = User::onlyTrashed()->findOrFail($id);
+        $this->userService->restore($id);
 
-        $user->restore();
-
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($user)
-            ->event('restored')
-            ->log('User has been restored.');
-
-        return back()->with('success', 'User restored successfully.');
+        return back()->with(
+            'success',
+            'User restored successfully.'
+        );
     }
 
     public function forceDelete($id)
     {
-        $user = User::onlyTrashed()->findOrFail($id);
+        $this->userService->forceDelete($id);
 
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($user)
-            ->event('force deleted')
-            ->log('User has been force deleted.');
-
-        $user->forceDelete();
-
-        return back()->with('success', 'User force deleted successfully.');
+        return back()->with(
+            'success',
+            'User force deleted successfully.'
+        );
     }
 
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
 
-        if ($user->id === Auth::id()) {
-            return back()->with('error', 'You cannot delete your own account.');
+        try {
+
+            $this->userService->delete($user);
+
+            return redirect()
+                ->route('admin.users.index')
+                ->with('success', 'User deleted successfully.');
+
+        } catch (\RuntimeException $e) {
+
+            return back()->with('error', $e->getMessage());
+
         }
-
-        if ($user->hasRole('admin') && User::whereHas('roles', function ($query) {
-            $query->where('name', 'admin');
-        })->count() === 1) {
-            return back()->with('error', 'You cannot delete the last admin account.');
-        }
-
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($user)
-            ->event('deleted')
-            ->withProperties(['name' => $user->name, 'email' => $user->email])
-            ->log('User has been deleted.');
-
-        $user->delete();
-
-        return redirect()
-            ->route('admin.users.index')
-            ->with('success', 'User deleted successfully.');
     }
 }

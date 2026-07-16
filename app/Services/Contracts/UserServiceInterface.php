@@ -23,11 +23,11 @@ interface UserServiceInterface
 
     public function update(User $user, array $data): User;
 
-    public function delete(User $user): bool;
+    public function delete(User $user): void;
 
-    public function restore(User $user): bool;
+    public function restore(int $id): void;
 
-    public function forceDelete(User $user): bool;
+    public function forceDelete(int $id): void;
 
     public function updatePassword(User $user, string $password): User;
 

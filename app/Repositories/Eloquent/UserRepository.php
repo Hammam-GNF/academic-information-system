@@ -48,4 +48,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->role('admin')
             ->count();
     }
+
+    public function findTrashedById(int $id): ?User
+    {
+        return $this->model
+            ->onlyTrashed()
+            ->with('roles')
+            ->find($id);
+    }
 }

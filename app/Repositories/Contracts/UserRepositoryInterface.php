@@ -20,4 +20,6 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function findByEmail(string $email): ?User;
 
     public function getAdminsCount(): int;
+
+    public function findTrashedById(int $id): ?User;
 }
