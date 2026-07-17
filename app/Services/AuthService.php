@@ -213,8 +213,18 @@ class AuthService implements AuthServiceInterface
         );
     }
 
-    public function logout(): void
+    public function logout(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/')
+            ->with(
+                'success',
+                'Logged out successfully.'
+            );
     }
 }

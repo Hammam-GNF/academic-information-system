@@ -35,13 +35,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $this->authService->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/')
-            ->with('success', 'Logged out successfully.');
+        return $this->authService->logout($request);
     }
 }
