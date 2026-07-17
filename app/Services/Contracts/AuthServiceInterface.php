@@ -34,6 +34,10 @@ interface AuthServiceInterface
         Request $request
     ): RedirectResponse;
 
+    public function confirmPassword(
+        Request $request
+    ): RedirectResponse;
+
     public function logout(): void;
 
 }

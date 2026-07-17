@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
 
 class AuthService implements AuthServiceInterface
 {
@@ -175,6 +176,29 @@ class AuthService implements AuthServiceInterface
             'success',
             'Verification link sent successfully.'
         );
+    }
+
+    public function confirmPassword(Request $request): RedirectResponse
+    {
+        if (! Auth::guard('web')->validate([
+            'email' => $request->user()->email,
+            'password' => $request->password,
+        ])) {
+            throw ValidationException::withMessages([
+                'password' => __('auth.password'),
+            ]);
+        }
+
+        $request->session()->put(
+            'auth.password_confirmed_at',
+            time()
+        );
+
+        $route = $request->user()->hasRole('admin')
+            ? route('admin.dashboard')
+            : route('dashboard');
+
+        return redirect()->intended($route);
     }
 
     public function logout(): void
