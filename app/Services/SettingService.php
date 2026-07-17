@@ -15,14 +15,12 @@ class SettingService implements SettingServiceInterface
 
     public function index(): Collection
     {
-        return $this->settingRepository
-            ->getAllKeyValue();
+        return $this->settingRepository->getAllKeyValue();
     }
 
     public function update(array $settings): RedirectResponse
     {
-        $this->settingRepository
-            ->updateMany($settings);
+        $this->settingRepository->updateMany($settings);
 
         return back()->with(
             'success',
