@@ -22,4 +22,6 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function getAdminsCount(): int;
 
     public function findTrashedById(int $id): ?User;
+
+    public function queryTrashed(): Builder;
 }

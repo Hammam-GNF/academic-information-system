@@ -56,4 +56,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->with('roles')
             ->find($id);
     }
+
+    public function queryTrashed(): Builder
+    {
+        return $this->model
+            ->onlyTrashed()
+            ->with('roles')
+            ->latest();
+    }
 }

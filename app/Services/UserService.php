@@ -9,9 +9,13 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserService implements UserServiceInterface
 {
@@ -223,6 +227,115 @@ class UserService implements UserServiceInterface
                 $e->getMessage()
             );
         }
+    }
+
+    public function index(Request $request): View|JsonResponse
+    {
+        if ($request->ajax()) {
+
+            $users = $this->query();
+
+            if ($request->filled('role')) {
+                $users->role($request->role);
+            }
+
+            return DataTables::of($users)
+                ->addIndexColumn()
+
+                ->addColumn('role', function ($user) {
+                    return $user->roles->first()?->name ?? '-';
+                })
+
+                ->addColumn('action', function ($user) {
+
+                    $buttons = '
+                        <div class="flex gap-2">
+                    ';
+
+                    $buttons .= '
+                        <a href="' . route('admin.users.edit', $user) . '"
+                            class="px-3 py-1 bg-blue-600 text-white rounded">
+                            Edit
+                        </a>
+                    ';
+
+                    $buttons .= '
+                        <a href="' . route('admin.users.change-password', $user) . '"
+                            class="px-3 py-1 bg-green-600 text-white rounded">
+                            Password
+                        </a>
+                    ';
+
+                    if (Auth::id() !== $user->id) {
+
+                        $buttons .= '
+                            <button
+                                type="button"
+                                class="delete-user-btn px-3 py-1 bg-red-600 text-white rounded"
+                                data-url="' . route('admin.users.destroy', $user) . '">
+                                Delete
+                            </button>
+                        ';
+                    }
+
+                    $buttons .= '</div>';
+
+                    return $buttons;
+                })
+
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.users.index');
+    }
+
+    public function trash(Request $request): View|JsonResponse
+    {
+        if ($request->ajax()) {
+
+            $users = $this->userRepository->queryTrashed();
+
+            return DataTables::of($users)
+
+                ->addIndexColumn()
+
+                ->addColumn('role', function ($user) {
+                    return $user->roles->first()?->name ?? 'N/A';
+                })
+
+                ->editColumn('deleted_at', function ($user) {
+                    return $user->deleted_at->format('Y-m-d H:i:s');
+                })
+
+                ->addColumn('action', function ($user) {
+
+                    return '
+                        <div class="flex gap-2">
+
+                            <button
+                                type="button"
+                                class="restore-user-btn px-3 py-1 bg-green-600 text-white rounded"
+                                data-url="' . route('admin.users.restore', $user) . '">
+                                Restore
+                            </button>
+
+                            <button
+                                type="button"
+                                class="force-delete-btn px-3 py-1 bg-red-600 text-white rounded"
+                                data-url="' . route('admin.users.force-delete', $user) . '">
+                                Force Delete
+                            </button>
+
+                        </div>
+                    ';
+                })
+
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.users.trash');
     }
 
     public function getAdminsCount(): int
