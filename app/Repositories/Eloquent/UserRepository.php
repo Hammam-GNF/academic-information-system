@@ -42,14 +42,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->first();
     }
 
-    public function createUser(array $data): User
-    {
-        /** @var User $user */
-        $user = $this->create($data);
-
-        return $user;
-    }
-
     public function getAdminsCount(): int
     {
         return $this->query()

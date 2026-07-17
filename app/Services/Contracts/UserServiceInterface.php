@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\RedirectResponse;
 
 interface UserServiceInterface
 {
@@ -19,17 +20,23 @@ interface UserServiceInterface
 
     public function findByEmail(string $email): ?User;
 
-    public function create(array $data): User;
+    public function create(array $data): RedirectResponse;
 
-    public function update(User $user, array $data): User;
+    public function update(
+        User $user,
+        array $data
+    ): RedirectResponse;
 
-    public function delete(User $user): void;
+    public function updatePassword(
+        User $user,
+        string $password
+    ): RedirectResponse;
 
-    public function restore(int $id): void;
+    public function delete(User $user): RedirectResponse;
 
-    public function forceDelete(int $id): void;
+    public function restore(int $id): RedirectResponse;
 
-    public function updatePassword(User $user, string $password): User;
+    public function forceDelete(int $id): RedirectResponse;
 
     public function getAdminsCount(): int;
 }

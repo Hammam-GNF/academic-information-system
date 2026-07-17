@@ -68,7 +68,8 @@ class AuthService implements AuthServiceInterface
 
     public function register(RegisterRequest $request): RedirectResponse
     {
-        $user = $this->userRepository->createUser([
+        /** @var User $user */
+        $user = $this->userRepository->create([
             'name' => $request->validated('name'),
             'email' => $request->validated('email'),
             'password' => $request->validated('password'),

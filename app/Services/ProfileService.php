@@ -36,7 +36,7 @@ class ProfileService implements ProfileServiceInterface
         );
 
         activity()
-            ->causedBy(Auth::user())
+            ->causedBy($updated)
             ->performedOn($updated)
             ->event('profile updated')
             ->withProperties([
@@ -61,7 +61,7 @@ class ProfileService implements ProfileServiceInterface
             ->toMediaCollection('avatar');
 
         activity()
-            ->causedBy(Auth::user())
+            ->causedBy($user)
             ->performedOn($user)
             ->event('avatar updated')
             ->log('Profile avatar has been updated.');

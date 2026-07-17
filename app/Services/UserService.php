@@ -8,8 +8,10 @@ use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class UserService implements UserServiceInterface
 {
@@ -42,12 +44,13 @@ class UserService implements UserServiceInterface
         return $this->userRepository->findByEmail($email);
     }
 
-    public function create(array $data): User
+    public function create(array $data): RedirectResponse
     {
         $role = $data['role'] ?? null;
 
         unset($data['role']);
 
+        /** @var User $user */
         $user = $this->userRepository->create($data);
 
         if ($role) {
@@ -64,16 +67,23 @@ class UserService implements UserServiceInterface
             ])
             ->log('User has been created.');
 
-        return $user;
+        return Redirect::route('admin.users.index')
+            ->with(
+                'success',
+                'User created successfully.'
+            );
     }
 
-    public function update(User $user, array $data): User
+    public function update(User $user,array $data): RedirectResponse
     {
         $role = $data['role'] ?? null;
 
         unset($data['role']);
 
-        $updated = $this->userRepository->update($user, $data);
+        $updated = $this->userRepository->update(
+            $user,
+            $data
+        );
 
         if ($role) {
             $updated->syncRoles($role);
@@ -89,42 +99,43 @@ class UserService implements UserServiceInterface
             ])
             ->log('User has been updated.');
 
-        return $updated;
+        return Redirect::route('admin.users.index')
+            ->with(
+                'success',
+                'User updated successfully.'
+            );
     }
 
-    public function delete(User $user): void
+    public function updatePassword(User $user,string $password): RedirectResponse
     {
-        if ($user->id === Auth::id()) {
-            throw new \RuntimeException(
-                'You cannot delete your own account.'
-            );
-        }
-
-        if (
-            $user->hasRole('admin') &&
-            $this->userRepository->getAdminsCount() === 1
-        ) {
-            throw new \RuntimeException(
-                'You cannot delete the last admin account.'
-            );
-        }
+        $updated = $this->userRepository->update(
+            $user,
+            [
+                'password' => Hash::make($password),
+            ]
+        );
 
         activity()
             ->causedBy(Auth::user())
-            ->performedOn($user)
-            ->event('deleted')
+            ->performedOn($updated)
+            ->event('updated')
             ->withProperties([
-                'name' => $user->name,
-                'email' => $user->email,
+                'name' => $updated->name,
+                'email' => $updated->email,
             ])
-            ->log('User has been deleted.');
+            ->log('Password has been updated.');
 
-        $this->userRepository->delete($user);
+        return Redirect::route('admin.users.index')
+            ->with(
+                'success',
+                'Password updated successfully.'
+            );
     }
 
-    public function restore(int $id): void
+    public function restore(int $id): RedirectResponse
     {
-        $user = $this->userRepository->findTrashedById($id);
+        $user = $this->userRepository
+            ->findTrashedById($id);
 
         if (! $user) {
             abort(404);
@@ -137,11 +148,17 @@ class UserService implements UserServiceInterface
             ->performedOn($user)
             ->event('restored')
             ->log('User has been restored.');
+
+        return back()->with(
+            'success',
+            'User restored successfully.'
+        );
     }
 
-    public function forceDelete(int $id): void
+    public function forceDelete(int $id): RedirectResponse
     {
-        $user = $this->userRepository->findTrashedById($id);
+        $user = $this->userRepository
+            ->findTrashedById($id);
 
         if (! $user) {
             abort(404);
@@ -153,27 +170,61 @@ class UserService implements UserServiceInterface
             ->event('force deleted')
             ->log('User has been force deleted.');
 
-        $this->userRepository->forceDelete($user);
+        $this->userRepository
+            ->forceDelete($user);
+
+        return back()->with(
+            'success',
+            'User force deleted successfully.'
+        );
     }
 
-    public function updatePassword(User $user, string $password): User
+    public function delete(User $user): RedirectResponse
     {
-        $updated = $this->userRepository->update($user, [
-            'password' => Hash::make($password),
-        ]);
+        try {
 
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($updated)
-            ->event('updated')
-            ->withProperties([
-                'name' => $updated->name,
-                'email' => $updated->email,
-            ])
-            ->log('Password has been updated.');
+            if ($user->id === Auth::id()) {
+                throw new \RuntimeException(
+                    'You cannot delete your own account.'
+                );
+            }
 
-        return $updated;
+            if (
+                $user->hasRole('admin')
+                && $this->userRepository->getAdminsCount() === 1
+            ) {
+                throw new \RuntimeException(
+                    'You cannot delete the last admin account.'
+                );
+            }
+
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($user)
+                ->event('deleted')
+                ->withProperties([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ])
+                ->log('User has been deleted.');
+
+            $this->userRepository->delete($user);
+
+            return Redirect::route('admin.users.index')
+                ->with(
+                    'success',
+                    'User deleted successfully.'
+                );
+
+        } catch (\RuntimeException $e) {
+
+            return back()->with(
+                'error',
+                $e->getMessage()
+            );
+        }
     }
+
     public function getAdminsCount(): int
     {
         return $this->userRepository->getAdminsCount();

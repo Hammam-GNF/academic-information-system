@@ -19,6 +19,7 @@ class UserController extends Controller
     public function __construct(
         protected UserServiceInterface $userService,
     ) {}
+
     public function index(Request $request)
     {
         $this->authorize('viewAny', User::class);
@@ -93,13 +94,9 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $this->userService->create(
+        return $this->userService->create(
             $request->validated()
         );
-
-        return redirect()
-            ->route('admin.users.index')
-            ->with('success', 'User created successfully.');
     }
 
     public function edit(User $user)
@@ -109,18 +106,29 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request,User $user)
     {
         $this->authorize('update', $user);
 
-        $this->userService->update(
+        return $this->userService->update(
             $user,
             $request->validated()
         );
+    }
 
-        return redirect()
-            ->route('admin.users.index')
-            ->with('success', 'User updated successfully.');
+    public function updatePassword(UpdateUserPasswordRequest $request,User $user)
+    {
+        $this->authorize('update', $user);
+
+        return $this->userService->updatePassword(
+            $user,
+            $request->validated('password')
+        );
+    }
+
+    public function restore($id)
+    {
+        return $this->userService->restore($id);
     }
 
     public function changePassword(User $user)
@@ -128,20 +136,6 @@ class UserController extends Controller
         $this->authorize('update', $user);
 
         return view('admin.users.change-password', compact('user'));
-    }
-
-    public function updatePassword(UpdateUserPasswordRequest $request, User $user)
-    {
-        $this->authorize('update', $user);
-
-        $this->userService->updatePassword(
-            $user,
-            $request->validated('password')
-        );
-
-        return redirect()
-            ->route('admin.users.index')
-            ->with('success', 'Password updated successfully.');
     }
 
     public function export()
@@ -204,42 +198,15 @@ class UserController extends Controller
         return view('admin.users.trash');
     }
 
-    public function restore($id)
-    {
-        $this->userService->restore($id);
-
-        return back()->with(
-            'success',
-            'User restored successfully.'
-        );
-    }
-
     public function forceDelete($id)
     {
-        $this->userService->forceDelete($id);
-
-        return back()->with(
-            'success',
-            'User force deleted successfully.'
-        );
+        return $this->userService->forceDelete($id);
     }
 
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
 
-        try {
-
-            $this->userService->delete($user);
-
-            return redirect()
-                ->route('admin.users.index')
-                ->with('success', 'User deleted successfully.');
-
-        } catch (\RuntimeException $e) {
-
-            return back()->with('error', $e->getMessage());
-
-        }
+        return $this->userService->delete($user);
     }
 }
