@@ -81,7 +81,7 @@ class UserService implements UserServiceInterface
             );
     }
 
-    public function update(User $user,array $data): RedirectResponse
+    public function update(User $user, array $data): RedirectResponse
     {
         $role = $data['role'] ?? null;
 
@@ -113,7 +113,7 @@ class UserService implements UserServiceInterface
             );
     }
 
-    public function updatePassword(User $user,string $password): RedirectResponse
+    public function updatePassword(User $user, string $password): RedirectResponse
     {
         $updated = $this->userRepository->update(
             $user,
@@ -256,14 +256,14 @@ class UserService implements UserServiceInterface
                     ';
 
                     $buttons .= '
-                        <a href="' . route('admin.users.edit', $user) . '"
+                        <a href="'.route('admin.users.edit', $user).'"
                             class="px-3 py-1 bg-blue-600 text-white rounded">
                             Edit
                         </a>
                     ';
 
                     $buttons .= '
-                        <a href="' . route('admin.users.change-password', $user) . '"
+                        <a href="'.route('admin.users.change-password', $user).'"
                             class="px-3 py-1 bg-green-600 text-white rounded">
                             Password
                         </a>
@@ -275,7 +275,7 @@ class UserService implements UserServiceInterface
                             <button
                                 type="button"
                                 class="delete-user-btn px-3 py-1 bg-red-600 text-white rounded"
-                                data-url="' . route('admin.users.destroy', $user) . '">
+                                data-url="'.route('admin.users.destroy', $user).'">
                                 Delete
                             </button>
                         ';
@@ -319,14 +319,14 @@ class UserService implements UserServiceInterface
                             <button
                                 type="button"
                                 class="restore-user-btn px-3 py-1 bg-green-600 text-white rounded"
-                                data-url="' . route('admin.users.restore', $user) . '">
+                                data-url="'.route('admin.users.restore', $user).'">
                                 Restore
                             </button>
 
                             <button
                                 type="button"
                                 class="force-delete-btn px-3 py-1 bg-red-600 text-white rounded"
-                                data-url="' . route('admin.users.force-delete', $user) . '">
+                                data-url="'.route('admin.users.force-delete', $user).'">
                                 Force Delete
                             </button>
 
@@ -349,7 +349,7 @@ class UserService implements UserServiceInterface
     public function export(): BinaryFileResponse
     {
         return Excel::download(
-            new UsersExport(),
+            new UsersExport,
             'users.xlsx'
         );
     }

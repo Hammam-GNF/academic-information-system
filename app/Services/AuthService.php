@@ -9,8 +9,8 @@ use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\AuthServiceInterface;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
@@ -23,7 +23,6 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService implements AuthServiceInterface
 {
-
     public function __construct(
         protected UserRepositoryInterface $userRepository,
     ) {}
@@ -105,7 +104,7 @@ class AuthService implements AuthServiceInterface
                 ->withErrors([
                     'email' => __($status),
                 ]);
-                
+
     }
 
     public function resetPassword(ResetPasswordRequest $request): RedirectResponse

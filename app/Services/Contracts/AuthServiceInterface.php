@@ -45,5 +45,4 @@ interface AuthServiceInterface
     public function logout(
         Request $request
     ): RedirectResponse;
-
 }

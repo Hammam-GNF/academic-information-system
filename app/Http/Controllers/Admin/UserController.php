@@ -7,8 +7,8 @@ use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserPasswordRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Services\Contracts\UserServiceInterface;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -44,7 +44,7 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(UpdateUserRequest $request,User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         return $this->userService->update(
             $user,
@@ -52,7 +52,7 @@ class UserController extends Controller
         );
     }
 
-    public function updatePassword(UpdateUserPasswordRequest $request,User $user)
+    public function updatePassword(UpdateUserPasswordRequest $request, User $user)
     {
         return $this->userService->updatePassword(
             $user,

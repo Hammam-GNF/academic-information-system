@@ -14,6 +14,7 @@ class RegisteredUserController extends Controller
     public function __construct(
         protected AuthServiceInterface $authService,
     ) {}
+
     /**
      * Display the registration view.
      */

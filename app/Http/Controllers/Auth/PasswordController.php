@@ -15,8 +15,7 @@ class PasswordController extends Controller
 
     public function update(
         UpdatePasswordRequest $request
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         return $this->authService
             ->updatePassword($request);
     }

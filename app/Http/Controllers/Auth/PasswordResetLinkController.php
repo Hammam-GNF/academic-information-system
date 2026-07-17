@@ -14,6 +14,7 @@ class PasswordResetLinkController extends Controller
     public function __construct(
         protected AuthServiceInterface $authService,
     ) {}
+
     /**
      * Display the password reset link request view.
      */

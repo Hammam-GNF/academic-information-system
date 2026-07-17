@@ -22,7 +22,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
         );
     }
 
-    public function get(string $key,mixed $default = null): mixed
+    public function get(string $key, mixed $default = null): mixed
     {
         return Cache::rememberForever(
             "setting.{$key}",
@@ -33,7 +33,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
         );
     }
 
-    public function set(string $key,mixed $value): void
+    public function set(string $key, mixed $value): void
     {
         $this->model->updateOrCreate(
             ['key' => $key],

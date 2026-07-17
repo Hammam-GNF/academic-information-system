@@ -14,7 +14,7 @@ class AuthenticatedSessionController extends Controller
     public function __construct(
         protected AuthServiceInterface $authService,
     ) {}
-    
+
     /**
      * Display the login view.
      */

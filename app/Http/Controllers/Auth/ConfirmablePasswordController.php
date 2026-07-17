@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\Contracts\AuthServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class ConfirmablePasswordController extends Controller
@@ -14,6 +13,7 @@ class ConfirmablePasswordController extends Controller
     public function __construct(
         protected AuthServiceInterface $authService,
     ) {}
+
     /**
      * Show the confirm password view.
      */
