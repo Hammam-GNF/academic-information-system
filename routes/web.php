@@ -16,9 +16,10 @@ Route::get('/', function () {
         return view('welcome');
     }
 
+    /** @var User $user */
     $user = Auth::user();
 
-    return $user instanceof User && $user->hasRole('admin')
+    return $user->hasRole('admin')
         ? redirect()->route('admin.dashboard')
         : redirect()->route('dashboard');
 

@@ -13,10 +13,14 @@ use Illuminate\Http\Request;
 interface AuthServiceInterface
 {
     public function login(LoginRequest $request): RedirectResponse;
-    
-    public function register(RegisterRequest $request): RedirectResponse;
 
-    public function sendPasswordResetLink(Request $request): RedirectResponse;
+    public function register(
+        RegisterRequest $request
+    ): RedirectResponse;
+
+    public function sendPasswordResetLink(
+        Request $request
+    ): RedirectResponse;
 
     public function resetPassword(
         ResetPasswordRequest $request

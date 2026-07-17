@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
+use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\AuthServiceInterface;
 use Illuminate\Auth\Events\Registered;
@@ -27,14 +28,23 @@ class AuthService implements AuthServiceInterface
         protected UserRepositoryInterface $userRepository,
     ) {}
 
-    private function redirectAfterVerification($user): RedirectResponse
+    /**
+     * Resolve dashboard route based on user role.
+     */
+    private function getDashboardRoute(User $user): string
     {
-        $route = $user->hasRole('admin')
+        return $user->hasRole('admin')
             ? route('admin.dashboard')
             : route('dashboard');
+    }
 
+    /**
+     * Redirect user after email verification.
+     */
+    private function redirectAfterVerification(User $user): RedirectResponse
+    {
         return redirect()->intended(
-            $route.'?verified=1'
+            $this->getDashboardRoute($user).'?verified=1'
         );
     }
 
@@ -46,13 +56,14 @@ class AuthService implements AuthServiceInterface
 
         $user = $request->user();
 
-        $redirect = $user->hasRole('admin')
-            ? route('admin.dashboard')
-            : route('dashboard');
-
         return redirect()
-            ->intended($redirect)
-            ->with('success', "Welcome back, {$user->name}.");
+            ->intended(
+                $this->getDashboardRoute($user)
+            )
+            ->with(
+                'success',
+                "Welcome back, {$user->name}."
+            );
     }
 
     public function register(RegisterRequest $request): RedirectResponse
@@ -194,11 +205,11 @@ class AuthService implements AuthServiceInterface
             time()
         );
 
-        $route = $request->user()->hasRole('admin')
-            ? route('admin.dashboard')
-            : route('dashboard');
-
-        return redirect()->intended($route);
+        return redirect()->intended(
+            $this->getDashboardRoute(
+                $request->user()
+            )
+        );
     }
 
     public function logout(): void
