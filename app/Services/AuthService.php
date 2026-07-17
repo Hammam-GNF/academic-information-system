@@ -10,6 +10,8 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\AuthServiceInterface;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +25,17 @@ class AuthService implements AuthServiceInterface
     public function __construct(
         protected UserRepositoryInterface $userRepository,
     ) {}
+
+    private function redirectAfterVerification($user): RedirectResponse
+    {
+        $route = $user->hasRole('admin')
+            ? route('admin.dashboard')
+            : route('dashboard');
+
+        return redirect()->intended(
+            $route.'?verified=1'
+        );
+    }
 
     public function login(LoginRequest $request): RedirectResponse
     {
@@ -128,6 +141,39 @@ class AuthService implements AuthServiceInterface
         return back()->with(
             'success',
             'Password updated successfully.'
+        );
+    }
+
+    public function verifyEmail(EmailVerificationRequest $request): RedirectResponse
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return $this->redirectAfterVerification(
+                $request->user()
+            );
+        }
+
+        if ($request->user()->markEmailAsVerified()) {
+            event(new Verified($request->user()));
+        }
+
+        return $this->redirectAfterVerification(
+            $request->user()
+        );
+    }
+
+    public function sendEmailVerificationNotification(Request $request): RedirectResponse
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return $this->redirectAfterVerification(
+                $request->user()
+            );
+        }
+
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with(
+            'success',
+            'Verification link sent successfully.'
         );
     }
 

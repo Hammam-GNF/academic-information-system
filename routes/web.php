@@ -6,10 +6,22 @@ use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+
+    if (! Auth::check()) {
+        return view('welcome');
+    }
+
+    $user = Auth::user();
+
+    return $user instanceof User && $user->hasRole('admin')
+        ? redirect()->route('admin.dashboard')
+        : redirect()->route('dashboard');
+
 });
 
 Route::get('/dashboard', function () {
