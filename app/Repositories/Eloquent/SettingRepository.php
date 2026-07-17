@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Setting;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class SettingRepository extends BaseRepository implements SettingRepositoryInterface
 {
@@ -15,16 +16,21 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
     public function getAllKeyValue(): Collection
     {
-        return $this->model
-            ->pluck('value', 'key');
+        return Cache::rememberForever(
+            'settings.all',
+            fn () => $this->model->pluck('value', 'key')
+        );
     }
 
     public function get(string $key,mixed $default = null): mixed
     {
-        return $this->model
-            ->where('key', $key)
-            ->value('value')
-            ?? $default;
+        return Cache::rememberForever(
+            "setting.{$key}",
+            fn () => $this->model
+                ->where('key', $key)
+                ->value('value')
+                ?? $default
+        );
     }
 
     public function set(string $key,mixed $value): void
@@ -33,6 +39,9 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
             ['key' => $key],
             ['value' => $value]
         );
+
+        Cache::forget("setting.{$key}");
+        Cache::forget('settings.all');
     }
 
     public function updateMany(array $settings): void
