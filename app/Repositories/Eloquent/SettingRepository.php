@@ -19,7 +19,15 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
             ->pluck('value', 'key');
     }
 
-    public function set(string $key, mixed $value): void
+    public function get(string $key,mixed $default = null): mixed
+    {
+        return $this->model
+            ->where('key', $key)
+            ->value('value')
+            ?? $default;
+    }
+
+    public function set(string $key,mixed $value): void
     {
         $this->model->updateOrCreate(
             ['key' => $key],

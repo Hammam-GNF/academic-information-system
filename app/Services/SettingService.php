@@ -18,6 +18,17 @@ class SettingService implements SettingServiceInterface
         return $this->settingRepository->getAllKeyValue();
     }
 
+    public function get(
+        string $key,
+        mixed $default = null
+    ): mixed
+    {
+        return $this->settingRepository->get(
+            $key,
+            $default
+        );
+    }
+
     public function update(array $settings): RedirectResponse
     {
         $this->settingRepository->updateMany($settings);
