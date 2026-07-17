@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exports\UsersExport;
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\UserServiceInterface;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -341,5 +344,13 @@ class UserService implements UserServiceInterface
     public function getAdminsCount(): int
     {
         return $this->userRepository->getAdminsCount();
+    }
+
+    public function export(): BinaryFileResponse
+    {
+        return Excel::download(
+            new UsersExport(),
+            'users.xlsx'
+        );
     }
 }

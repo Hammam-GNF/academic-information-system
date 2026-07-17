@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserPasswordRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
-use Yajra\DataTables\Facades\DataTables;
 use App\Services\Contracts\UserServiceInterface;
 
 class UserController extends Controller
@@ -84,7 +80,7 @@ class UserController extends Controller
 
     public function export()
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return $this->userService->export();
     }
 
     public function trash(Request $request)

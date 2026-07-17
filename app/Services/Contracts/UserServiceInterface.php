@@ -9,6 +9,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 interface UserServiceInterface
@@ -44,6 +45,8 @@ interface UserServiceInterface
     public function index(Request $request): View|JsonResponse;
 
     public function trash(Request $request): View|JsonResponse;
+
+    public function export(): BinaryFileResponse;
 
     public function getAdminsCount(): int;
 }
