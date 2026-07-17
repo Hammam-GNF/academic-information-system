@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\AuthServiceInterface;
 use Illuminate\Auth\Events\Registered;
@@ -70,6 +71,41 @@ class AuthService implements AuthServiceInterface
             ? back()->with('success', __($status))
             : back()
                 ->withInput($request->only('email'))
+                ->withErrors([
+                    'email' => __($status),
+                ]);
+    }
+
+    public function resetPassword(ResetPasswordRequest $request): RedirectResponse
+    {
+        $status = Password::reset(
+            $request->only(
+                'email',
+                'password',
+                'password_confirmation',
+                'token'
+            ),
+            function ($user) use ($request) {
+
+                $user->forceFill([
+                    'password' => Hash::make(
+                        $request->validated('password')
+                    ),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()
+                ->route('login')
+                ->with('success', __($status))
+            : back()
+                ->withInput(
+                    $request->only('email')
+                )
                 ->withErrors([
                     'email' => __($status),
                 ]);
