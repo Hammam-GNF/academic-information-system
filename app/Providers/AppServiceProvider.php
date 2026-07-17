@@ -8,7 +8,9 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\UserRepository;
 use App\Services\AuthService;
 use App\Services\Contracts\AuthServiceInterface;
+use App\Services\Contracts\ProfileServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
+use App\Services\ProfileService;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -33,6 +35,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             AuthServiceInterface::class,
             AuthService::class
+        );
+
+        $this->app->bind(
+            ProfileServiceInterface::class,
+            ProfileService::class
         );
     }
 
