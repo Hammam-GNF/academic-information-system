@@ -5,6 +5,7 @@ namespace App\Services\Contracts;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\UpdatePasswordRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,10 @@ interface AuthServiceInterface
 
     public function resetPassword(
         ResetPasswordRequest $request
+    ): RedirectResponse;
+
+    public function updatePassword(
+        UpdatePasswordRequest $request
     ): RedirectResponse;
 
     public function logout(): void;

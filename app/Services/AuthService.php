@@ -5,16 +5,21 @@ namespace App\Services;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\AuthServiceInterface;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Password;
 
 class AuthService implements AuthServiceInterface
 {
+
     public function __construct(
         protected UserRepositoryInterface $userRepository,
     ) {}
@@ -74,6 +79,7 @@ class AuthService implements AuthServiceInterface
                 ->withErrors([
                     'email' => __($status),
                 ]);
+                
     }
 
     public function resetPassword(ResetPasswordRequest $request): RedirectResponse
@@ -109,6 +115,20 @@ class AuthService implements AuthServiceInterface
                 ->withErrors([
                     'email' => __($status),
                 ]);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
+    {
+        $request->user()->update([
+            'password' => Hash::make(
+                $request->validated('password')
+            ),
+        ]);
+
+        return back()->with(
+            'success',
+            'Password updated successfully.'
+        );
     }
 
     public function logout(): void
