@@ -32,8 +32,6 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        $this->authorize('create', User::class);
-
         return $this->userService->create(
             $request->validated()
         );
@@ -48,8 +46,6 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request,User $user)
     {
-        $this->authorize('update', $user);
-
         return $this->userService->update(
             $user,
             $request->validated()
@@ -58,8 +54,6 @@ class UserController extends Controller
 
     public function updatePassword(UpdateUserPasswordRequest $request,User $user)
     {
-        $this->authorize('update', $user);
-
         return $this->userService->updatePassword(
             $user,
             $request->validated('password')
