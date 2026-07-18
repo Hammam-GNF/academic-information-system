@@ -14,71 +14,73 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="mb-4">
-                        <x-forms.input-label for="name" value="Name" />
-
+                    <x-forms.field
+                        label="Name"
+                        for="name"
+                        :error="$errors->get('name')"
+                    >
                         <x-forms.text-input
                             id="name"
                             name="name"
                             type="text"
-                            class="mt-1 block w-full"
+                            class="block w-full"
                             :value="old('name', $user->name)"
                             required
                             autofocus
                         />
+                    </x-forms.field>
 
-                        <x-feedback.input-error
-                            :messages="$errors->get('name')"
-                            class="mt-2"
-                        />
-                    </div>
-
-                    <div class="mb-4">
-                        <x-forms.input-label for="email" value="Email" />
-
+                    <x-forms.field
+                        label="Email"
+                        for="email"
+                        :error="$errors->get('email')"
+                        class="mt-4"
+                    >
                         <x-forms.text-input
                             id="email"
                             name="email"
                             type="email"
-                            class="mt-1 block w-full"
+                            class="block w-full"
                             :value="old('email', $user->email)"
                             required
                         />
+                    </x-forms.field>
 
-                        <x-feedback.input-error
-                            :messages="$errors->get('email')"
-                            class="mt-2"
-                        />
-                    </div>
-
-                    <div class="mb-6">
-                        <x-forms.input-label for="role" value="Role" />
-
-                        <select
+                    <x-forms.field
+                        label="Role"
+                        for="role"
+                        :error="$errors->get('role')"
+                        class="mt-6"
+                    >
+                        <x-forms.select
                             id="role"
                             name="role"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            class="block w-full"
                             required
                         >
-                            <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>Admin</option>
-                            <option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>User</option>
-                        </select>
+                            <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>
+                                Admin
+                            </option>
 
-                        <x-feedback.input-error
-                            :messages="$errors->get('role')"
-                            class="mt-2"
-                        />
-                    </div>
+                            <option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>
+                                User
+                            </option>
+                        </x-forms.select>
+                    </x-forms.field>
 
-                    <div class="flex justify-end">
+                    <div class="flex justify-end mt-6">
                         <x-buttons.primary>
                             Save User
                         </x-buttons.primary>
 
-                        <x-buttons.secondary class="ms-3" onclick="window.history.back();">
+                        <x-buttons.secondary
+                            class="ms-3"
+                            onclick="window.history.back();"
+                        >
                             Cancel
                         </x-buttons.secondary>
                     </div>
+
                 </form>
 
             </div>
