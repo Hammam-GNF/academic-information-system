@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <x-confirm-modal
+    <x-modals.confirm-modal
         name="confirm-delete-media"
         title="Delete Media"
         message="Are you sure you want to delete this media?"

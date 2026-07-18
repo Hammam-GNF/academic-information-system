@@ -30,7 +30,7 @@
 
             <!-- Page Content -->
             <main>
-                @include('components.flash-message')
+                @include('components.feedback.flash-message')
                 
                 {{ $slot }}
             </main>

@@ -14,9 +14,9 @@
                     @csrf
 
                     <div class="mb-4">
-                        <x-input-label for="name" value="Name" />
+                        <x-forms.input-label for="name" value="Name" />
 
-                        <x-text-input
+                        <x-forms.text-input
                             id="name"
                             name="name"
                             type="text"
@@ -25,16 +25,16 @@
                             required
                         />
 
-                        <x-input-error
+                        <x-feedback.input-error
                             :messages="$errors->get('name')"
                             class="mt-2"
                         />
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="email" value="Email" />
+                        <x-forms.input-label for="email" value="Email" />
 
-                        <x-text-input
+                        <x-forms.text-input
                             id="email"
                             name="email"
                             type="email"
@@ -43,16 +43,16 @@
                             required
                         />
 
-                        <x-input-error
+                        <x-feedback.input-error
                             :messages="$errors->get('email')"
                             class="mt-2"
                         />
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="password" value="Password" />
+                        <x-forms.input-label for="password" value="Password" />
 
-                        <x-text-input
+                        <x-forms.text-input
                             id="password"
                             name="password"
                             type="password"
@@ -60,14 +60,14 @@
                             required
                         />
 
-                        <x-input-error
+                        <x-feedback.input-error
                             :messages="$errors->get('password')"
                             class="mt-2"
                         />
                     </div>
 
                     <div class="mb-6">
-                        <x-input-label for="role" value="Role" />
+                        <x-forms.input-label for="role" value="Role" />
 
                         <select
                             id="role"
@@ -86,20 +86,20 @@
                             </option>
                         </select>
 
-                        <x-input-error
+                        <x-feedback.input-error
                             :messages="$errors->get('role')"
                             class="mt-2"
                         />
                     </div>
 
                     <div class="flex justify-end">
-                        <x-primary-button>
+                        <x-buttons.primary>
                             Save User
-                        </x-primary-button>
+                        </x-buttons.primary>
 
-                        <x-secondary-button class="ms-3" onclick="window.history.back();">
+                        <x-buttons.secondary class="ms-3" onclick="window.history.back();">
                             Cancel
-                        </x-secondary-button>
+                        </x-buttons.secondary>
                     </div>
                 </form>
 

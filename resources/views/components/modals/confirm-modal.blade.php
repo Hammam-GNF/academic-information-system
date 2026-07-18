@@ -6,7 +6,7 @@
     'submitText' => 'Confirm',
 ])
 
-<x-modal :name="$name" focusable>
+<x-modals.modal :name="$name" focusable>
     <form
         id="{{ $name }}-form"
         method="POST"
@@ -24,16 +24,16 @@
         </p>
 
         <div class="mt-6 flex justify-end gap-2">
-            <x-secondary-button
+            <x-buttons.secondary
                 type="button"
                 x-on:click="$dispatch('close')"
             >
                 Cancel
-            </x-secondary-button>
+            </x-buttons.secondary>
 
-            <x-danger-button>
+            <x-buttons.danger>
                 {{ $submitText }}
-            </x-danger-button>
+            </x-buttons.danger>
         </div>
     </form>
-</x-modal>
+</x-modals.modal>

@@ -20,12 +20,12 @@
                             </h3>
 
                             <div class="mb-4">
-                                <x-input-label
+                                <x-forms.input-label
                                     for="app_name"
                                     value="Application Name"
                                 />
 
-                                <x-text-input
+                                <x-forms.text-input
                                     id="app_name"
                                     name="app_name"
                                     type="text"
@@ -34,14 +34,14 @@
                                     required
                                 />
 
-                                <x-input-error
+                                <x-feedback.input-error
                                     :messages="$errors->get('app_name')"
                                     class="mt-2"
                                 />
                             </div>
 
                             <div class="mb-4">
-                                <x-input-label
+                                <x-forms.input-label
                                     for="app_description"
                                     value="Application Description"
                                 />
@@ -53,7 +53,7 @@
                                     rows="3"
                                 >{{ old('app_description', $settings['app_description'] ?? '') }}</textarea>
 
-                                <x-input-error
+                                <x-feedback.input-error
                                     :messages="$errors->get('app_description')"
                                     class="mt-2"
                                 />
@@ -67,12 +67,12 @@
                             </h3>
 
                             <div class="mb-4">
-                                <x-input-label
+                                <x-forms.input-label
                                     for="company_email"
                                     value="Company Email"
                                 />
 
-                                <x-text-input
+                                <x-forms.text-input
                                     id="company_email"
                                     name="company_email"
                                     type="email"
@@ -81,19 +81,19 @@
                                     required
                                 />
 
-                                <x-input-error
+                                <x-feedback.input-error
                                     :messages="$errors->get('company_email')"
                                     class="mt-2"
                                 />
                             </div>
 
                             <div class="mb-4">
-                                <x-input-label
+                                <x-forms.input-label
                                     for="company_phone"
                                     value="Company Phone"
                                 />
 
-                                <x-text-input
+                                <x-forms.text-input
                                     id="company_phone"
                                     name="company_phone"
                                     type="text"
@@ -102,14 +102,14 @@
                                     required
                                 />
 
-                                <x-input-error
+                                <x-feedback.input-error
                                     :messages="$errors->get('company_phone')"
                                     class="mt-2"
                                 />
                             </div>
 
                             <div class="mb-4">
-                                <x-input-label
+                                <x-forms.input-label
                                     for="company_address"
                                     value="Company Address"
                                 />
@@ -121,7 +121,7 @@
                                     rows="3"
                                 >{{ old('company_address', $settings['company_address'] ?? '') }}</textarea>
 
-                                <x-input-error
+                                <x-feedback.input-error
                                     :messages="$errors->get('company_address')"
                                     class="mt-2"
                                 />
@@ -135,12 +135,12 @@
                             </h3>
 
                             <div class="mb-4">
-                                <x-input-label
+                                <x-forms.input-label
                                     for="pagination_per_page"
                                     value="Pagination Per Page"
                                 />
 
-                                <x-text-input
+                                <x-forms.text-input
                                     id="pagination_per_page"
                                     name="pagination_per_page"
                                     type="number"
@@ -150,7 +150,7 @@
                                     required
                                 />
 
-                                <x-input-error
+                                <x-feedback.input-error
                                     :messages="$errors->get('pagination_per_page')"
                                     class="mt-2"
                                 />
@@ -171,7 +171,7 @@
                                     </span>
                                 </label>
 
-                                <x-input-error
+                                <x-feedback.input-error
                                     :messages="$errors->get('registration_enabled')"
                                     class="mt-2"
                                 />
@@ -179,9 +179,9 @@
                         </div>
 
                         <div class="flex justify-end">
-                            <x-primary-button>
+                            <x-buttons.primary>
                                 Save Settings
-                            </x-primary-button>
+                            </x-buttons.primary>
                         </div>
                     </form>
 

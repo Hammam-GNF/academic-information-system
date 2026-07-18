@@ -72,7 +72,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     @endpush
 
-    <x-confirm-modal
+    <x-modals.confirm-modal
         name="confirm-delete-user"
         title="Delete User"
         message="Are you sure you want to delete this user?"
