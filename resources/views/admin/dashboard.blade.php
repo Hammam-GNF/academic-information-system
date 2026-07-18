@@ -5,13 +5,13 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <x-layout.section>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <x-layout.card class="overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <x-layout.card class="p-6">
                             <h3 class="text-sm font-medium text-gray-500">
                                 Total Users
                             </h3>
@@ -19,9 +19,9 @@
                             <p class="mt-2 text-3xl font-bold text-gray-900">
                                 {{ $totalUsers }}
                             </p>
-                        </div>
+                        </x-layout.card>
 
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <x-layout.card class="p-6">
                             <h3 class="text-sm font-medium text-gray-500">
                                 Total Admins
                             </h3>
@@ -29,9 +29,9 @@
                             <p class="mt-2 text-3xl font-bold text-gray-900">
                                 {{ $totalAdmins }}
                             </p>
-                        </div>
+                        </x-layout.card>
 
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <x-layout.card class="p-6">
                             <h3 class="text-sm font-medium text-gray-500">
                                 Total Activities
                             </h3>
@@ -39,11 +39,11 @@
                             <p class="mt-2 text-3xl font-bold text-gray-900">
                                 {{ $totalActivities }}
                             </p>
-                        </div>
+                        </x-layout.card>
 
                     </div>
                 </div>
-            </div>
+            </x-layout.card>
         </div>
-    </div>
+    </x-layout.section>
 </x-app-layout>
