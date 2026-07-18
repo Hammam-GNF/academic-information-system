@@ -20,23 +20,23 @@
                 <div class="flex gap-2">
                     <a
                         href="{{ route('admin.users.export') }}"
-                        class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500"
+                        class="btn btn-success"
                     >
                         Export Excel
                     </a>
 
                     @can('create', App\Models\User::class)
-                        <a
-                            href="{{ route('admin.users.create') }}"
-                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700"
-                        >
-                            Create User
-                        </a>
+                    <a
+                        href="{{ route('admin.users.create') }}"
+                        class="btn btn-primary"
+                    >
+                        Create User
+                    </a>
                     @endcan
 
                     <a
                         href="{{ route('admin.users.trash') }}"
-                        class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700"
+                        class="btn btn-danger"
                     >
                         Trash
                     </a>
@@ -45,20 +45,21 @@
             </div>
             
             <x-layout.card class="overflow-x-auto">
-                
-                <table id="users-table" class="w-full divide-y divide-gray-200">
 
-                    <thead class="bg-gray-50">
+                <table id="users-table" class="table">
+
+                    <thead class="table-head">
                         <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
+                            <th class="table-th">No</th>
+                            <th class="table-th">Name</th>
+                            <th class="table-th">Email</th>
+                            <th class="table-th">Role</th>
+                            <th class="table-th">Action</th>
                         </tr>
                     </thead>
 
                     <tbody></tbody>
+
                 </table>
 
             </x-layout.card>
