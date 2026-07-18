@@ -44,26 +44,24 @@
 
             </div>
             
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 overflow-x-auto">
+            <x-layout.card class="overflow-x-auto">
+                
+                <table id="users-table" class="w-full divide-y divide-gray-200">
 
-                    <table id="users-table" class="w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
 
-                        <tbody></tbody>
-                    </table>
+                    <tbody></tbody>
+                </table>
 
-                </div>
-
-            </div>
+            </x-layout.card>
 
         </div>
     </div>

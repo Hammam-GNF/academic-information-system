@@ -17,23 +17,23 @@
                 </a>
             </div>
 
-            <div class="bg-white shadow rounded overflow-hidden sm:rounded-lg">
-                <div class="p-6 overflow-x-auto">
-                    <table id="trash-users-table" class="w-full">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Deleted At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+            <x-layout.card class="overflow-x-auto">
 
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
+                <table id="trash-users-table" class="w-full">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Deleted At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+
+            </x-layout.card>
 
         </div>
     </div>
