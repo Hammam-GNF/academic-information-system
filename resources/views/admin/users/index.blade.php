@@ -53,17 +53,6 @@
 
             </x-slot>
 
-            <div class="flex items-center gap-2">
-
-                <input
-                    id="table-search"
-                    type="text"
-                    placeholder="Search users..."
-                    class="form-input w-full md:w-64"
-                >
-
-            </div>
-
         </x-crud.toolbar>
 
         <x-crud.table-card>
@@ -148,14 +137,9 @@
                 $('#role-filter').change(function () {
 
                     table.draw();
-                    
-                });
-
-                $('#table-search').keyup(function () {
-
-                    table.search($(this).val()).draw();
 
                 });
+
             });
 
             $(document).on('click', '.delete-user-btn', function () {
