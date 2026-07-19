@@ -20,7 +20,9 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-buttons.primary>{ __('Upload Avatar') }}</x-buttons.primary>
+            <x-buttons.primary>
+                {{ __('Upload Avatar') }}
+            </x-buttons.primary>
         </div>
     </form>
 </section>

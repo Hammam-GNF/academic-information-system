@@ -31,7 +31,7 @@
                 Cancel
             </x-buttons.secondary>
 
-            <x-buttons.danger>
+            <x-buttons.danger
                 {{ $submitText }}
             </x-buttons.danger>
         </div>
