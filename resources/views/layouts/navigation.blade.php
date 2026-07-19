@@ -12,7 +12,7 @@
                     </div>
                 @else
                     <div class="shrink-0 flex items-center">
-                        <a href="{{ route('dashboard') }}">
+                        <a href="{{ route('user.dashboard') }}">
                             <x-branding.application-logo class="block h-9 w-auto" />
                         </a>
                     </div>
@@ -29,8 +29,8 @@
                         </x-navigation.nav-link>
                     @else
                         <x-navigation.nav-link
-                            :href="route('dashboard')"
-                            :active="request()->routeIs('dashboard')"
+                            :href="route('user.dashboard')"
+                            :active="request()->routeIs('user.dashboard')"
                         >
                             Dashboard
                         </x-navigation.nav-link>
@@ -168,8 +168,8 @@
                 </x-navigation.responsive-nav-link>
             @else
                 <x-navigation.responsive-nav-link
-                    :href="route('dashboard')"
-                    :active="request()->routeIs('dashboard')"
+                    :href="route('user.dashboard')"
+                    :active="request()->routeIs('user.dashboard')"
                 >
                     Dashboard
                 </x-navigation.responsive-nav-link>

@@ -34,7 +34,7 @@ class AuthService implements AuthServiceInterface
     {
         return $user->hasRole('admin')
             ? route('admin.dashboard')
-            : route('dashboard');
+            : route('user.dashboard');
     }
 
     /**
@@ -78,7 +78,8 @@ class AuthService implements AuthServiceInterface
 
         Auth::login($user);
 
-        return redirect(route('dashboard'))
+        return redirect()
+            ->route('user.dashboard')
             ->with(
                 'success',
                 "Welcome {$user->name}, your account has been created."
