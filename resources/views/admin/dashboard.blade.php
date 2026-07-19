@@ -111,6 +111,128 @@
 
         </div>
 
+        <div class="dashboard-widgets">
+
+            <div class="dashboard-panel">
+
+                <div class="dashboard-panel-header">
+
+                    <h2 class="dashboard-panel-title">
+
+                        Quick Actions
+
+                    </h2>
+
+                </div>
+
+                <div class="dashboard-panel-body space-y-3">
+
+                    <a
+                        href="{{ route('admin.users.index') }}"
+                        class="dashboard-action"
+                    >
+
+                        <span>Manage Users</span>
+
+                        <span>→</span>
+
+                    </a>
+
+                    <a
+                        href="{{ route('admin.activity-logs.index') }}"
+                        class="dashboard-action"
+                    >
+
+                        <span>Activity Logs</span>
+
+                        <span>→</span>
+
+                    </a>
+
+                    <a
+                        href="{{ route('admin.media.index') }}"
+                        class="dashboard-action"
+                    >
+
+                        <span>Media Library</span>
+
+                        <span>→</span>
+
+                    </a>
+
+                    <a
+                        href="{{ route('admin.settings.index') }}"
+                        class="dashboard-action"
+                    >
+
+                        <span>Settings</span>
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="dashboard-panel lg:col-span-2">
+
+                <div class="dashboard-panel-header">
+
+                    <h2 class="dashboard-panel-title">
+
+                        Recent Activities
+
+                    </h2>
+
+                </div>
+
+                <div class="dashboard-panel-body">
+
+                    @forelse($recentActivities as $activity)
+
+                        <div class="dashboard-activity">
+
+                            <div>
+
+                                <p class="font-medium text-gray-900">
+
+                                    {{ Str::headline($activity->description) }}
+
+                                </p>
+
+                                <p class="mt-1 text-sm text-gray-500">
+
+                                    {{ optional($activity->causer)->name ?? 'System' }}
+
+                                </p>
+
+                            </div>
+
+                            <span class="text-sm text-gray-400">
+
+                                {{ $activity->created_at->diffForHumans() }}
+
+                            </span>
+
+                        </div>
+
+                    @empty
+
+                        <p class="text-sm text-gray-500">
+
+                            No activities found.
+
+                        </p>
+
+                    @endforelse
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 </x-app-layout>
