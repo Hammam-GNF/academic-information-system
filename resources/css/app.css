@@ -270,4 +270,12 @@
         @apply overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm;
     }
 
+    .crud-toolbar-start{
+        @apply flex flex-wrap items-center gap-3;
+    }
+
+    .crud-toolbar-end{
+        @apply flex flex-wrap items-center gap-3 md:ml-auto;
+    }
+
 }

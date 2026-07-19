@@ -4,6 +4,16 @@
     ]) }}
 >
 
-    {{ $slot }}
+    <div class="crud-toolbar-start">
+
+        {{ $start ?? '' }}
+
+    </div>
+
+    <div class="crud-toolbar-end">
+
+        {{ $slot }}
+
+    </div>
 
 </div>

@@ -39,17 +39,28 @@
 
         <x-crud.toolbar>
 
-            <div class="flex items-center gap-3">
+            <x-slot name="start">
 
                 <select
                     id="role-filter"
                     name="role"
-                    class="form-select block w-full"
+                    class="form-select min-w-[180px]"
                 >
                     <option value="">All Roles</option>
                     <option value="admin">Admin</option>
                     <option value="user">User</option>
                 </select>
+
+            </x-slot>
+
+            <div class="flex items-center gap-2">
+
+                <input
+                    id="table-search"
+                    type="text"
+                    placeholder="Search users..."
+                    class="form-input w-full md:w-64"
+                >
 
             </div>
 
@@ -135,7 +146,15 @@
                 });
 
                 $('#role-filter').change(function () {
+
                     table.draw();
+                    
+                });
+
+                $('#table-search').keyup(function () {
+
+                    table.search($(this).val()).draw();
+
                 });
             });
 
