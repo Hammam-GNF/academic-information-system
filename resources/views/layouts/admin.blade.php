@@ -29,7 +29,65 @@
 
         <div class="flex-1 px-4 py-6">
 
-            {{-- navigation next commit --}}
+            <p
+                class="px-3 mb-3 text-xs font-semibold tracking-wider uppercase text-gray-400"
+            >
+                Main Menu
+            </p>
+
+            <nav class="space-y-1">
+
+                <a
+                    href="{{ route('admin.dashboard') }}"
+                    class="{{ request()->routeIs('admin.dashboard')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="{{ route('admin.users.index') }}"
+                    class="{{ request()->routeIs('admin.users.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Users
+                </a>
+
+                <a
+                    href="{{ route('admin.activity-logs.index') }}"
+                    class="{{ request()->routeIs('admin.activity-logs.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Activity Logs
+                </a>
+
+                <a
+                    href="{{ route('admin.settings.index') }}"
+                    class="{{ request()->routeIs('admin.settings.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Settings
+                </a>
+
+                <a
+                    href="{{ route('admin.media.index') }}"
+                    class="{{ request()->routeIs('admin.media.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Media Library
+                </a>
+
+            </nav>
 
         </div>
 
@@ -38,7 +96,15 @@
     <div class="flex flex-col flex-1">
 
         {{-- Topbar --}}
-        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-end px-6">
+        <header
+            class="flex items-center justify-between h-16 px-6 bg-white border-b border-gray-200"
+        >
+
+            <h1
+                class="text-lg font-semibold text-gray-900"
+            >
+                {{ $header ?? '' }}
+            </h1>
 
             <x-navigation.dropdown>
 
