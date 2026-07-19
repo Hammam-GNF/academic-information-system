@@ -24,6 +24,14 @@
 
     </div>
 
+    <x-modals.confirm-modal
+        name="confirm-logout"
+        title="Log Out"
+        message="Are you sure you want to log out from your account?"
+        method="POST"
+        submit-text="Log Out"
+    />
+
     <x-layout.scripts />
 
 </body>

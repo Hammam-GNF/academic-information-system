@@ -107,14 +107,38 @@
                         </x-navigation.dropdown-link>
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form
+                            id="logout-form"
+                            method="POST"
+                            action="{{ route('logout') }}"
+                        >
                             @csrf
 
-                            <x-navigation.dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                            <x-navigation.dropdown-link
+                                :href="route('logout')"
+                                onclick="
+                                    event.preventDefault();
+
+                                    document
+                                        .getElementById('confirm-logout-form')
+                                        .setAttribute(
+                                            'action',
+                                            '{{ route('logout') }}'
+                                        );
+
+                                    window.dispatchEvent(
+                                        new CustomEvent(
+                                            'open-modal',
+                                            {
+                                                detail: 'confirm-logout'
+                                            }
+                                        )
+                                    );
+                                "
+                            >
                                 {{ __('Log Out') }}
                             </x-navigation.dropdown-link>
+
                         </form>
                     </x-slot>
                 </x-navigation.dropdown>
@@ -212,14 +236,38 @@
                 </x-navigation.responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
+                <form
+                    id="responsive-logout-form"
+                    method="POST"
+                    action="{{ route('logout') }}"
+                >
                     @csrf
 
-                    <x-navigation.responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                    <x-navigation.responsive-nav-link
+                        :href="route('logout')"
+                        onclick="
+                            event.preventDefault();
+
+                            document
+                                .getElementById('confirm-logout-form')
+                                .setAttribute(
+                                    'action',
+                                    '{{ route('logout') }}'
+                                );
+
+                            window.dispatchEvent(
+                                new CustomEvent(
+                                    'open-modal',
+                                    {
+                                        detail: 'confirm-logout'
+                                    }
+                                )
+                            );
+                        "
+                    >
                         {{ __('Log Out') }}
                     </x-navigation.responsive-nav-link>
+
                 </form>
             </div>
         </div>

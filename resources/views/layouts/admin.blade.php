@@ -212,12 +212,29 @@
                         method="POST"
                         action="{{ route('logout') }}"
                     >
-
                         @csrf
 
                         <x-navigation.dropdown-link
                             :href="route('logout')"
-                            onclick="event.preventDefault();this.closest('form').submit();"
+                            onclick="
+                                event.preventDefault();
+
+                                document
+                                    .getElementById('confirm-logout-form')
+                                    .setAttribute(
+                                        'action',
+                                        '{{ route('logout') }}'
+                                    );
+
+                                window.dispatchEvent(
+                                    new CustomEvent(
+                                        'open-modal',
+                                        {
+                                            detail: 'confirm-logout'
+                                        }
+                                    )
+                                );
+                            "
                         >
                             Logout
                         </x-navigation.dropdown-link>
@@ -239,6 +256,14 @@
     </div>
 
 </div>
+
+<x-modals.confirm-modal
+    name="confirm-logout"
+    title="Log Out"
+    message="Are you sure you want to log out from your account?"
+    method="POST"
+    submit-text="Log Out"
+/>
 
 <x-layout.scripts />
 
