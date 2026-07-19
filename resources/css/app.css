@@ -1,3 +1,355 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[x-cloak]{
+    display:none !important;
+}
+
+@layer components {
+
+    /* ===============================
+     * Buttons
+     * =============================== */
+
+    .btn {
+        @apply inline-flex items-center
+        rounded-md
+        border
+        px-4
+        py-2
+        text-xs
+        font-semibold
+        uppercase
+        tracking-widest
+        transition
+        duration-150
+        ease-in-out
+        focus:outline-none
+        focus:ring-2
+        focus:ring-offset-2
+        disabled:opacity-25;
+    }
+
+    .btn-primary {
+        @apply bg-gray-800
+        border-transparent
+        text-white
+        hover:bg-gray-700
+        focus:bg-gray-700
+        active:bg-gray-900
+        focus:ring-indigo-500;
+    }
+
+    .btn-secondary {
+        @apply bg-white
+        border-gray-300
+        text-gray-700
+        shadow-sm
+        hover:bg-gray-50
+        focus:ring-indigo-500;
+    }
+
+    .btn-danger {
+        @apply bg-red-600
+        border-transparent
+        text-white
+        hover:bg-red-500
+        active:bg-red-700
+        focus:ring-red-500;
+    }
+
+    .btn-success {
+        @apply bg-green-600
+        text-white
+        hover:bg-green-500;
+    }
+
+    /* ----------------------------------------
+    | Badge
+    |-----------------------------------------*/
+
+    .badge{
+        @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
+    }
+
+    .badge-primary{
+        @apply bg-blue-100 text-blue-800;
+    }
+
+    .badge-success{
+        @apply bg-green-100 text-green-800;
+    }
+
+    .badge-danger{
+        @apply bg-red-100 text-red-800;
+    }
+
+    .badge-warning{
+        @apply bg-yellow-100 text-yellow-800;
+    }
+
+    .badge-info{
+        @apply bg-cyan-100 text-cyan-800;
+    }
+
+    /* ===============================
+     * Forms
+     * =============================== */
+
+    .form-label {
+        @apply block
+        text-sm
+        font-medium
+        text-gray-700;
+    }
+
+    .form-input {
+        @apply rounded-md
+        border-gray-300
+        shadow-sm
+        focus:border-indigo-500
+        focus:ring-indigo-500;
+    }
+
+    .form-error {
+        @apply text-sm
+        text-red-600
+        space-y-1;
+    }
+
+    /* ===============================
+     * Feedback
+     * =============================== */
+
+    .feedback-status {
+        @apply text-sm
+        font-medium
+        text-green-600;
+    }
+
+    /* ----------------------------------------
+    | Table
+    |-----------------------------------------*/
+
+    .table {
+        @apply w-full divide-y divide-gray-200;
+    }
+
+    .table-head {
+        @apply bg-gray-50;
+    }
+
+    .table-th {
+        @apply px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500;
+    }
+
+    .table-td {
+        @apply px-6 py-4 whitespace-nowrap text-sm text-gray-700;
+    }
+
+    /* ===============================
+    * Dashboard
+    * =============================== */
+
+    .dashboard-header{
+        @apply mb-8;
+    }
+
+    .dashboard-title{
+        @apply text-3xl font-bold tracking-tight text-gray-900;
+    }
+
+    .dashboard-description{
+        @apply mt-2 text-gray-500;
+    }
+
+    .dashboard-container {
+        @apply max-w-7xl mx-auto;
+    }
+
+    .dashboard-grid {
+        @apply grid gap-6 sm:grid-cols-2 xl:grid-cols-4;
+    }
+
+    .dashboard-card {
+        @apply rounded-xl
+        border
+        border-gray-200
+        bg-white
+        p-6
+        shadow-sm
+        transition
+        duration-200
+        hover:-translate-y-0.5
+        hover:shadow-md;
+    }
+
+    .dashboard-label {
+        @apply text-sm
+        font-medium
+        text-gray-500;
+    }
+
+    .dashboard-value {
+        @apply mt-3
+        text-3xl
+        font-bold
+        tracking-tight
+        text-gray-900;
+    }
+
+    .dashboard-icon {
+        @apply flex
+        h-12
+        w-12
+        items-center
+        justify-center
+        rounded-xl
+        bg-indigo-50
+        text-indigo-600;
+    }
+
+    .dashboard-widgets{
+        @apply mt-8 grid gap-6 lg:grid-cols-3;
+    }
+
+    .dashboard-panel{
+        @apply rounded-xl border border-gray-200 bg-white shadow-sm;
+    }
+
+    .dashboard-panel-header{
+        @apply border-b border-gray-100 px-6 py-4;
+    }
+
+    .dashboard-panel-title{
+        @apply text-lg font-semibold text-gray-900;
+    }
+
+    .dashboard-panel-body{
+        @apply p-6;
+    }
+
+    .dashboard-action{
+        @apply flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3 transition hover:border-indigo-200 hover:bg-indigo-50;
+    }
+
+    .dashboard-activity{
+        @apply flex items-start justify-between border-b border-gray-100 py-3 last:border-none;
+    }
+
+    /* ===============================
+    * CRUD
+    * =============================== */
+
+    .crud-page{
+        @apply max-w-7xl mx-auto;
+    }
+
+    .crud-header{
+        @apply mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between;
+    }
+
+    .crud-title{
+        @apply text-3xl font-bold tracking-tight text-gray-900;
+    }
+
+    .crud-description{
+        @apply mt-2 text-gray-500;
+    }
+
+    .crud-actions{
+        @apply flex flex-wrap gap-2;
+    }
+
+    .crud-toolbar{
+        @apply mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between;
+    }
+
+    .crud-table-card{
+        @apply overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm;
+    }
+
+    .crud-toolbar-start{
+        @apply flex flex-wrap items-center gap-3;
+    }
+
+    .crud-toolbar-end{
+        @apply flex flex-wrap items-center gap-3 md:ml-auto;
+    }
+
+    .crud-form-card{
+        @apply max-w-3xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm;
+    }
+
+    .crud-form-actions{
+        @apply mt-8 flex justify-end gap-3 border-t border-gray-100 pt-6;
+    }
+
+    /* ===============================
+    * Authentication
+    * =============================== */
+
+    .auth-layout{
+        @apply min-h-screen
+        flex
+        items-center
+        justify-center
+        bg-gray-100
+        px-4;
+    }
+
+    .auth-container{
+        @apply w-full
+        max-w-md;
+    }
+
+    .auth-logo{
+        @apply mb-8
+        flex
+        justify-center;
+    }
+
+    .auth-card{
+        @apply rounded-xl
+        border
+        border-gray-200
+        bg-white
+        p-8
+        shadow-sm;
+    }
+
+    .auth-title{
+        @apply text-2xl
+        font-bold
+        text-gray-900;
+    }
+
+    .auth-description{
+        @apply mt-2
+        text-sm
+        text-gray-500;
+    }
+
+    .auth-section{
+        @apply mt-6;
+    }
+
+    .auth-actions{
+        @apply mt-6
+        flex
+        flex-col-reverse
+        gap-4
+        sm:flex-row
+        sm:items-center
+        sm:justify-between;
+    }
+
+    .auth-footer{
+        @apply mt-6
+        text-center
+        text-sm
+        text-gray-500;
+    }
+
+}

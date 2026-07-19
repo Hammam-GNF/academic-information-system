@@ -1,88 +1,97 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit User
-        </h2>
+        Edit User
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+    <x-crud.form-page
+        title="Edit User"
+        description="Update user information."
+    >
 
-            <div class="bg-white shadow-sm rounded-lg p-6">
+        <x-crud.form-card>
 
-                <form method="POST" action="{{ route('admin.users.update', $user) }}">
-                    @csrf
-                    @method('PUT')
+            <form
+                method="POST"
+                action="{{ route('admin.users.update', $user) }}"
+            >
 
-                    <div class="mb-4">
-                        <x-input-label for="name" value="Name" />
+                @csrf
+                @method('PUT')
 
-                        <x-text-input
+                <x-forms.field
+                        label="Name"
+                        for="name"
+                        :error="$errors->get('name')"
+                    >
+                        <x-forms.text-input
                             id="name"
                             name="name"
                             type="text"
-                            class="mt-1 block w-full"
+                            class="block w-full"
                             :value="old('name', $user->name)"
                             required
                             autofocus
                         />
+                    </x-forms.field>
 
-                        <x-input-error
-                            :messages="$errors->get('name')"
-                            class="mt-2"
-                        />
-                    </div>
-
-                    <div class="mb-4">
-                        <x-input-label for="email" value="Email" />
-
-                        <x-text-input
+                    <x-forms.field
+                        label="Email"
+                        for="email"
+                        :error="$errors->get('email')"
+                        class="mt-4"
+                    >
+                        <x-forms.text-input
                             id="email"
                             name="email"
                             type="email"
-                            class="mt-1 block w-full"
+                            class="block w-full"
                             :value="old('email', $user->email)"
                             required
                         />
+                    </x-forms.field>
 
-                        <x-input-error
-                            :messages="$errors->get('email')"
-                            class="mt-2"
-                        />
-                    </div>
-
-                    <div class="mb-6">
-                        <x-input-label for="role" value="Role" />
-
-                        <select
+                    <x-forms.field
+                        label="Role"
+                        for="role"
+                        :error="$errors->get('role')"
+                        class="mt-6"
+                    >
+                        <x-forms.select
                             id="role"
                             name="role"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            class="block w-full"
                             required
                         >
-                            <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>Admin</option>
-                            <option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>User</option>
-                        </select>
+                            <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>
+                                Admin
+                            </option>
 
-                        <x-input-error
-                            :messages="$errors->get('role')"
-                            class="mt-2"
-                        />
-                    </div>
+                            <option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>
+                                User
+                            </option>
+                        </x-forms.select>
+                    </x-forms.field>
 
-                    <div class="flex justify-end">
-                        <x-primary-button>
-                            Save User
-                        </x-primary-button>
+                <x-crud.form-actions>
 
-                        <x-secondary-button class="ms-3" onclick="window.history.back();">
-                            Cancel
-                        </x-secondary-button>
-                    </div>
-                </form>
+                    <x-buttons.primary>
+                        Save User
+                    </x-buttons.primary>
 
-            </div>
+                    <x-buttons.secondary
+                        type="button"
+                        onclick="window.history.back()"
+                    >
+                        Cancel
+                    </x-buttons.secondary>
 
-        </div>
-    </div>
+                </x-crud.form-actions>
+
+            </form>
+
+        </x-crud.form-card>
+
+    </x-crud.form-page>
+
 </x-app-layout>

@@ -34,7 +34,7 @@ class AuthService implements AuthServiceInterface
     {
         return $user->hasRole('admin')
             ? route('admin.dashboard')
-            : route('dashboard');
+            : route('user.dashboard');
     }
 
     /**
@@ -42,7 +42,7 @@ class AuthService implements AuthServiceInterface
      */
     private function redirectAfterVerification(User $user): RedirectResponse
     {
-        return redirect()->intended(
+        return redirect()->to(
             $this->getDashboardRoute($user).'?verified=1'
         );
     }
@@ -56,9 +56,7 @@ class AuthService implements AuthServiceInterface
         $user = $request->user();
 
         return redirect()
-            ->intended(
-                $this->getDashboardRoute($user)
-            )
+            ->to($this->getDashboardRoute($user))
             ->with(
                 'success',
                 "Welcome back, {$user->name}."
@@ -80,7 +78,8 @@ class AuthService implements AuthServiceInterface
 
         Auth::login($user);
 
-        return redirect(route('dashboard'))
+        return redirect()
+            ->route('user.dashboard')
             ->with(
                 'success',
                 "Welcome {$user->name}, your account has been created."
@@ -205,7 +204,7 @@ class AuthService implements AuthServiceInterface
             time()
         );
 
-        return redirect()->intended(
+        return redirect()->to(
             $this->getDashboardRoute(
                 $request->user()
             )

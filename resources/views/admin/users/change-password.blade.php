@@ -15,9 +15,9 @@
                         @method('PUT')
 
                         <div class="mb-4">
-                            <x-input-label for="password" value="New Password" />
+                            <x-forms.input-label for="password" value="New Password" />
 
-                            <x-text-input
+                            <x-forms.text-input
                                 id="password"
                                 name="password"
                                 type="password"
@@ -25,16 +25,16 @@
                                 required
                             />
 
-                            <x-input-error
+                            <x-feedback.input-error
                                 :messages="$errors->get('password')"
                                 class="mt-2"
                             />
                         </div>
 
                         <div class="mb-4">
-                            <x-input-label for="password_confirmation" value="Confirm New Password" />
+                            <x-forms.input-label for="password_confirmation" value="Confirm New Password" />
 
-                            <x-text-input
+                            <x-forms.text-input
                                 id="password_confirmation"
                                 name="password_confirmation"
                                 type="password"
@@ -42,20 +42,20 @@
                                 required
                             />
 
-                            <x-input-error
+                            <x-feedback.input-error
                                 :messages="$errors->get('password_confirmation')"
                                 class="mt-2"
                             />
                         </div>
 
                         <div class="flex justify-end">
-                            <x-primary-button>
+                            <x-buttons.primary>
                                 Update Password
-                            </x-primary-button>
+                            </x-buttons.primary>
 
-                            <x-secondary-button class="ms-3" onclick="window.history.back();">
+                            <x-buttons.secondary class="ms-3" onclick="window.history.back();">
                                 Cancel
-                            </x-secondary-button>
+                            </x-buttons.secondary>
                         </div>
                     </form>
 

@@ -1,39 +1,39 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Deleted Users
-        </h2>
+        Deleted User
     </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="mb-4">
+            <div class="mb-6">
+
                 <a
                     href="{{ route('admin.users.index') }}"
-                    class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-500"
+                    class="btn btn-secondary"
                 >
                     Back
                 </a>
+
             </div>
 
-            <div class="bg-white shadow rounded overflow-hidden sm:rounded-lg">
-                <div class="p-6 overflow-x-auto">
-                    <table id="trash-users-table" class="w-full">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Deleted At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+            <x-layout.card class="overflow-x-auto">
 
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
+                <table id="trash-users-table" class="w-full">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Deleted At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+
+            </x-layout.card>
 
         </div>
     </div>
@@ -42,7 +42,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     @endpush
 
-    <x-confirm-modal
+    <x-modals.confirm-modal
         name="confirm-restore-user"
         title="Restore User"
         message="Are you sure you want to restore this user?"
@@ -50,7 +50,7 @@
         submit-text="Restore"
     />
 
-    <x-confirm-modal
+    <x-modals.confirm-modal
         name="confirm-force-delete"
         title="Force Delete User"
         message="This action cannot be undone."

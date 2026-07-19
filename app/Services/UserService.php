@@ -250,40 +250,10 @@ class UserService implements UserServiceInterface
                 })
 
                 ->addColumn('action', function ($user) {
-
-                    $buttons = '
-                        <div class="flex gap-2">
-                    ';
-
-                    $buttons .= '
-                        <a href="'.route('admin.users.edit', $user).'"
-                            class="px-3 py-1 bg-blue-600 text-white rounded">
-                            Edit
-                        </a>
-                    ';
-
-                    $buttons .= '
-                        <a href="'.route('admin.users.change-password', $user).'"
-                            class="px-3 py-1 bg-green-600 text-white rounded">
-                            Password
-                        </a>
-                    ';
-
-                    if (Auth::id() !== $user->id) {
-
-                        $buttons .= '
-                            <button
-                                type="button"
-                                class="delete-user-btn px-3 py-1 bg-red-600 text-white rounded"
-                                data-url="'.route('admin.users.destroy', $user).'">
-                                Delete
-                            </button>
-                        ';
-                    }
-
-                    $buttons .= '</div>';
-
-                    return $buttons;
+                    return view(
+                        'admin.users.datatables.actions',
+                        compact('user')
+                    )->render();
                 })
 
                 ->rawColumns(['action'])
@@ -312,26 +282,10 @@ class UserService implements UserServiceInterface
                 })
 
                 ->addColumn('action', function ($user) {
-
-                    return '
-                        <div class="flex gap-2">
-
-                            <button
-                                type="button"
-                                class="restore-user-btn px-3 py-1 bg-green-600 text-white rounded"
-                                data-url="'.route('admin.users.restore', $user).'">
-                                Restore
-                            </button>
-
-                            <button
-                                type="button"
-                                class="force-delete-btn px-3 py-1 bg-red-600 text-white rounded"
-                                data-url="'.route('admin.users.force-delete', $user).'">
-                                Force Delete
-                            </button>
-
-                        </div>
-                    ';
+                    return view(
+                        'admin.users.datatables.trash-actions',
+                        compact('user')
+                    )->render();
                 })
 
                 ->rawColumns(['action'])

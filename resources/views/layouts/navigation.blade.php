@@ -7,13 +7,13 @@
                 @if(auth()->user()->hasRole('admin'))
                     <div class="shrink-0 flex items-center">
                         <a href="{{ route('admin.dashboard') }}">
-                            <x-application-logo class="block h-9 w-auto" />
+                            <x-branding.application-logo class="block h-9 w-auto" />
                         </a>
                     </div>
                 @else
                     <div class="shrink-0 flex items-center">
-                        <a href="{{ route('dashboard') }}">
-                            <x-application-logo class="block h-9 w-auto" />
+                        <a href="{{ route('user.dashboard') }}">
+                            <x-branding.application-logo class="block h-9 w-auto" />
                         </a>
                     </div>
                 @endif
@@ -21,62 +21,62 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @if(auth()->user()->hasRole('admin'))
-                        <x-nav-link
+                        <x-navigation.nav-link
                             :href="route('admin.dashboard')"
                             :active="request()->routeIs('admin.dashboard')"
                         >
                             Dashboard
-                        </x-nav-link>
+                        </x-navigation.nav-link>
                     @else
-                        <x-nav-link
-                            :href="route('dashboard')"
-                            :active="request()->routeIs('dashboard')"
+                        <x-navigation.nav-link
+                            :href="route('user.dashboard')"
+                            :active="request()->routeIs('user.dashboard')"
                         >
                             Dashboard
-                        </x-nav-link>
+                        </x-navigation.nav-link>
                     @endif
 
                     @if(auth()->user()->hasRole('admin'))
-                        <x-nav-link
+                        <x-navigation.nav-link
                             :href="route('admin.users.index')"
                             :active="request()->routeIs('admin.users.*')"
                         >
                             Users
-                        </x-nav-link>
+                        </x-navigation.nav-link>
                     @endif
 
                     @if(auth()->user()->hasRole('admin'))
-                        <x-nav-link
+                        <x-navigation.nav-link
                             :href="route('admin.activity-logs.index')"
                             :active="request()->routeIs('admin.activity-logs.*')"
                         >
                             Activity Logs
-                        </x-nav-link>
+                        </x-navigation.nav-link>
                     @endif
 
                     @if(auth()->user()->hasRole('admin'))
-                        <x-nav-link
+                        <x-navigation.nav-link
                             :href="route('admin.settings.index')"
                             :active="request()->routeIs('admin.settings.*')"
                         >
                             Settings
-                        </x-nav-link>
+                        </x-navigation.nav-link>
                     @endif
 
                     @if(auth()->user()->hasRole('admin'))
-                        <x-nav-link
+                        <x-navigation.nav-link
                             :href="route('admin.media.index')"
                             :active="request()->routeIs('admin.media.*')"
                         >
                             Media Library
-                        </x-nav-link>
+                        </x-navigation.nav-link>
                     @endif
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
+                <x-navigation.dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             @if(Auth::user()->hasMedia('avatar'))
@@ -102,22 +102,46 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-navigation.dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
-                        </x-dropdown-link>
+                        </x-navigation.dropdown-link>
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form
+                            id="logout-form"
+                            method="POST"
+                            action="{{ route('logout') }}"
+                        >
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                            <x-navigation.dropdown-link
+                                :href="route('logout')"
+                                onclick="
+                                    event.preventDefault();
+
+                                    document
+                                        .getElementById('confirm-logout-form')
+                                        .setAttribute(
+                                            'action',
+                                            '{{ route('logout') }}'
+                                        );
+
+                                    window.dispatchEvent(
+                                        new CustomEvent(
+                                            'open-modal',
+                                            {
+                                                detail: 'confirm-logout'
+                                            }
+                                        )
+                                    );
+                                "
+                            >
                                 {{ __('Log Out') }}
-                            </x-dropdown-link>
+                            </x-navigation.dropdown-link>
+
                         </form>
                     </x-slot>
-                </x-dropdown>
+                </x-navigation.dropdown>
             </div>
 
             <!-- Hamburger -->
@@ -136,55 +160,55 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             @if(auth()->user()->hasRole('admin'))
-                <x-responsive-nav-link
+                <x-navigation.responsive-nav-link
                     :href="route('admin.dashboard')"
                     :active="request()->routeIs('admin.dashboard')"
                 >
                     Dashboard
-                </x-responsive-nav-link>
+                </x-navigation.responsive-nav-link>
             @else
-                <x-responsive-nav-link
-                    :href="route('dashboard')"
-                    :active="request()->routeIs('dashboard')"
+                <x-navigation.responsive-nav-link
+                    :href="route('user.dashboard')"
+                    :active="request()->routeIs('user.dashboard')"
                 >
                     Dashboard
-                </x-responsive-nav-link>
+                </x-navigation.responsive-nav-link>
             @endif
 
             @if(auth()->user()->hasRole('admin'))
-                <x-responsive-nav-link
+                <x-navigation.responsive-nav-link
                     :href="route('admin.users.index')"
                     :active="request()->routeIs('admin.users.*')"
                 >
                     Users
-                </x-responsive-nav-link>
+                </x-navigation.responsive-nav-link>
             @endif
 
             @if(auth()->user()->hasRole('admin'))
-                <x-responsive-nav-link
+                <x-navigation.responsive-nav-link
                     :href="route('admin.activity-logs.index')"
                     :active="request()->routeIs('admin.activity-logs.*')"
                 >
                     Activity Logs
-                </x-responsive-nav-link>
+                </x-navigation.responsive-nav-link>
             @endif
 
             @if(auth()->user()->hasRole('admin'))
-                <x-responsive-nav-link
+                <x-navigation.responsive-nav-link
                     :href="route('admin.settings.index')"
                     :active="request()->routeIs('admin.settings.*')"
                 >
                     Settings
-                </x-responsive-nav-link>
+                </x-navigation.responsive-nav-link>
             @endif
 
             @if(auth()->user()->hasRole('admin'))
-                <x-responsive-nav-link
+                <x-navigation.responsive-nav-link
                     :href="route('admin.media.index')"
                     :active="request()->routeIs('admin.media.*')"
                 >
                     Media Library
-                </x-responsive-nav-link>
+                </x-navigation.responsive-nav-link>
             @endif
         </div>
 
@@ -207,19 +231,43 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-navigation.responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
+                </x-navigation.responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
+                <form
+                    id="responsive-logout-form"
+                    method="POST"
+                    action="{{ route('logout') }}"
+                >
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                    <x-navigation.responsive-nav-link
+                        :href="route('logout')"
+                        onclick="
+                            event.preventDefault();
+
+                            document
+                                .getElementById('confirm-logout-form')
+                                .setAttribute(
+                                    'action',
+                                    '{{ route('logout') }}'
+                                );
+
+                            window.dispatchEvent(
+                                new CustomEvent(
+                                    'open-modal',
+                                    {
+                                        detail: 'confirm-logout'
+                                    }
+                                )
+                            );
+                        "
+                    >
                         {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+                    </x-navigation.responsive-nav-link>
+
                 </form>
             </div>
         </div>

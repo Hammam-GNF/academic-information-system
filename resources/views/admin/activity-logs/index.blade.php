@@ -1,41 +1,46 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Activity Logs') }}
-        </h2>
+        Activity Logs
     </x-slot>
 
     <div class="py-12">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+            
+            <x-layout.card>
+                
+                <div class="mb-6">
 
-                    <div class="mb-4 flex gap-4">
-                        <select id="event-filter" class="border-gray-300 rounded-md shadow-sm">
-                            <option value="">All Events</option>
-                            <option value="created">Created</option>
-                            <option value="updated">Updated</option>
-                            <option value="deleted">Deleted</option>
-                        </select>
-                    </div>
+                    <select
+                        id="event-filter"
+                        class="form-select"
+                    >
+                        <option value="">All Events</option>
+                        <option value="created">Created</option>
+                        <option value="updated">Updated</option>
+                        <option value="deleted">Deleted</option>
+                    </select>
 
-                    <table id="activity-table" class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Target</th>
-                            </tr>
-                        </thead>
-
-                        <tbody></tbody>
-
-                    </table>
                 </div>
-            </div>
+
+                <table id="activity-table" class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Target</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+
+            </x-layout.card>
+
         </div>
+
     </div>
 
     @push('styles')
@@ -89,6 +94,6 @@
                 });
 
             });
-            </script>
+        </script>
     @endpush
 </x-app-layout>

@@ -14,13 +14,13 @@
         @method('POST')
 
         <div>
-            <x-input-label for="avatar" :value="__('Avatar')" />
-            <x-text-input id="avatar" name="avatar" type="file" class="mt-1 block w-full" accept="image/*" />
-            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+            <x-forms.input-label for="avatar" :value="__('Avatar')" />
+            <x-forms.text-input id="avatar" name="avatar" type="file" class="mt-1 block w-full" accept="image/*" />
+            <x-feedback.input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Upload Avatar') }}</x-primary-button>
+            <x-buttons.primary>{ __('Upload Avatar') }}</x-buttons.primary>
         </div>
     </form>
 </section>
