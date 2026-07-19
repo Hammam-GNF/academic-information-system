@@ -3,77 +3,79 @@
         User Management
     </x-slot>
 
-    <div class="py-6">
+    <x-crud.page
+        title="User Management"
+        description="Manage application users, roles and permissions."
+    >
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <x-slot name="actions">
 
-            <div class="flex justify-between items-center mb-6">
+            <a
+                href="{{ route('admin.users.export') }}"
+                class="btn btn-success"
+            >
+                Export Excel
+            </a>
 
-                <div>
+            @can('create', App\Models\User::class)
 
-                    <select
-                        id="role-filter"
-                        name="role"
-                        class="form-select block w-full"
-                    >
-                        <option value="">All Roles</option>
-                        <option value="admin">Admin</option>
-                        <option value="user">User</option>
-                    </select>
+                <a
+                    href="{{ route('admin.users.create') }}"
+                    class="btn btn-primary"
+                >
+                    Create User
+                </a>
 
-                </div>
+            @endcan
 
-                <div class="flex gap-2">
+            <a
+                href="{{ route('admin.users.trash') }}"
+                class="btn btn-danger"
+            >
+                Trash
+            </a>
 
-                    <a
-                        href="{{ route('admin.users.export') }}"
-                        class="btn btn-success"
-                    >
-                        Export Excel
-                    </a>
+        </x-slot>
 
-                    @can('create', App\Models\User::class)
-                        <a
-                            href="{{ route('admin.users.create') }}"
-                            class="btn btn-primary"
-                        >
-                            Create User
-                        </a>
-                    @endcan
+        <x-crud.toolbar>
 
-                    <a
-                        href="{{ route('admin.users.trash') }}"
-                        class="btn btn-danger"
-                    >
-                        Trash
-                    </a>
+            <div class="flex items-center gap-3">
 
-                </div>
+                <select
+                    id="role-filter"
+                    name="role"
+                    class="form-select block w-full"
+                >
+                    <option value="">All Roles</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
 
             </div>
-            
-            <x-layout.card class="overflow-x-auto">
 
-                <table id="users-table" class="table">
+        </x-crud.toolbar>
 
-                    <thead class="table-head">
-                        <tr>
-                            <th class="table-th">No</th>
-                            <th class="table-th">Name</th>
-                            <th class="table-th">Email</th>
-                            <th class="table-th">Role</th>
-                            <th class="table-th">Action</th>
-                        </tr>
-                    </thead>
+        <x-crud.table-card>
 
-                    <tbody></tbody>
+            <table id="users-table" class="table">
 
-                </table>
+                <thead class="table-head">
+                    <tr>
+                        <th class="table-th">No</th>
+                        <th class="table-th">Name</th>
+                        <th class="table-th">Email</th>
+                        <th class="table-th">Role</th>
+                        <th class="table-th">Action</th>
+                    </tr>
+                </thead>
 
-            </x-layout.card>
+                <tbody></tbody>
 
-        </div>
-    </div>
+            </table>
+
+        </x-crud.table-card>
+
+    </x-crud.page>
 
     @push('styles')
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">

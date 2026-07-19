@@ -238,4 +238,36 @@
         @apply flex items-start justify-between border-b border-gray-100 py-3 last:border-none;
     }
 
+    /* ===============================
+    * CRUD
+    * =============================== */
+
+    .crud-page{
+        @apply max-w-7xl mx-auto;
+    }
+
+    .crud-header{
+        @apply mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between;
+    }
+
+    .crud-title{
+        @apply text-3xl font-bold tracking-tight text-gray-900;
+    }
+
+    .crud-description{
+        @apply mt-2 text-gray-500;
+    }
+
+    .crud-actions{
+        @apply flex flex-wrap gap-2;
+    }
+
+    .crud-toolbar{
+        @apply mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between;
+    }
+
+    .crud-table-card{
+        @apply overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm;
+    }
+
 }
