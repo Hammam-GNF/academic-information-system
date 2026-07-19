@@ -11,16 +11,37 @@
             
             <x-layout.card>
                 
-                <div class="mb-4 flex gap-4">
+                <x-layout.page-header
+                    title="Activity Logs"
+                >
 
-                    <select id="event-filter" class="border-gray-300 rounded-md shadow-sm">
-                        <option value="">All Events</option>
-                        <option value="created">Created</option>
-                        <option value="updated">Updated</option>
-                        <option value="deleted">Deleted</option>
-                    </select>
-                    
-                </div>
+                    <x-slot name="actions">
+
+                        <select
+                            id="event-filter"
+                            class="form-select"
+                        >
+                            <option value="">
+                                All Events
+                            </option>
+
+                            <option value="created">
+                                Created
+                            </option>
+
+                            <option value="updated">
+                                Updated
+                            </option>
+
+                            <option value="deleted">
+                                Deleted
+                            </option>
+
+                        </select>
+
+                    </x-slot>
+
+                </x-layout.page-header>
 
                 <table id="activity-table" class="min-w-full divide-y divide-gray-200">
                     <thead>

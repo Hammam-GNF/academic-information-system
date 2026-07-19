@@ -6,18 +6,35 @@
     </x-slot>
 
     <div class="py-6">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center mb-4">
 
-                <div>
-                    <select id="role-filter" name="role" class="form-select block w-full mt-1">
-                        <option value="">All Roles</option>
-                        <option value="admin">Admin</option>
-                        <option value="user">User</option>
-                    </select>
-                </div>
+            <x-layout.page-header
+                title="User Management"
+            >
 
-                <div class="flex gap-2">
+                <x-slot name="actions">
+
+                    <div>
+                        <select
+                            id="role-filter"
+                            name="role"
+                            class="form-select block w-full"
+                        >
+                            <option value="">
+                                All Roles
+                            </option>
+
+                            <option value="admin">
+                                Admin
+                            </option>
+
+                            <option value="user">
+                                User
+                            </option>
+                        </select>
+                    </div>
+
                     <a
                         href="{{ route('admin.users.export') }}"
                         class="btn btn-success"
@@ -26,12 +43,12 @@
                     </a>
 
                     @can('create', App\Models\User::class)
-                    <a
-                        href="{{ route('admin.users.create') }}"
-                        class="btn btn-primary"
-                    >
-                        Create User
-                    </a>
+                        <a
+                            href="{{ route('admin.users.create') }}"
+                            class="btn btn-primary"
+                        >
+                            Create User
+                        </a>
                     @endcan
 
                     <a
@@ -40,9 +57,10 @@
                     >
                         Trash
                     </a>
-                </div>
 
-            </div>
+                </x-slot>
+
+            </x-layout.page-header>
             
             <x-layout.card class="overflow-x-auto">
 
