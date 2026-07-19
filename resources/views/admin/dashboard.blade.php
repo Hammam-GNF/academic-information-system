@@ -1,47 +1,90 @@
 <x-app-layout>
+
     <x-slot name="header">
-        Admin Dashboard
+        Dashboard
     </x-slot>
 
-    <x-layout.section>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-layout.card class="overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
-                        <x-layout.card class="p-6">
-                            <h3 class="text-sm font-medium text-gray-500">
-                                Total Users
-                            </h3>
+    <div class="dashboard-container">
 
-                            <p class="mt-2 text-3xl font-bold text-gray-900">
-                                {{ $totalUsers }}
-                            </p>
-                        </x-layout.card>
+        <div class="dashboard-grid">
 
-                        <x-layout.card class="p-6">
-                            <h3 class="text-sm font-medium text-gray-500">
-                                Total Admins
-                            </h3>
+            <x-dashboard.stat-card
+                title="Total Users"
+                :value="$totalUsers"
+            >
+                <x-slot name="icon">
 
-                            <p class="mt-2 text-3xl font-bold text-gray-900">
-                                {{ $totalAdmins }}
-                            </p>
-                        </x-layout.card>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17 20h5V4H2v16h5m10 0v-2a4 4 0 00-8 0v2m8 0H9m4-10a4 4 0 110-8 4 4 0 010 8z"
+                        />
+                    </svg>
 
-                        <x-layout.card class="p-6">
-                            <h3 class="text-sm font-medium text-gray-500">
-                                Total Activities
-                            </h3>
+                </x-slot>
 
-                            <p class="mt-2 text-3xl font-bold text-gray-900">
-                                {{ $totalActivities }}
-                            </p>
-                        </x-layout.card>
+            </x-dashboard.stat-card>
 
-                    </div>
-                </div>
-            </x-layout.card>
+            <x-dashboard.stat-card
+                title="Total Admins"
+                :value="$totalAdmins"
+            >
+                <x-slot name="icon">
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 14l9-5-9-5-9 5 9 5zm0 0v6"
+                        />
+                    </svg>
+
+                </x-slot>
+
+            </x-dashboard.stat-card>
+
+            <x-dashboard.stat-card
+                title="Activity Logs"
+                :value="$totalActivities"
+            >
+                <x-slot name="icon">
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12h6m-6 4h6M7 4h10l2 2v14H5V6l2-2z"
+                        />
+                    </svg>
+
+                </x-slot>
+
+            </x-dashboard.stat-card>
+
         </div>
-    </x-layout.section>
+
+    </div>
+
 </x-app-layout>
