@@ -113,123 +113,84 @@
 
         <div class="dashboard-widgets">
 
-            <div class="dashboard-panel">
+            <x-dashboard.panel
+                title="Quick Actions"
+            >
 
-                <div class="dashboard-panel-header">
+                <div class="space-y-3">
 
-                    <h2 class="dashboard-panel-title">
+                    <x-dashboard.action-link
+                        :href="route('admin.users.index')"
+                    >
+                        Manage Users
+                    </x-dashboard.action-link>
 
-                        Quick Actions
+                    <x-dashboard.action-link
+                        :href="route('admin.activity-logs.index')"
+                    >
+                        Activity Logs
+                    </x-dashboard.action-link>
 
-                    </h2>
+                    <x-dashboard.action-link
+                        :href="route('admin.media.index')"
+                    >
+                        Media Library
+                    </x-dashboard.action-link>
+
+                    <x-dashboard.action-link
+                        :href="route('admin.settings.index')"
+                    >
+                        Settings
+                    </x-dashboard.action-link>
 
                 </div>
 
-                <div class="dashboard-panel-body space-y-3">
+            </x-dashboard.panel>
 
-                    <a
-                        href="{{ route('admin.users.index') }}"
-                        class="dashboard-action"
-                    >
+            <x-dashboard.panel
+                title="Recent Activities"
+                class="lg:col-span-2"
+            >
 
-                        <span>Manage Users</span>
+                @forelse($recentActivities as $activity)
 
-                        <span>→</span>
+                    <div class="dashboard-activity">
 
-                    </a>
+                        <div>
 
-                    <a
-                        href="{{ route('admin.activity-logs.index') }}"
-                        class="dashboard-action"
-                    >
+                            <p class="font-medium text-gray-900">
 
-                        <span>Activity Logs</span>
+                                {{ Str::headline($activity->description) }}
 
-                        <span>→</span>
+                            </p>
 
-                    </a>
+                            <p class="mt-1 text-sm text-gray-500">
 
-                    <a
-                        href="{{ route('admin.media.index') }}"
-                        class="dashboard-action"
-                    >
+                                {{ optional($activity->causer)->name ?? 'System' }}
 
-                        <span>Media Library</span>
-
-                        <span>→</span>
-
-                    </a>
-
-                    <a
-                        href="{{ route('admin.settings.index') }}"
-                        class="dashboard-action"
-                    >
-
-                        <span>Settings</span>
-
-                        <span>→</span>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-            <div class="dashboard-panel lg:col-span-2">
-
-                <div class="dashboard-panel-header">
-
-                    <h2 class="dashboard-panel-title">
-
-                        Recent Activities
-
-                    </h2>
-
-                </div>
-
-                <div class="dashboard-panel-body">
-
-                    @forelse($recentActivities as $activity)
-
-                        <div class="dashboard-activity">
-
-                            <div>
-
-                                <p class="font-medium text-gray-900">
-
-                                    {{ Str::headline($activity->description) }}
-
-                                </p>
-
-                                <p class="mt-1 text-sm text-gray-500">
-
-                                    {{ optional($activity->causer)->name ?? 'System' }}
-
-                                </p>
-
-                            </div>
-
-                            <span class="text-sm text-gray-400">
-
-                                {{ $activity->created_at->diffForHumans() }}
-
-                            </span>
+                            </p>
 
                         </div>
 
-                    @empty
+                        <span class="text-sm text-gray-400">
 
-                        <p class="text-sm text-gray-500">
+                            {{ $activity->created_at->diffForHumans() }}
 
-                            No activities found.
+                        </span>
 
-                        </p>
+                    </div>
 
-                    @endforelse
+                @empty
 
-                </div>
+                    <p class="text-sm text-gray-500">
 
-            </div>
+                        No activities found.
+
+                    </p>
+
+                @endforelse
+
+            </x-dashboard.panel>
 
         </div>
 
