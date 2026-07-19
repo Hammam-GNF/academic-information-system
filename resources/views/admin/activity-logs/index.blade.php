@@ -34,10 +34,9 @@
                     </thead>
 
                     <tbody></tbody>
-
                 </table>
 
-            </div>
+            </x-layout.card>
 
         </div>
 
@@ -94,6 +93,6 @@
                 });
 
             });
-            </script>
+        </script>
     @endpush
 </x-app-layout>

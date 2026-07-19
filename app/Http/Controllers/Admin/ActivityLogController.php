@@ -28,12 +28,14 @@ class ActivityLogController extends Controller
                 })
 
                 ->editColumn('event', function ($activity) {
-                    return match ($activity->event) {
-                        'created' => '<span class="text-green-600 font-semibold">Created</span>',
-                        'updated' => '<span class="text-yellow-600 font-semibold">Updated</span>',
-                        'deleted' => '<span class="text-red-600 font-semibold">Deleted</span>',
-                        default => $activity->event,
-                    };
+
+                    return view(
+                        'admin.activity-logs.partials.event-badge',
+                        [
+                            'event' => $activity->event,
+                        ]
+                    )->render();
+
                 })
 
                 ->editColumn('created_at', function ($activity) {
