@@ -1,20 +1,25 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit User
-        </h2>
+        Edit User
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+    <x-crud.form-page
+        title="Edit User"
+        description="Update user information."
+    >
 
-            <div class="bg-white shadow-sm rounded-lg p-6">
+        <x-crud.form-card>
 
-                <form method="POST" action="{{ route('admin.users.update', $user) }}">
-                    @csrf
-                    @method('PUT')
+            <form
+                method="POST"
+                action="{{ route('admin.users.update', $user) }}"
+            >
 
-                    <x-forms.field
+                @csrf
+                @method('PUT')
+
+                <x-forms.field
                         label="Name"
                         for="name"
                         :error="$errors->get('name')"
@@ -68,23 +73,25 @@
                         </x-forms.select>
                     </x-forms.field>
 
-                    <div class="flex justify-end mt-6">
-                        <x-buttons.primary>
-                            Save User
-                        </x-buttons.primary>
+                <x-crud.form-actions>
 
-                        <x-buttons.secondary
-                            class="ms-3"
-                            onclick="window.history.back();"
-                        >
-                            Cancel
-                        </x-buttons.secondary>
-                    </div>
+                    <x-buttons.primary>
+                        Save User
+                    </x-buttons.primary>
 
-                </form>
+                    <x-buttons.secondary
+                        type="button"
+                        onclick="window.history.back()"
+                    >
+                        Cancel
+                    </x-buttons.secondary>
 
-            </div>
+                </x-crud.form-actions>
 
-        </div>
-    </div>
+            </form>
+
+        </x-crud.form-card>
+
+    </x-crud.form-page>
+
 </x-app-layout>
