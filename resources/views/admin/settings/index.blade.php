@@ -9,7 +9,12 @@
 
             <x-layout.card>
 
-                <form method="POST" action="{{ route('admin.settings.update') }}">
+                <form
+                    method="POST"
+                    action="{{ route('admin.settings.update') }}"
+                    x-data="{ loading: false }"
+                    x-on:submit="loading = true"
+                >
                     @csrf
                     @method('PUT')
 

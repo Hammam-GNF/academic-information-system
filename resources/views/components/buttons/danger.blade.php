@@ -5,19 +5,10 @@
             'class' => 'btn btn-danger',
         ])
     }}
-    x-data="{ loading: false }"
-    x-on:click="
-        if ($el.form) {
-            loading = true;
-        }
-    "
     x-bind:disabled="loading"
     x-bind:class="{ 'opacity-50 cursor-not-allowed': loading }"
 >
-    <span
-        x-show="!loading"
-        x-cloak
-    >
+    <span x-show="!loading" x-cloak>
         {{ $slot }}
     </span>
 

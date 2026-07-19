@@ -10,7 +10,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    <form method="POST" action="{{ route('admin.users.update-password', $user) }}">
+                    <form
+                        method="POST"
+                        action="{{ route('admin.users.update-password', $user) }}"
+                        x-data="{ loading: false }"
+                        x-on:submit="loading = true"
+                    >
                         @csrf
                         @method('PUT')
 

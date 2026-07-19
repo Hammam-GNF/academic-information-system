@@ -13,7 +13,13 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form
+        method="post"
+        action="{{ route('profile.update') }}"
+        class="mt-6 space-y-6"
+        x-data="{ loading: false }"
+        x-on:submit="loading = true"
+    >
         @csrf
         @method('patch')
 

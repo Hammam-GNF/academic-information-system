@@ -9,7 +9,14 @@
         </p>
     </header>
 
-    <form method="POST" action="{{ route('profile.avatar') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
+    <form
+        method="POST"
+        action="{{ route('profile.avatar') }}"
+        class="mt-6 space-y-6"
+        enctype="multipart/form-data"
+        x-data="{ loading: false }"
+        x-on:submit="loading = true"
+    >
         @csrf
         @method('POST')
 

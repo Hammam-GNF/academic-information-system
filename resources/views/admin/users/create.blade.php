@@ -14,6 +14,8 @@
             <form
                 method="POST"
                 action="{{ route('admin.users.store') }}"
+                x-data="{ loading: false }"
+                x-on:submit="loading = true"
             >
 
                 @csrf

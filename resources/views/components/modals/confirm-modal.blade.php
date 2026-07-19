@@ -11,6 +11,11 @@
         id="{{ $name }}-form"
         method="POST"
         class="p-6"
+        x-data="{ loading: false }"
+        x-on:submit="
+            loading = true;
+            $root.loading = true;
+        "
     >
         @csrf
         @method($method)
@@ -31,7 +36,7 @@
                 Cancel
             </x-buttons.secondary>
 
-            <x-buttons.danger
+            <x-buttons.danger>
                 {{ $submitText }}
             </x-buttons.danger>
         </div>
