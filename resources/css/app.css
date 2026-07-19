@@ -152,6 +152,18 @@
     * Dashboard
     * =============================== */
 
+    .dashboard-header{
+        @apply mb-8;
+    }
+
+    .dashboard-title{
+        @apply text-3xl font-bold tracking-tight text-gray-900;
+    }
+
+    .dashboard-description{
+        @apply mt-2 text-gray-500;
+    }
+
     .dashboard-container {
         @apply max-w-7xl mx-auto;
     }

@@ -6,12 +6,32 @@
 
     <div class="dashboard-container">
 
+        <div class="dashboard-header">
+
+            <h1 class="dashboard-title">
+
+                Welcome back,
+                {{ Auth::user()->name }}
+
+            </h1>
+
+            <p class="dashboard-description">
+
+                Here's what's happening in your application today.
+
+            </p>
+
+        </div>
+
         <div class="dashboard-grid">
 
             <x-dashboard.stat-card
                 title="Total Users"
                 :value="$totalUsers"
+                description="Registered accounts"
+                color="indigo"
             >
+
                 <x-slot name="icon">
 
                     <svg
@@ -36,7 +56,10 @@
             <x-dashboard.stat-card
                 title="Total Admins"
                 :value="$totalAdmins"
+                description="Administrator accounts"
+                color="green"
             >
+
                 <x-slot name="icon">
 
                     <svg
@@ -61,7 +84,10 @@
             <x-dashboard.stat-card
                 title="Activity Logs"
                 :value="$totalActivities"
+                description="Recorded system activities"
+                color="amber"
             >
+
                 <x-slot name="icon">
 
                     <svg
