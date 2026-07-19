@@ -1,4 +1,13 @@
 <x-guest-layout>
+
+    <x-slot name="title">
+        Create Account
+    </x-slot>
+
+    <x-slot name="description">
+        Create your account to get started.
+    </x-slot>
+    
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -10,14 +19,14 @@
         </div>
 
         <!-- Email Address -->
-        <div class="mt-4">
+        <div class="auth-section">
             <x-forms.input-label for="email" :value="__('Email')" />
             <x-forms.text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-feedback.input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="auth-section">
             <x-forms.input-label for="password" :value="__('Password')" />
 
             <x-forms.text-input id="password" class="block mt-1 w-full"
@@ -29,7 +38,7 @@
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
+        <div class="auth-section">
             <x-forms.input-label for="password_confirmation" :value="__('Confirm Password')" />
 
             <x-forms.text-input id="password_confirmation" class="block mt-1 w-full"
@@ -39,12 +48,12 @@
             <x-feedback.input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="auth-actions">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
-            <x-buttons.primary class="ms-4">
+            <x-buttons.primary class="w-full justify-center sm:w-auto sm:justify-start sm:ms-4">
                 {{ __('Register') }}
             </x-buttons.primary>
         </div>

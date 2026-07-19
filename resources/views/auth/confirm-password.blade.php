@@ -1,4 +1,13 @@
 <x-guest-layout>
+
+    <x-slot name="title">
+        Confirm Password
+    </x-slot>
+
+    <x-slot name="description">
+        Please confirm your password to continue.
+    </x-slot>
+
     <div class="mb-4 text-sm text-gray-600">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
@@ -18,8 +27,8 @@
             <x-feedback.input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex justify-end mt-4">
-            <x-buttons.primary>
+        <div class="auth-actions justify-end">
+            <x-buttons.primary class="w-full justify-center sm:w-auto">
                 {{ __('Confirm') }}
             </x-buttons.primary>
         </div>

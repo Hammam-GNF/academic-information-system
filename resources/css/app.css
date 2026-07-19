@@ -286,4 +286,70 @@
         @apply mt-8 flex justify-end gap-3 border-t border-gray-100 pt-6;
     }
 
+    /* ===============================
+    * Authentication
+    * =============================== */
+
+    .auth-layout{
+        @apply min-h-screen
+        flex
+        items-center
+        justify-center
+        bg-gray-100
+        px-4;
+    }
+
+    .auth-container{
+        @apply w-full
+        max-w-md;
+    }
+
+    .auth-logo{
+        @apply mb-8
+        flex
+        justify-center;
+    }
+
+    .auth-card{
+        @apply rounded-xl
+        border
+        border-gray-200
+        bg-white
+        p-8
+        shadow-sm;
+    }
+
+    .auth-title{
+        @apply text-2xl
+        font-bold
+        text-gray-900;
+    }
+
+    .auth-description{
+        @apply mt-2
+        text-sm
+        text-gray-500;
+    }
+
+    .auth-section{
+        @apply mt-6;
+    }
+
+    .auth-actions{
+        @apply mt-6
+        flex
+        flex-col-reverse
+        gap-4
+        sm:flex-row
+        sm:items-center
+        sm:justify-between;
+    }
+
+    .auth-footer{
+        @apply mt-6
+        text-center
+        text-sm
+        text-gray-500;
+    }
+
 }

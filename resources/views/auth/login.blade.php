@@ -1,4 +1,13 @@
 <x-guest-layout>
+
+    <x-slot name="title">
+        Welcome Back
+    </x-slot>
+
+    <x-slot name="description">
+        Sign in to continue to your account.
+    </x-slot>
+    
     <!-- Session Status -->
     <x-feedback.auth-session-status class="mb-4" :status="session('status')" />
 
@@ -13,7 +22,7 @@
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="auth-section">
             <x-forms.input-label for="password" :value="__('Password')" />
 
             <x-forms.text-input id="password" class="block mt-1 w-full"
@@ -32,14 +41,14 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="auth-actions">
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
 
-            <x-buttons.primary class="ms-3">
+            <x-buttons.primary class="w-full justify-center sm:w-auto sm:justify-start sm:ms-3">
                 {{ __('Log in') }}
             </x-buttons.primary>
         </div>
