@@ -8,22 +8,16 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <x-layout.page-header
-                title="Deleted Users"
-            >
+            <div class="mb-6">
 
-                <x-slot name="actions">
+                <a
+                    href="{{ route('admin.users.index') }}"
+                    class="btn btn-secondary"
+                >
+                    Back
+                </a>
 
-                    <a
-                        href="{{ route('admin.users.index') }}"
-                        class="btn btn-secondary"
-                    >
-                        Back
-                    </a>
-
-                </x-slot>
-
-            </x-layout.page-header>
+            </div>
 
             <x-layout.card class="overflow-x-auto">
 

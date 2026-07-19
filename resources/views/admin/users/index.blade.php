@@ -9,31 +9,23 @@
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <x-layout.page-header
-                title="User Management"
-            >
+            <div class="flex justify-between items-center mb-6">
 
-                <x-slot name="actions">
+                <div>
 
-                    <div>
-                        <select
-                            id="role-filter"
-                            name="role"
-                            class="form-select block w-full"
-                        >
-                            <option value="">
-                                All Roles
-                            </option>
+                    <select
+                        id="role-filter"
+                        name="role"
+                        class="form-select block w-full"
+                    >
+                        <option value="">All Roles</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
 
-                            <option value="admin">
-                                Admin
-                            </option>
+                </div>
 
-                            <option value="user">
-                                User
-                            </option>
-                        </select>
-                    </div>
+                <div class="flex gap-2">
 
                     <a
                         href="{{ route('admin.users.export') }}"
@@ -58,9 +50,9 @@
                         Trash
                     </a>
 
-                </x-slot>
+                </div>
 
-            </x-layout.page-header>
+            </div>
             
             <x-layout.card class="overflow-x-auto">
 
