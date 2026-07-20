@@ -11,7 +11,12 @@
     <!-- Session Status -->
     <x-feedback.auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    <form
+        method="POST"
+        action="{{ route('login') }}"
+        x-data="{ loading: false }"
+        x-on:submit="loading = true"
+    >
         @csrf
 
         <!-- Email Address -->

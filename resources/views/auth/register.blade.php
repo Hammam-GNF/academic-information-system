@@ -8,7 +8,12 @@
         Create your account to get started.
     </x-slot>
     
-    <form method="POST" action="{{ route('register') }}">
+    <form
+        method="POST"
+        action="{{ route('register') }}"
+        x-data="{ loading: false }"
+        x-on:submit="loading = true"
+    >
         @csrf
 
         <!-- Name -->

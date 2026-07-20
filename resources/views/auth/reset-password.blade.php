@@ -8,7 +8,12 @@
         Choose a new password for your account.
     </x-slot>
 
-    <form method="POST" action="{{ route('password.store') }}">
+    <form
+        method="POST"
+        action="{{ route('password.store') }}"
+        x-data="{ loading: false }"
+        x-on:submit="loading = true"
+    >
         @csrf
 
         <!-- Password Reset Token -->

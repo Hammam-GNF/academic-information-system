@@ -19,7 +19,12 @@
     @endif
 
     <div class="auth-actions">
-        <form method="POST" action="{{ route('verification.send') }}">
+        <form
+            method="POST"
+            action="{{ route('verification.send') }}"
+            x-data="{ loading: false }"
+            x-on:submit="loading = true"
+        >
             @csrf
 
             <div>
@@ -29,7 +34,12 @@
             </div>
         </form>
 
-        <form method="POST" action="{{ route('logout') }}">
+        <form
+            method="POST"
+            action="{{ route('logout') }}"
+            x-data="{ loading: false }"
+            x-on:submit="loading = true"
+        >
             @csrf
 
             <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
