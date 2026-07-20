@@ -10,6 +10,8 @@
     class="font-sans antialiased bg-gray-100"
 >
 
+<x-feedback.toast />
+
 <div
     x-show="sidebarOpen"
     x-transition.opacity

@@ -6,6 +6,8 @@
 
 <body class="font-sans antialiased">
 
+    <x-feedback.toast />
+
     <div class="min-h-screen bg-gray-100" x-data>
 
         @include('layouts.navigation')
