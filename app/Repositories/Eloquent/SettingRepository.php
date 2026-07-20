@@ -16,10 +16,17 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
     public function getAllKeyValue(): Collection
     {
-        return Cache::rememberForever(
+        $settings = Cache::rememberForever(
             'settings.all',
-            fn () => $this->model->pluck('value', 'key')
+            function (): array {
+                return $this->model
+                    ->newQuery()
+                    ->pluck('value', 'key')
+                    ->all();
+            }
         );
+
+        return collect($settings);
     }
 
     public function get(string $key, mixed $default = null): mixed
