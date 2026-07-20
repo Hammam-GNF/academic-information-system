@@ -42,9 +42,12 @@ class AuthService implements AuthServiceInterface
      */
     private function redirectAfterVerification(User $user): RedirectResponse
     {
-        return redirect()->to(
-            $this->getDashboardRoute($user).'?verified=1'
-        );
+        return redirect()
+            ->to($this->getDashboardRoute($user))
+            ->with(
+                'success',
+                'Your email has been verified successfully.'
+            );
     }
 
     public function login(LoginRequest $request): RedirectResponse

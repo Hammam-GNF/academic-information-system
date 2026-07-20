@@ -6,6 +6,8 @@
 
 <body class="font-sans antialiased">
 
+<x-feedback.toast />
+
 <div class="auth-layout">
 
     <div class="auth-container">
