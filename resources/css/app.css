@@ -357,54 +357,101 @@
     * =============================== */
 
     .toast{
-
         @apply
-        min-w-[320px]
-        max-w-md
-        rounded-xl
-        shadow-lg
-        text-white
-        px-5
-        py-4
-        flex
-        items-start
-        gap-3;
-
+            flex
+            items-start
+            gap-4
+            w-[360px]
+            rounded-xl
+            border
+            bg-white
+            shadow-xl
+            overflow-hidden
+            p-4;
     }
 
-    .toast-success{
-
-        @apply bg-green-600;
-
+    .toast-icon{
+        @apply
+            flex
+            h-10
+            w-10
+            shrink-0
+            items-center
+            justify-center
+            rounded-full
+            font-bold
+            text-white;
     }
 
-    .toast-error{
-
-        @apply bg-red-600;
-
+    .toast-title{
+        @apply
+            font-semibold
+            text-gray-900;
     }
 
-    .toast-warning{
-
-        @apply bg-yellow-500 text-black;
-
-    }
-
-    .toast-info{
-
-        @apply bg-blue-600;
-
+    .toast-message{
+        @apply
+            mt-1
+            text-sm
+            text-gray-600;
     }
 
     .toast-close{
-
         @apply
-        opacity-70
-        hover:opacity-100
-        transition
-        text-lg
-        leading-none;
+            text-gray-400
+            transition
+            hover:text-gray-700;
+    }
 
+    .toast-progress{
+        @apply
+            mt-3
+            h-1
+            rounded-full
+            bg-black/10;
+        animation: toast-progress 3s linear forwards;
+    }
+
+    .toast-success{
+        @apply border-green-200;
+    }
+
+    .toast-success .toast-icon{
+        @apply bg-green-600;
+    }
+
+    .toast-error{
+        @apply border-red-200;
+    }
+
+    .toast-error .toast-icon{
+        @apply bg-red-600;
+    }
+
+    .toast-warning{
+        @apply border-yellow-200;
+    }
+
+    .toast-warning .toast-icon{
+        @apply bg-yellow-500;
+    }
+
+    .toast-info{
+        @apply border-blue-200;
+    }
+
+    .toast-info .toast-icon{
+        @apply bg-blue-600;
+    }
+
+    @keyframes toast-progress{
+        from{
+            width:100%;
+        }
+
+        to{
+            width:0%;
+        }
     }
 
 }
