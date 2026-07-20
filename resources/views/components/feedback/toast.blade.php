@@ -1,3 +1,19 @@
+@props([
+    'type' => null,
+    'title' => null,
+    'message' => null,
+])
+
+@php
+
+if ($type && $message) {
+
+    session()->flash($type, $message);
+
+}
+
+@endphp
+
 @if (
     session()->has('success') ||
     session()->has('error') ||

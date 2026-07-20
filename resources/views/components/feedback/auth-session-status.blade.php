@@ -1,7 +1,9 @@
 @props(['status'])
 
 @if ($status)
-    <div {{ $attributes->merge(['class' => 'feedback-status']) }}>
-        {{ $status }}
-    </div>
+    <x-feedback.toast
+        type="success"
+        title="Success"
+        :message="$status"
+    />
 @endif
