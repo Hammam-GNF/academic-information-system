@@ -352,4 +352,59 @@
         text-gray-500;
     }
 
+    /* ===============================
+    * Toast Notification
+    * =============================== */
+
+    .toast{
+
+        @apply
+        min-w-[320px]
+        max-w-md
+        rounded-xl
+        shadow-lg
+        text-white
+        px-5
+        py-4
+        flex
+        items-start
+        gap-3;
+
+    }
+
+    .toast-success{
+
+        @apply bg-green-600;
+
+    }
+
+    .toast-error{
+
+        @apply bg-red-600;
+
+    }
+
+    .toast-warning{
+
+        @apply bg-yellow-500 text-black;
+
+    }
+
+    .toast-info{
+
+        @apply bg-blue-600;
+
+    }
+
+    .toast-close{
+
+        @apply
+        opacity-70
+        hover:opacity-100
+        transition
+        text-lg
+        leading-none;
+
+    }
+
 }
