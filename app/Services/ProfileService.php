@@ -83,6 +83,13 @@ class ProfileService implements ProfileServiceInterface
 
         $user = $request->user();
 
+        if ($user->hasRole('admin')) {
+            return back()->with(
+                'error',
+                'Administrator accounts cannot be deleted.'
+            );
+        }
+
         activity()
             ->causedBy($user)
             ->performedOn($user)

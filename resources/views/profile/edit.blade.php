@@ -25,11 +25,13 @@
                 </div>
             </x-layout.card>
 
-            <x-layout.card class="p-4 sm:p-8 sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </x-layout.card>
+            @if (! auth()->user()->hasRole('admin'))
+                <x-layout.card class="p-4 sm:p-8 sm:rounded-lg">
+                    <div class="max-w-xl">
+                        @include('profile.partials.delete-user-form')
+                    </div>
+                </x-layout.card>
+            @endif
         </div>
     </x-layout.section>
 </x-app-layout>
