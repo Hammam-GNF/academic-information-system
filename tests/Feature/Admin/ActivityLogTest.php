@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use Spatie\Activitylog\Models\Activity;
 
 it('admin can access activity log page', function () {
 

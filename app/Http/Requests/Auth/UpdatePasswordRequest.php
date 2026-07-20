@@ -12,7 +12,7 @@ class UpdatePasswordRequest extends FormRequest
      * Error bag for validation.
      */
     protected $errorBag = 'updatePassword';
-    
+
     /**
      * Determine if the user is authorized to make this request.
      */
