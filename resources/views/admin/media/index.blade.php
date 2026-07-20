@@ -9,10 +9,26 @@
 
             <x-layout.card>
 
-                <form action="{{ route('admin.media.store') }}" method="POST" enctype="multipart/form-data" class="p-6 bg-white border-b border-gray-200 mb-4">
+                <form
+                    x-data="{ loading: false }"
+                    @submit="loading = true"
+                    action="{{ route('admin.media.store') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="p-6 bg-white border-b border-gray-200 mb-4"
+                >
                     @csrf
-                    <input type="file" name="file" class="mb-4" class="border rounded p-2">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upload</button>
+
+                    <input
+                        type="file"
+                        name="file"
+                        required
+                        class="mb-4 border rounded p-2"
+                    >
+
+                    <x-buttons.primary>
+                        Upload
+                    </x-buttons.primary>
                 </form>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
