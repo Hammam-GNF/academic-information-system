@@ -2,14 +2,14 @@
     'type' => null,
     'title' => null,
     'message' => null,
+    'duration' => 3000,
+    'autoclose' => true,
 ])
 
 @php
 
 if ($type && $message) {
-
     session()->flash($type, $message);
-
 }
 
 @endphp
@@ -24,26 +24,31 @@ if ($type && $message) {
 @php
 
 $type = 'success';
-$title = 'Success';
 $message = session('success');
 
 if (session()->has('error')) {
     $type = 'error';
-    $title = 'Error';
     $message = session('error');
 }
 
 if (session()->has('warning')) {
     $type = 'warning';
-    $title = 'Warning';
     $message = session('warning');
 }
 
 if (session()->has('info')) {
     $type = 'info';
-    $title = 'Information';
     $message = session('info');
 }
+
+$titles = [
+    'success' => 'Success',
+    'error' => 'Error',
+    'warning' => 'Warning',
+    'info' => 'Information',
+];
+
+$title ??= $titles[$type];
 
 $icons = [
     'success' => '✓',
@@ -62,7 +67,11 @@ $classes = [
 @endphp
 
 <div
-    x-data="{ show: true }"
+    x-data="{
+        show: true,
+        duration: {{ $duration }},
+        autoclose: @js($autoclose),
+    }"
     x-show="show"
     x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="translate-x-full opacity-0"
@@ -70,7 +79,11 @@ $classes = [
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="translate-x-0 opacity-100"
     x-transition:leave-end="translate-x-full opacity-0"
-    x-init="setTimeout(() => show = false, 3000)"
+    x-init="
+        if (autoclose) {
+            setTimeout(() => show = false, duration)
+        }
+    "
     class="fixed top-5 right-5 z-[9999]"
 >
 
@@ -90,14 +103,17 @@ $classes = [
                 {{ $message }}
             </div>
 
-            <div class="toast-progress"></div>
+            <div
+                class="toast-progress"
+                :style="`animation-duration:${duration}ms`"
+            ></div>
 
         </div>
 
         <button
-            class="toast-close"
-            @click="show=false"
             type="button"
+            class="toast-close"
+            @click="show = false"
         >
             ✕
         </button>
