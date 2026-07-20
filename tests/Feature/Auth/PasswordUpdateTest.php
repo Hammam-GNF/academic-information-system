@@ -11,18 +11,24 @@ test('password can be updated', function () {
         ->from('/profile')
         ->put('/password', [
             'current_password' => 'password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
+            'password' => '123456789',
+            'password_confirmation' => '123456789',
         ]);
 
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect('/profile');
 
-    $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
+    expect(
+        Hash::check(
+            '123456789',
+            $user->fresh()->password
+        )
+    )->toBeTrue();
 });
 
 test('correct password must be provided to update password', function () {
+
     $user = User::factory()->create();
 
     $response = $this
@@ -35,6 +41,9 @@ test('correct password must be provided to update password', function () {
         ]);
 
     $response
-        ->assertSessionHasErrorsIn('updatePassword', 'current_password')
+        ->assertSessionHasErrorsIn(
+            'updatePassword',
+            'current_password'
+        )
         ->assertRedirect('/profile');
 });
