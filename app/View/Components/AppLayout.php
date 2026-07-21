@@ -14,11 +14,16 @@ class AppLayout extends Component
         /** @var User|null $user */
         $user = Auth::user();
 
-        if (
-            $user &&
-            $user->hasRole('admin')
-        ) {
+        if (! $user) {
+            return view('layouts.app');
+        }
+
+        if ($user->hasRole('admin')) {
             return view('layouts.admin');
+        }
+
+        if ($user->hasRole('user')) {
+            return view('layouts.user');
         }
 
         return view('layouts.app');
