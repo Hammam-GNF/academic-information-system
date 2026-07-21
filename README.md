@@ -1,44 +1,50 @@
-# Laravel 13 Admin Management System
+# Laravel 13 Starter Template
 
-A role-based admin management system built with Laravel 13.
+A modern Laravel 13 starter template built for scalable web applications.
 
-This project demonstrates authentication, authorization, user management, media management, activity logging, soft deletes, reusable UI components, and modern Laravel development practices.
+This project provides a solid foundation for Laravel development with authentication, role-based authorization, reusable Blade components, repository and service layers, media management, activity logging, settings management, and a clean dashboard UI.
 
-## Features
+Designed to help developers start new Laravel projects faster while following maintainable architecture and modern development practices.
+
+---
+
+## ✨ Features
 
 ### Authentication
 
 * Login
 * Logout
-* Registration
+* User Registration
 * Email Verification
+* Password Reset
 * Password Confirmation
+* Profile Management
+* Avatar Upload
 
 ### Authorization
 
 * Role-Based Access Control (RBAC)
-* Admin Role
-* User Role
+* Admin & User Roles
 * Custom Role Middleware
-* User Policies
+* Laravel Policies
 
 ### User Management
 
 * Create User
 * Edit User
-* Delete User (Soft Delete)
+* Soft Delete
 * Restore User
-* Force Delete User
-* Change User Password
-* Filter Users by Role
+* Force Delete
+* Change Password
 * Export Users to Excel
 
 ### Media Library
 
 * Upload Files
-* View Files
 * Delete Files
-* User-owned media protection
+* File Validation
+* Upload Loading State
+* User-owned Media Protection
 
 ### Activity Logs
 
@@ -47,108 +53,150 @@ This project demonstrates authentication, authorization, user management, media 
 * Password Updated
 * User Deleted
 * User Restored
-* User Force Deleted
+* User Permanently Deleted
 
-### UI Features
+### Settings Management
 
-* Server-side DataTables
-* Flash Alerts
-* Reusable Confirmation Modal
-* Responsive Layout
+* Application Settings
+* Update Configuration
+* Validation Support
 
-## Tech Stack
+### UI Components
 
-* PHP 8.3
+* Reusable Blade Components
+* Responsive Admin Layout
+* Responsive User Layout
+* Dashboard Components
+* CRUD Components
+* Button Components
+* Form Components
+* Modal Components
+* Toast Notifications
+* Badge Components
+
+### Architecture
+
+* Repository Pattern
+* Service Layer
+* Form Request Validation
+* Blade Components
+* Clean Project Structure
+
+### Testing
+
+* Pest PHP
+* Feature Tests
+* Authentication Tests
+* Authorization Tests
+* CRUD Tests
+* Dashboard Tests
+
+---
+
+## 🛠 Tech Stack
+
+* PHP 8.3+
 * Laravel 13
-* MySQL
 * Blade
 * Tailwind CSS
 * Alpine.js
-* jQuery
-* DataTables
+* Vite
+* MySQL
 
-## Packages
+---
+
+## 📦 Packages
 
 * spatie/laravel-permission
 * spatie/laravel-activitylog
 * spatie/laravel-medialibrary
-* maatwebsite/excel
 * yajra/laravel-datatables
+* maatwebsite/excel
 
-## Installation
+---
 
-Clone the repository:
+## 🚀 Installation
 
 ```bash
 git clone <repository-url>
+
 cd <project-folder>
-```
 
-Install dependencies:
-
-```bash
 composer install
+
 npm install
-```
 
-Create environment file:
-
-```bash
 cp .env.example .env
-```
 
-Generate application key:
-
-```bash
 php artisan key:generate
-```
 
-Run migrations and seeders:
-
-```bash
 php artisan migrate --seed
-```
 
-Create storage link:
-
-```bash
 php artisan storage:link
+
+npm run dev
+
+php artisan serve
 ```
 
-Run the application:
+---
+
+## 🔐 Demo Account
+
+### Administrator
+
+| Email                                     | Password  |
+| ----------------------------------------- | --------- |
+| [admin@gmail.com](mailto:admin@gmail.com) | 123456789 |
+
+---
+
+## 📁 Project Structure
+
+```
+app/
+├── Http/
+├── Models/
+├── Policies/
+├── Providers/
+├── Repositories/
+├── Services/
+└── View/
+
+database/
+resources/
+routes/
+tests/
+```
+
+---
+
+## 📚 Documentation
+
+Additional documentation is available inside the `docs/` directory.
+
+* Installation Guide
+* Project Architecture
+* Blade Components
+* Testing Guide
+* Project Roadmap
+
+---
+
+## 🧪 Running Tests
 
 ```bash
-php artisan serve
-npm run dev
+php artisan test
 ```
 
-## Demo Account
+or
 
-Admin Account
+```bash
+composer test
+```
 
-Email:
-[admin@gmail.com](mailto:admin@gmail.com)
+---
 
-Password:
-123456789
+## 📄 License
 
-## Project Structure
-
-* Authentication & Authorization
-* User Management
-* Media Management
-* Activity Logging
-* Settings Management
-
-## Future Improvements
-
-* Automated Tests (Pest)
-* Dashboard Analytics
-* API Authentication
-* Multi-Tenant Support
-* Notification System
-* Audit Report Export
-
-## License
-
-MIT License
+This project is open-sourced under the MIT License.
