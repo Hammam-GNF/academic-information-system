@@ -1,24 +1,79 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        Dashboard
     </x-slot>
 
-    <x-layout.section>
+    <div class="dashboard-container">
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="dashboard-header">
 
-            <x-layout.card class="overflow-hidden shadow-sm sm:rounded-lg">
+            <h1 class="dashboard-title">
 
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
+                Welcome back,
+                {{ Auth::user()->name }}
 
-            </x-layout.card>
+            </h1>
+
+            <p class="dashboard-description">
+
+                You're successfully signed in. This dashboard is ready to be customized for your application.
+
+            </p>
 
         </div>
 
-    </x-layout.section>
+        <div class="dashboard-widgets">
+
+            <x-dashboard.panel
+                title="Getting Started"
+                class="lg:col-span-2"
+            >
+
+                <div class="space-y-4">
+
+                    <p class="text-sm text-gray-600">
+
+                        Your user dashboard has been successfully configured.
+                        You can replace this page with modules, widgets, reports,
+                        notifications, or any other content that fits your project.
+
+                    </p>
+
+                    <div class="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center">
+
+                        <p class="font-medium text-gray-700">
+                            🚀 Ready to build something great.
+                        </p>
+
+                        <p class="mt-2 text-sm text-gray-500">
+                            Start adding your own dashboard components here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </x-dashboard.panel>
+
+            <x-dashboard.panel
+                title="Quick Links"
+            >
+
+                <div class="space-y-3">
+
+                    <x-dashboard.action-link
+                        :href="route('profile.edit')"
+                    >
+                        Manage Profile
+                    </x-dashboard.action-link>
+
+                </div>
+
+            </x-dashboard.panel>
+
+        </div>
+
+    </div>
 
 </x-app-layout>
