@@ -175,7 +175,7 @@ tests/
 
 Detailed documentation is available inside the `docs` directory.
 
-* Architecture (`docs/architecture.md`)
+* Architecture
 * Installation Guide
 * Project Architecture
 * Blade Components
