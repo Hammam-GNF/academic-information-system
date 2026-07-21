@@ -173,8 +173,9 @@ tests/
 
 ## 📚 Documentation
 
-Additional documentation is available inside the `docs/` directory.
+Detailed documentation is available inside the `docs` directory.
 
+* Architecture (`docs/architecture.md`)
 * Installation Guide
 * Project Architecture
 * Blade Components
