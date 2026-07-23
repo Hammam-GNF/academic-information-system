@@ -1,8 +1,8 @@
-# Project Roadmap
+# Academic Information System Roadmap
 
-This document describes the current development progress and future roadmap of the Laravel 13 Starter Template.
+This document describes the development roadmap of the Academic Information System.
 
-The goal of this project is to provide a production-ready Laravel starter that follows clean architecture, reusable Blade components, and modern development practices.
+The goal of this project is to build a scalable academic platform that follows clean architecture principles, reusable components, configurable business processes, and modern Laravel development practices.
 
 ---
 
@@ -16,273 +16,108 @@ The goal of this project is to provide a production-ready Laravel starter that f
 
 ---
 
-# Phase 1 — Project Foundation
-
-**Status:** ✅ Completed
-
-### Completed
-
-- Laravel 13 setup
-- Authentication (Laravel Breeze)
-- Role-Based Access Control
-- Repository Layer
-- Service Layer
-- Form Requests
-- Blade Component Structure
-- Basic Project Architecture
-
----
-
-# Phase 2 — Reusable Blade Components
-
-**Status:** ✅ Completed
-
-### Completed
-
-### Buttons
-
-- Primary Button
-- Secondary Button
-- Success Button
-- Danger Button
-
-### Forms
-
-- Input
-- Label
-- Error Message
-
-### Feedback
-
-- Toast Notification
-- Status Message
-
-### Badge
-
-- Primary
-- Success
-- Warning
-- Danger
-- Info
-
-### CRUD Components
-
-- CRUD Header
-- CRUD Toolbar
-- CRUD Form
-- CRUD Table
-- CRUD Actions
-
-### Dashboard Components
-
-- Dashboard Cards
-- Dashboard Widgets
-- Dashboard Panels
-
-### Authentication Components
-
-- Authentication Layout
-- Authentication Card
-- Authentication Actions
-
----
-
-# Phase 3 — Authentication
-
-**Status:** ✅ Completed
-
-### Completed
-
-- Login
-- Logout
-- Registration
-- Email Verification
-- Password Reset
-- Password Confirmation
-- Profile Management
-- Avatar Upload
-
----
-
-# Phase 4 — User Management
-
-**Status:** ✅ Completed
-
-### Completed
-
-- User CRUD
-- Change Password
-- Soft Delete
-- Restore
-- Force Delete
-- User Export
-
----
-
-# Phase 5 — Administration
-
-**Status:** ✅ Completed
-
-### Completed
-
-- Dashboard
-- Activity Logs
-- Media Library
-- Application Settings
-
----
-
-# Phase 6 — Testing
+# Phase 0 — Product Definition & System Design
 
 **Status:** 🚧 In Progress
 
-### Current Coverage
+### Goals
 
-- Authentication Tests
-- Authorization Tests
-- Dashboard Tests
-- CRUD Tests
-- Profile Tests
-- Smoke Tests
+Define the foundation of the Academic Information System before implementation.
 
-### Next Goals
+### Planned
 
-- Increase Feature Test Coverage
-- Improve Unit Test Coverage
-- CI-ready Test Suite
-- Performance Testing
+- Product Definition
+- Target User Analysis
+- Business Flow
+- User Flow
+- Use Case Analysis
+- Functional Requirements
+- Database Design
+- System Architecture Review
 
 ---
 
-# Phase 7 — Design System
+# Phase 1 — System Foundation
 
 **Status:** 📋 Planned
 
 ### Planned
 
-- Design Tokens
-- Color Palette
-- Typography Scale
-- Spacing System
-- Icon Guidelines
-- Component Documentation
+- Project Configuration
+- Authentication Setup
+- Authorization Setup
+- Role Management
+- Permission Management
+- Base Application Layout
 
 ---
 
-# Phase 8 — Advanced Components
+# Phase 2 — Academic Master Data
 
 **Status:** 📋 Planned
 
 ### Planned
 
-- Advanced Table Component
-- Search Component
-- Filter Component
-- Pagination Component
-- Empty State
-- Skeleton Loading
-- Loading Spinner
+- Academic Year
+- Semester
+- School Structure
+- Teacher Management
+- Student Management
+- Subject Management
+- Class Management
 
 ---
 
-# Phase 9 — File Management
+# Phase 3 — Learning Management
 
 **Status:** 📋 Planned
 
 ### Planned
 
-- Image Upload Component
-- File Upload Component
-- Drag & Drop Upload
-- Image Preview
-- Progress Indicator
+- Teaching Assignment
+- Learning Schedule
+- Learning Sessions
+- Attendance Management
+- Assessment Management
 
 ---
 
-# Phase 10 — Notifications
+# Phase 4 — Academic Reporting
 
 **Status:** 📋 Planned
 
 ### Planned
 
-- Browser Notifications
-- Database Notifications
-- Email Notifications
-- Notification Center
+- Grade Calculation
+- Attendance Recap
+- Student Reports
+- Academic Reports
+- Report Export
 
 ---
 
-# Phase 11 — Developer Experience
+# Phase 5 — Advanced Features
 
 **Status:** 📋 Planned
 
 ### Planned
 
-- Static Analysis
-- Laravel Pint Configuration
-- PHPStan Support
-- GitHub Actions
-- Automatic Code Style Checks
+- Notification System
+- Parent Access
+- Student Access
+- API Integration
+- External System Integration
 
 ---
 
-# Phase 12 — Documentation
+# Development Principles
 
-**Status:** 🚧 In Progress
-
-### Completed
-
-- README
-- Installation Guide
-- Architecture Guide
-- Blade Components Guide
-- Testing Guide
-- Project Roadmap
-
-### Planned
-
-- API Documentation
-- Contributing Guide
-- Changelog
-- Release Notes
-
----
-
-# Long-Term Goals
-
-Future releases aim to provide:
-
-- Complete Design System
-- Production-ready Starter Kit
-- Modular Architecture
-- Excellent Developer Experience
-- Comprehensive Documentation
-- High Test Coverage
-- Easy Customization
-- Long-term Maintainability
-
----
-
-# Versioning Strategy
-
-Future releases will follow Semantic Versioning.
-
-```
-Major   → Breaking Changes
-
-Minor   → New Features
-
-Patch   → Bug Fixes
-```
-
----
-
-# Contributing
-
-Future contributions should prioritize:
+This project prioritizes:
 
 - Clean Architecture
+- Documentation First Development
 - Reusable Components
+- Configurable Business Rules
 - Test Coverage
-- Documentation
-- Backward Compatibility
+- Maintainability
+- Long-term Scalability

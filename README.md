@@ -1,16 +1,18 @@
-# Laravel 13 Starter Template
+# Academic Information System
 
-A modern Laravel 13 starter template built for scalable web applications.
+A modern Academic Information System built with Laravel 13.
 
-This project provides a solid foundation for Laravel development with authentication, role-based authorization, reusable Blade components, repository and service layers, media management, activity logging, settings management, and a clean dashboard UI.
+This project is designed as a scalable school management platform that supports academic operations such as student management, teacher management, class management, learning activities, attendance, assessment, reporting, and future academic integrations.
 
-Designed to help developers start new Laravel projects faster while following maintainable architecture and modern development practices.
+Built on top of a Laravel 13 Enterprise Starter Kit foundation, this project follows modern Laravel development practices including layered architecture, repository pattern, service layer, reusable Blade components, role-based authorization, testing, and maintainable project structure.
+
+The goal of this project is to provide a flexible academic platform that can be adapted for different educational institutions such as elementary schools, junior high schools, senior high schools, and vocational schools.
 
 ---
 
-## ✨ Features
+# ✨ Features
 
-### Authentication
+## Authentication
 
 * Login
 * Logout
@@ -21,79 +23,120 @@ Designed to help developers start new Laravel projects faster while following ma
 * Profile Management
 * Avatar Upload
 
-### Authorization
+---
+
+## Authorization
 
 * Role-Based Access Control (RBAC)
-* Admin & User Roles
-* Custom Role Middleware
+* Permission Management
 * Laravel Policies
+* Custom Role Middleware
 
-### User Management
+---
 
-* Create User
-* Edit User
-* Soft Delete
-* Restore User
-* Force Delete
-* Change Password
-* Export Users to Excel
+## Academic Management
 
-### Media Library
+Planned academic modules include:
 
-* Upload Files
-* Delete Files
-* File Validation
-* Upload Loading State
-* User-owned Media Protection
+* Academic Year Management
+* Semester Management
+* School Structure Management
+* Teacher Management
+* Student Management
+* Class Management
+* Subject Management
+* Learning Assignment Management
 
-### Activity Logs
+---
 
-* User Created
-* User Updated
-* Password Updated
-* User Deleted
-* User Restored
-* User Permanently Deleted
+## Learning Process
 
-### Settings Management
+The learning process is built around the core concept of teaching assignments.
 
-* Application Settings
-* Update Configuration
-* Validation Support
+Future modules include:
 
-### UI Components
+* Teaching Schedule
+* Learning Sessions
+* Attendance Management
+* Assessment Management
+* Grade Calculation
+* Report Generation
 
-* Reusable Blade Components
+---
+
+## Reporting
+
+Planned reporting features:
+
+* Academic Reports
+* Student Reports
+* Attendance Reports
+* Grade Reports
+* PDF Export
+* Excel Export
+* Print Support
+* CSV Export
+
+---
+
+## UI Components
+
+The project uses a reusable design system foundation.
+
+Includes:
+
+* Blade Components
 * Responsive Admin Layout
 * Responsive User Layout
 * Dashboard Components
 * CRUD Components
-* Button Components
 * Form Components
+* Button Components
 * Modal Components
 * Toast Notifications
 * Badge Components
 
-### Architecture
+---
 
-* Repository Pattern
+# 🏗 Architecture
+
+This project follows a layered architecture approach.
+
+Architecture principles:
+
+* Thin Controllers
 * Service Layer
-* Form Request Validation
-* Blade Components
-* Clean Project Structure
+* Repository Layer
+* Dependency Injection
+* Interface-based Programming
+* Separation of Concerns
+* Reusable Components
 
-### Testing
+Main flow:
 
-* Pest PHP
-* Feature Tests
-* Authentication Tests
-* Authorization Tests
-* CRUD Tests
-* Dashboard Tests
+```
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+
+↓
+
+Model
+
+↓
+
+Database
+```
 
 ---
 
-## 🛠 Tech Stack
+# 🛠 Tech Stack
 
 * PHP 8.3+
 * Laravel 13
@@ -105,7 +148,9 @@ Designed to help developers start new Laravel projects faster while following ma
 
 ---
 
-## 📦 Packages
+# 📦 Packages
+
+Core packages inherited from the Laravel Starter Kit:
 
 * spatie/laravel-permission
 * spatie/laravel-activitylog
@@ -115,7 +160,7 @@ Designed to help developers start new Laravel projects faster while following ma
 
 ---
 
-## 🚀 Installation
+# 🚀 Installation
 
 ```bash
 git clone <repository-url>
@@ -141,49 +186,84 @@ php artisan serve
 
 ---
 
-## 🔐 Demo Account
+# 👥 Target Users
 
-### Administrator
+The system is designed for educational institutions with users such as:
 
-| Email                                     | Password  |
-| ----------------------------------------- | --------- |
-| [admin@gmail.com](mailto:admin@gmail.com) | 123456789 |
+## Super Administrator
 
----
+Responsible for:
 
-## 📁 Project Structure
-
-```
-app/
-├── Http/
-├── Models/
-├── Policies/
-├── Providers/
-├── Repositories/
-├── Services/
-└── View/
-
-database/
-resources/
-routes/
-tests/
-```
+* System configuration
+* Role management
+* Permission management
 
 ---
 
-## 📚 Documentation
+## Academic Administrator
+
+Responsible for:
+
+* Academic setup
+* Teacher management
+* Student management
+* Class management
+
+---
+
+## Teacher
+
+Responsible for:
+
+* Learning activities
+* Attendance
+* Assessment
+
+---
+
+## Homeroom Teacher
+
+Responsible for:
+
+* Student monitoring
+* Academic review
+* Report preparation
+
+---
+
+## Principal
+
+Responsible for:
+
+* Monitoring
+* Academic reports
+* School statistics
+
+---
+
+# 📚 Documentation
 
 Detailed documentation is available inside the `docs` directory.
 
+Current documentation:
+
 * Installation Guide
-* Project Architecture
-* Blade Components
+* Architecture Guide
+* Blade Components Guide
 * Testing Guide
 * Project Roadmap
 
+Academic System documentation:
+
+* Product Definition
+* Business Flow
+* Use Case
+* Functional Requirements
+* Database Design
+
 ---
 
-## 🧪 Running Tests
+# 🧪 Running Tests
 
 ```bash
 php artisan test
@@ -197,6 +277,6 @@ composer test
 
 ---
 
-## 📄 License
+# 📄 License
 
 This project is open-sourced under the MIT License.
