@@ -1,417 +1,418 @@
-# Architecture
+# Academic Information System Architecture
 
-This project follows a lightweight layered architecture built on top of Laravel 13.
+This document describes the architecture approach used by the Academic Information System.
 
-The goal is to keep Controllers thin, isolate business logic inside Services, and centralize database operations inside Repositories.
+The system is built on top of the Laravel 13 Enterprise Starter Kit foundation and follows a scalable layered architecture approach.
+
+The goal is to create a maintainable system where each academic module can grow independently while maintaining consistency.
 
 ---
 
-# Architecture Overview
+# 1. Relationship Between Starter Kit and AIS
+
+Academic Information System is not built from zero.
+
+The project uses Laravel 13 Enterprise Starter Kit as its technical foundation.
+
+Starter Kit provides:
+
+* Authentication
+* Authorization
+* Repository Pattern
+* Service Layer
+* Blade Component System
+* Testing Foundation
+* Documentation Structure
+
+AIS extends this foundation by adding academic-specific domains:
+
+```
+Laravel 13 Enterprise Starter Kit
+
+            │
+
+            ▼
+
+Academic Information System
+
+            │
+
+            ├── Academic Management
+            ├── Student Management
+            ├── Teacher Management
+            ├── Learning Management
+            ├── Attendance Management
+            ├── Assessment Management
+            └── Reporting System
+```
+
+---
+
+# 2. Architecture Overview
+
+The system follows a layered architecture:
 
 ```
 Request
+
     │
+
     ▼
+
 Route
+
     │
+
     ▼
+
 Controller
+
     │
+
     ▼
+
 Service
+
     │
+
     ▼
+
 Repository
+
     │
+
     ▼
-Eloquent Model
+
+Model
+
     │
+
     ▼
+
 Database
 ```
 
-Each layer has a single responsibility.
+Each layer has a specific responsibility.
 
 ---
 
-# Folder Structure
-
-```
-app
-├── Exports
-├── Http
-│   ├── Controllers
-│   ├── Middleware
-│   └── Requests
-├── Models
-├── Policies
-├── Providers
-├── Repositories
-│   ├── Contracts
-│   └── Eloquent
-├── Services
-│   └── Contracts
-└── View
-```
-
----
-
-# Layer Responsibilities
+# 3. Layer Responsibilities
 
 ## Controllers
 
-Controllers should stay as small as possible.
+Controllers handle application requests.
 
 Responsibilities:
 
-- Authorization
-- Request Validation
-- Call Service
-- Return Response
+* Authorization
+* Request handling
+* Validation request execution
+* Calling services
+* Returning responses
 
-Avoid putting business logic inside controllers.
+Controllers should remain thin.
 
 Example:
 
 ```
-Controller
-    ↓
-UserService
+StudentController
+
+        ↓
+
+StudentService
 ```
+
+Business logic should not exist inside controllers.
 
 ---
 
-## Services
+# 4. Services
 
-Services contain business logic.
+Services contain business rules.
 
 Responsibilities:
 
-- Business rules
-- Validation beyond Form Requests
-- Transaction management
-- Activity Logging
-- Calling repositories
-- Returning responses
+* Academic business logic
+* Transaction handling
+* Process orchestration
+* Calling repositories
+* Activity logging
+* Complex operations
 
-Services should not directly access the database.
+Example:
 
-Instead they communicate through repositories.
+Student registration process:
 
 ```
-Controller
-      ↓
-Service
-      ↓
-Repository
+StudentService
+
+    ├── Create Student
+
+    ├── Assign Class
+
+    ├── Create Academic Relation
+
+    └── Record Activity
 ```
 
 ---
 
-## Repositories
+# 5. Repositories
 
-Repositories encapsulate data access.
+Repositories handle data access.
 
 Responsibilities:
 
-- Database queries
-- Eloquent relationships
-- Pagination
-- Search
-- Filters
+* Database queries
+* Filtering
+* Searching
+* Pagination
+* Eloquent relationships
 
-Repositories should never contain business logic.
-
-Good example:
+Example:
 
 ```
-UserRepository
+StudentRepository
 
-findById()
+    ├── findById()
 
-findByEmail()
+    ├── search()
 
-query()
+    ├── getActiveStudents()
 
-queryTrashed()
+    └── getStudentsByClass()
 ```
 
-Bad example:
-
-```
-createAdmin()
-
-sendEmail()
-
-assignRole()
-```
-
-Those belong inside Services.
+Repositories should not contain business rules.
 
 ---
 
-## Models
+# 6. Domain-Oriented Growth
+
+Although the system uses layered architecture, modules should grow based on business domains.
+
+Future structure:
+
+```
+app/
+
+├── Modules/
+
+│
+
+├── Academic/
+
+│   ├── Controllers
+
+│   ├── Services
+
+│   ├── Repositories
+
+│   ├── Models
+
+│   └── Requests
+
+│
+
+├── Student/
+
+│
+
+├── Teacher/
+
+│
+
+├── Attendance/
+
+│
+
+└── Assessment/
+```
+
+The goal is keeping each domain isolated as the application grows.
+
+---
+
+# 7. Module Architecture
+
+Each module follows the same pattern.
+
+Example:
+
+Student Management:
+
+```
+StudentController
+
+        ↓
+
+StudentService
+
+        ↓
+
+StudentRepository
+
+        ↓
+
+Student Model
+
+        ↓
+
+Database
+```
+
+Example:
+
+Attendance Management:
+
+```
+AttendanceController
+
+        ↓
+
+AttendanceService
+
+        ↓
+
+AttendanceRepository
+
+        ↓
+
+Attendance Model
+
+        ↓
+
+Database
+```
+
+---
+
+# 8. Database Responsibility
 
 Models represent database entities.
 
 Responsibilities:
 
-- Relationships
-- Casts
-- Accessors
-- Mutators
-- Media Collections
+* Relationships
+* Casts
+* Accessors
+* Mutators
+* Media collections
 
-Avoid placing application logic inside models.
-
----
-
-## Requests
-
-Form Requests handle validation.
-
-Responsibilities:
-
-- Validation rules
-- Authorization
-
-Business logic belongs inside Services.
+Models should not contain complex business processes.
 
 ---
 
-## Policies
+# 9. Authorization Architecture
 
-Policies control permissions.
+The system uses Role Based Access Control.
 
-Controllers should always authorize actions before calling Services.
-
-Example:
+Initial roles:
 
 ```
-$this->authorize('update', $user);
+Administrator
+
+Teacher
+
+Student
 ```
 
----
-
-# Dependency Injection
-
-Services and Repositories use interfaces.
-
-Example
+Authorization flow:
 
 ```
-UserController
+Request
 
-↓
+    ↓
 
-UserServiceInterface
+Middleware
 
-↓
+    ↓
 
-UserService
+Policy
 
-↓
+    ↓
 
-UserRepositoryInterface
-
-↓
-
-UserRepository
-```
-
-Bindings are registered inside:
-
-```
-RepositoryServiceProvider
-```
-
-Benefits:
-
-- Loose coupling
-
-- Easier testing
-
-- Replace implementations easily
-
----
-
-# Repository Pattern
-
-Repositories abstract Eloquent from the application.
-
-Instead of:
-
-```
 Controller
 
-↓
+    ↓
 
-User::query()
+Service
 ```
 
-Use:
-
-```
-Controller
-
-↓
-
-UserService
-
-↓
-
-UserRepository
-
-↓
-
-User Model
-```
-
-This keeps Controllers independent from database implementation.
+Permission management uses Spatie Permission.
 
 ---
 
-# Service Pattern
+# 10. Documentation First Development
 
-Business logic belongs inside Services.
+Development follows documentation-first principles.
 
-Example:
+Before creating a module:
 
-Creating a user requires:
+```
+Business Flow
 
-- Create User
+        ↓
 
-- Assign Role
+Use Case
 
-- Activity Log
+        ↓
 
-- Redirect
+Functional Requirement
 
-All of those happen inside UserService.
+        ↓
+
+Database Design
+
+        ↓
+
+Implementation
+
+        ↓
+
+Testing
+```
+
+This prevents building features without clear requirements.
 
 ---
 
-# Current Modules
+# 11. Design Principles
 
-Current implementation includes:
+The project follows:
 
-- Authentication
-- Authorization
-- User Management
-- Activity Logs
-- Media Library
-- Settings
-- User Dashboard
-- Admin Dashboard
-
-Each module follows the same layered architecture.
-
----
-
-# Request Lifecycle
-
-Example:
-
-```
-Browser
-
-↓
-
-Route
-
-↓
-
-UserController
-
-↓
-
-StoreUserRequest
-
-↓
-
-UserService
-
-↓
-
-UserRepository
-
-↓
-
-User Model
-
-↓
-
-Database
-
-↓
-
-Redirect Response
-```
+* Thin Controllers
+* Service Layer
+* Repository Pattern
+* Dependency Injection
+* Separation of Concerns
+* Single Responsibility Principle
+* Reusable Components
+* Test Driven Improvement
+* Documentation First Development
 
 ---
 
-# Design Principles
+# 12. Future Expansion
 
-This project follows several principles:
-
-- Thin Controllers
-
-- Service Layer
-
-- Repository Layer
-
-- Dependency Injection
-
-- Single Responsibility Principle
-
-- Interface-based Architecture
-
-- Reusable Blade Components
-
-- Separation of Concerns
-
----
-
-# Future Growth
-
-The current architecture is designed so additional modules can follow the same pattern.
-
-Examples:
+The architecture allows future modules:
 
 ```
-Product
+Core Academic System
 
-ProductController
+        │
 
-↓
+        ├── Library
 
-ProductService
+        ├── Finance
 
-↓
+        ├── Parent Portal
 
-ProductRepository
+        ├── Online Learning
 
-↓
+        ├── Communication
 
-Product Model
+        └── Mobile Application
 ```
 
-```
-Order
-
-OrderController
-
-↓
-
-OrderService
-
-↓
-
-OrderRepository
-
-↓
-
-Order Model
-```
-
-This keeps the project consistent as it grows.
+The architecture is designed to support long-term growth without major restructuring.
