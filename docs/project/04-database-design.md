@@ -1,8 +1,10 @@
 # Academic Information System Database Design
 
-This document describes the planned database design for the Academic Information System.
+This document describes the database design foundation for the Academic Information System.
 
-The database design will be created after completing business analysis and functional requirements.
+The design focuses on academic domain modeling and future scalability.
+
+The database structure is designed before implementation to prevent inconsistent data models.
 
 ---
 
@@ -10,65 +12,470 @@ The database design will be created after completing business analysis and funct
 
 The database should support:
 
-* Academic data consistency
-* Historical data tracking
-* Flexible configuration
-* Future module expansion
+- Academic data consistency
+- Historical academic records
+- Flexible configuration
+- Multi-level school implementation
+- Future module expansion
 
 ---
 
-# Planned Core Entities
+# Domain Overview
 
-## Academic Structure
+The system is divided into several domains:
+User Management
 
-Possible entities:
+    |
 
-* Academic Year
-* Semester
-* Class
-* Subject
-* Department
+Academic Structure
 
----
+    |
 
-## User Related
+Learning Process
 
-Possible entities:
+    |
 
-* User
-* Role
-* Permission
-* Teacher
-* Student
+Assessment & Reporting
 
 ---
 
-## Learning Process
+# 1. User Management Domain
 
-Possible entities:
+## User
 
-* Teaching Schedule
-* Learning Session
-* Attendance
-* Assessment
-* Grade
+Purpose:
+
+Stores authentication accounts.
+
+Attributes:
+
+- id
+- name
+- email
+- password
+- role information
+
+Relationship:
+User
+
+has one
+
+Teacher / Student
 
 ---
 
-## Reporting
+## Role & Permission
 
-Possible entities:
+Purpose:
 
-* Academic Report
-* Grade Summary
-* Attendance Summary
+Controls system authorization.
+
+Entities:
+
+- Role
+- Permission
+
+Implementation:
+
+Using Spatie Permission package.
+
+---
+
+# 2. Academic Structure Domain
+
+## Academic Year
+
+Purpose:
+
+Stores academic periods.
+
+Example:
+2026/2027
+
+
+Relationship:
+
+
+Academic Year
+
+has many
+
+Semester
+
+---
+
+## Semester
+
+Purpose:
+
+Represents academic term.
+
+Example:
+Odd Semester
+Even Semester
+
+
+Relationship:
+
+
+Semester
+
+belongs to
+
+Academic Year
+
+---
+
+## Department
+
+Purpose:
+
+Stores academic grouping.
+
+Example:
+
+- Science
+- Social
+- Software Engineering
+
+Optional depending on school type.
+
+---
+
+## Class
+
+Purpose:
+
+Represents student learning groups.
+
+Example:
+Class 7A
+Class 10 RPL 1
+
+
+Relationship:
+
+
+Class
+
+belongs to
+
+Academic Year
+
+Class
+
+has many
+
+Students
+
+---
+
+## Subject
+
+Purpose:
+
+Stores learning subjects.
+
+Example:
+
+- Mathematics
+- Science
+- Programming
+
+---
+
+# 3. Student Domain
+
+## Student
+
+Purpose:
+
+Stores student identity information.
+
+Attributes:
+
+- id
+- student_number
+- name
+- birth_date
+- gender
+
+Relationship:
+Student
+
+belongs to
+
+Class
+
+Student
+
+has many
+
+Attendance Records
+
+Student
+
+has many
+
+Scores
+
+---
+
+# 4. Teacher Domain
+
+## Teacher
+
+Purpose:
+
+Stores teacher information.
+
+Attributes:
+
+- id
+- employee_number
+- name
+
+Relationship:
+Teacher
+
+belongs to
+
+User
+
+Teacher
+
+has many
+
+Teaching Assignments
+
+---
+
+# 5. Learning Process Domain
+
+## Teaching Assignment
+
+Purpose:
+
+Defines teacher responsibility.
+
+Relationship:
+Teacher
+
+teaches
+
+Subject
+
+for
+
+Class
+
+---
+
+## Teaching Schedule
+
+Purpose:
+
+Stores learning timetable.
+
+Relationship:
+Schedule
+
+belongs to
+
+Teaching Assignment
+
+---
+
+## Learning Session
+
+Purpose:
+
+Represents actual classroom activity.
+
+Example:
+Mathematics
+
+Class 7A
+
+Monday 08:00
+
+
+Relationship:
+
+
+Learning Session
+
+belongs to
+
+Schedule
+
+---
+
+# 6. Attendance Domain
+
+## Attendance
+
+Purpose:
+
+Stores student attendance records.
+
+Status example:
+Present
+Absent
+Permission
+Sick
+
+
+Relationship:
+
+
+Learning Session
+
+has many
+
+Attendance
+
+Student
+
+has many
+
+Attendance
+
+---
+
+# 7. Assessment Domain
+
+## Assessment
+
+Purpose:
+
+Defines evaluation activity.
+
+Example:
+Quiz 1
+
+Mid Exam
+
+Final Exam
+
+
+Relationship:
+
+
+Subject
+
+has many
+
+Assessments
+
+---
+
+## Score
+
+Purpose:
+
+Stores student evaluation result.
+
+Relationship:
+Student
+
+has many
+
+Scores
+
+Assessment
+
+has many
+
+Scores
+
+---
+
+# 8. Reporting Domain
+
+## Academic Report
+
+Purpose:
+
+Generates student academic summary.
+
+Contains:
+
+- Grade summary
+- Attendance summary
+- Learning progress
+
+---
+
+# Core Entity Relationship Overview
+AcademicYear
+
+|
+
+Semester
+
+|
+
+Class
+
+|
+
+Student
+
+Teacher
+
+|
+
+TeachingAssignment
+
+|
+
+Schedule
+
+|
+
+LearningSession
+
+|
+
+Attendance
+
+Subject
+
+|
+
+Assessment
+
+|
+
+Score
+
+---
+
+# Future Expansion
+
+The design allows future modules:
+
+- Curriculum Management
+- Digital Learning
+- Library System
+- Finance System
+- Parent Portal
+- Student Admission
+- School Information Dashboard
 
 ---
 
 # Design Status
 
-Database design will be finalized after:
+Completed:
 
-1. Business Flow review
-2. Use Case completion
-3. Functional Requirement definition
+- Core domain identified
+- Main entities identified
+- Initial relationships defined
+
+Next:
+
+- Module dependency analysis
+- Database normalization review
+- Migration planning
