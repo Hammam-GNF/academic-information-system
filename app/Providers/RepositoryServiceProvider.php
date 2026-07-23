@@ -2,20 +2,28 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\AcademicYearRepositoryInterface;
 use App\Repositories\Contracts\MediaRepositoryInterface;
+use App\Repositories\Contracts\SemesterRepositoryInterface;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Eloquent\AcademicYearRepository;
 use App\Repositories\Eloquent\MediaRepository;
+use App\Repositories\Eloquent\SemesterRepository;
 use App\Repositories\Eloquent\SettingRepository;
 use App\Repositories\Eloquent\UserRepository;
+use App\Services\AcademicYearService;
 use App\Services\AuthService;
+use App\Services\Contracts\AcademicYearServiceInterface;
 use App\Services\Contracts\AuthServiceInterface;
 use App\Services\Contracts\MediaServiceInterface;
 use App\Services\Contracts\ProfileServiceInterface;
+use App\Services\Contracts\SemesterServiceInterface;
 use App\Services\Contracts\SettingServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use App\Services\MediaService;
 use App\Services\ProfileService;
+use App\Services\SemesterService;
 use App\Services\SettingService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
@@ -62,6 +70,26 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             MediaServiceInterface::class,
             MediaService::class
+        );
+
+        $this->app->bind(
+            AcademicYearRepositoryInterface::class,
+            AcademicYearRepository::class
+        );
+
+        $this->app->bind(
+            AcademicYearServiceInterface::class,
+            AcademicYearService::class
+        );
+
+        $this->app->bind(
+            SemesterRepositoryInterface::class,
+            SemesterRepository::class
+        );
+
+        $this->app->bind(
+            SemesterServiceInterface::class,
+            SemesterService::class
         );
     }
 
