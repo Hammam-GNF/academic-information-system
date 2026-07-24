@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Models\AcademicYear;
+use App\Models\Classroom;
 use App\Models\Department;
 use App\Models\Grade;
 use App\Models\Semester;
 use App\Models\User;
 use App\Policies\AcademicYearPolicy;
+use App\Policies\ClassroomPolicy;
 use App\Policies\DepartmentPolicy;
 use App\Policies\GradePolicy;
 use App\Policies\SemesterPolicy;
@@ -35,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Semester::class, SemesterPolicy::class);
         Gate::policy(Department::class, DepartmentPolicy::class);
         Gate::policy(Grade::class, GradePolicy::class);
+        Gate::policy(Classroom::class, ClassroomPolicy::class);
     }
 }

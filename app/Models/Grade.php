@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable([
@@ -27,5 +28,10 @@ class Grade extends Model
             'grade_point' => 'decimal:2',
             'is_active' => 'boolean',
         ];
+    }
+
+    public function classrooms(): HasMany
+    {
+        return $this->hasMany(Classroom::class);
     }
 }

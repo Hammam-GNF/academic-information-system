@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\AcademicYearRepositoryInterface;
+use App\Repositories\Contracts\ClassroomRepositoryInterface;
 use App\Repositories\Contracts\DepartmentRepositoryInterface;
 use App\Repositories\Contracts\GradeRepositoryInterface;
 use App\Repositories\Contracts\MediaRepositoryInterface;
@@ -10,6 +11,7 @@ use App\Repositories\Contracts\SemesterRepositoryInterface;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\AcademicYearRepository;
+use App\Repositories\Eloquent\ClassroomRepository;
 use App\Repositories\Eloquent\DepartmentRepository;
 use App\Repositories\Eloquent\GradeRepository;
 use App\Repositories\Eloquent\MediaRepository;
@@ -18,8 +20,10 @@ use App\Repositories\Eloquent\SettingRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Services\AcademicYearService;
 use App\Services\AuthService;
+use App\Services\ClassroomService;
 use App\Services\Contracts\AcademicYearServiceInterface;
 use App\Services\Contracts\AuthServiceInterface;
+use App\Services\Contracts\ClassroomServiceInterface;
 use App\Services\Contracts\DepartmentServiceInterface;
 use App\Services\Contracts\GradeServiceInterface;
 use App\Services\Contracts\MediaServiceInterface;
@@ -118,6 +122,16 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             GradeServiceInterface::class,
             GradeService::class
+        );
+
+        $this->app->bind(
+            ClassroomRepositoryInterface::class,
+            ClassroomRepository::class
+        );
+
+        $this->app->bind(
+            ClassroomServiceInterface::class,
+            ClassroomService::class
         );
     }
 
