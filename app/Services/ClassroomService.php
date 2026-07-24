@@ -29,40 +29,35 @@ class ClassroomService implements ClassroomServiceInterface
 
                 ->editColumn(
                     'department',
-                    fn (Classroom $classroom)
-                        => $classroom->department->name
+                    fn (Classroom $classroom) => $classroom->department->name
                 )
 
                 ->editColumn(
                     'grade',
-                    fn (Classroom $classroom)
-                        => $classroom->grade->name
+                    fn (Classroom $classroom) => $classroom->grade->name
                 )
 
                 ->editColumn(
                     'capacity',
-                    fn (Classroom $classroom)
-                        => number_format($classroom->capacity)
+                    fn (Classroom $classroom) => number_format($classroom->capacity)
                 )
 
                 ->editColumn(
                     'is_active',
-                    fn (Classroom $classroom)
-                        => view(
-                            'components.badges.status',
-                            [
-                                'active' => $classroom->is_active,
-                            ]
-                        )
+                    fn (Classroom $classroom) => view(
+                        'components.badges.status',
+                        [
+                            'active' => $classroom->is_active,
+                        ]
+                    )
                 )
 
                 ->addColumn(
                     'action',
-                    fn (Classroom $classroom)
-                        => view(
-                            'admin.classrooms.datatables.actions',
-                            compact('classroom')
-                        )
+                    fn (Classroom $classroom) => view(
+                        'admin.classrooms.datatables.actions',
+                        compact('classroom')
+                    )
                 )
 
                 ->rawColumns([

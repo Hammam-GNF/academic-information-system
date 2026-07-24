@@ -46,13 +46,12 @@ class AcademicYearService implements AcademicYearServiceInterface
 
                 ->editColumn(
                     'is_active',
-                    fn (AcademicYear $academicYear)
-                        => view(
-                            'components.badges.status',
-                            [
-                                'active' => $academicYear->is_active,
-                            ]
-                        )
+                    fn (AcademicYear $academicYear) => view(
+                        'components.badges.status',
+                        [
+                            'active' => $academicYear->is_active,
+                        ]
+                    )
                 )
 
                 ->addColumn('action', function ($academicYear) {

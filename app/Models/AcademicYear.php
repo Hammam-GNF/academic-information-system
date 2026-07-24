@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'name',
     'start_date',
     'end_date',
-    'is_active'
+    'is_active',
 ])]
 class AcademicYear extends Model
 {

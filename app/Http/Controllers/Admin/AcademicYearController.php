@@ -25,7 +25,7 @@ class AcademicYearController extends Controller
     public function create()
     {
         $this->authorize('create', AcademicYear::class);
-        
+
         return view('admin.academic-years.create');
     }
 

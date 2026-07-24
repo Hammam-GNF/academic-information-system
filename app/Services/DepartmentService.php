@@ -47,13 +47,12 @@ class DepartmentService implements DepartmentServiceInterface
 
                 ->editColumn(
                     'is_active',
-                    fn (Department $department)
-                        => view(
-                            'components.badges.status',
-                            [
-                                'active' => $department->is_active,
-                            ]
-                        )
+                    fn (Department $department) => view(
+                        'components.badges.status',
+                        [
+                            'active' => $department->is_active,
+                        ]
+                    )
                 )
 
                 ->addColumn('action', function ($department) {

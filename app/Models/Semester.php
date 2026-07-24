@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'name',
     'start_date',
     'end_date',
-    'is_active'
+    'is_active',
 ])]
 class Semester extends Model
 {

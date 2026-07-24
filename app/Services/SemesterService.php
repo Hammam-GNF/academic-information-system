@@ -50,13 +50,12 @@ class SemesterService implements SemesterServiceInterface
 
                 ->editColumn(
                     'is_active',
-                    fn (Semester $semester)
-                        => view(
-                            'components.badges.status',
-                            [
-                                'active' => $semester->is_active,
-                            ]
-                        )
+                    fn (Semester $semester) => view(
+                        'components.badges.status',
+                        [
+                            'active' => $semester->is_active,
+                        ]
+                    )
                 )
 
                 ->addColumn('action', function ($semester) {

@@ -263,8 +263,11 @@
                 </a>
 
                 <a
-                    href="#"
-                    class="cursor-not-allowed rounded-lg px-3 py-2 text-gray-400 flex"
+                    href="{{ route('admin.subjects.index') }}"
+                    class="{{ request()->routeIs('admin.subjects.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex rounded-lg px-3 py-2 transition"
                 >
                     Subjects
                 </a>
