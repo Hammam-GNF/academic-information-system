@@ -45,13 +45,16 @@ class DepartmentService implements DepartmentServiceInterface
             )
                 ->addIndexColumn()
 
-                ->editColumn('is_active', function ($department) {
-
-                    return $department->is_active
-                        ? 'Active'
-                        : 'Inactive';
-
-                })
+                ->editColumn(
+                    'is_active',
+                    fn (Department $department)
+                        => view(
+                            'components.badges.status',
+                            [
+                                'active' => $department->is_active,
+                            ]
+                        )
+                )
 
                 ->addColumn('action', function ($department) {
 

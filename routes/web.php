@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\GradeController;
@@ -73,6 +74,8 @@ Route::prefix('admin')
         Route::resource('departments', DepartmentController::class);
 
         Route::resource('grades', GradeController::class);
+
+        Route::resource('classrooms', ClassroomController::class);
 
         Route::get('users/{user}/change-password', [UserController::class, 'changePassword'])
             ->name('users.change-password');

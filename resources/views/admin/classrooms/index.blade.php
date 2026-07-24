@@ -1,23 +1,23 @@
 <x-app-layout>
 
     <x-slot name="header">
-        Semester Management
+        Classroom Management
     </x-slot>
 
     <x-crud.page
-        title="Semester Management"
-        description="Manage academic semesters."
+        title="Classroom Management"
+        description="Manage classrooms used by the academic information system."
     >
 
         <x-slot name="actions">
 
-            @can('create', App\Models\Semester::class)
+            @can('create', App\Models\Classroom::class)
 
                 <a
-                    href="{{ route('admin.semesters.create') }}"
+                    href="{{ route('admin.classrooms.create') }}"
                     class="btn btn-primary"
                 >
-                    Create Semester
+                    Create Classroom
                 </a>
 
             @endcan
@@ -27,7 +27,7 @@
         <x-crud.table-card>
 
             <table
-                id="semesters-table"
+                id="classrooms-table"
                 class="table"
             >
 
@@ -40,11 +40,19 @@
                         </th>
 
                         <th class="table-th">
-                            Academic Year
+                            Department
                         </th>
 
                         <th class="table-th">
-                            Name
+                            Grade
+                        </th>
+
+                        <th class="table-th">
+                            Classroom
+                        </th>
+
+                        <th class="table-th">
+                            Capacity
                         </th>
 
                         <th class="table-th">
@@ -68,9 +76,9 @@
     </x-crud.page>
 
     <x-modals.confirm-modal
-        name="confirm-delete-semester"
-        title="Delete Semester"
-        message="Are you sure you want to delete this semester?"
+        name="confirm-delete-classroom"
+        title="Delete Classroom"
+        message="Are you sure you want to delete this classroom?"
         method="DELETE"
         submit-text="Delete"
     />
@@ -94,13 +102,13 @@
 
             $(function () {
 
-                $('#semesters-table').DataTable({
+                $('#classrooms-table').DataTable({
 
                     processing: true,
 
                     serverSide: true,
 
-                    ajax: '{{ route('admin.semesters.index') }}',
+                    ajax: '{{ route("admin.classrooms.index") }}',
 
                     columns: [
 
@@ -108,32 +116,42 @@
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
                             searchable: false,
-                            orderable: false,
+                            orderable: false
                         },
 
                         {
-                            data: 'academic_year',
-                            name: 'academicYear.name',
+                            data: 'department',
+                            name: 'department.name'
+                        },
+
+                        {
+                            data: 'grade',
+                            name: 'grade.name'
                         },
 
                         {
                             data: 'name',
-                            name: 'name',
+                            name: 'name'
+                        },
+
+                        {
+                            data: 'capacity',
+                            name: 'capacity'
                         },
 
                         {
                             data: 'is_active',
-                            name: 'is_active',
+                            name: 'is_active'
                         },
 
                         {
                             data: 'action',
                             name: 'action',
                             searchable: false,
-                            orderable: false,
-                        },
+                            orderable: false
+                        }
 
-                    ],
+                    ]
 
                 });
 
@@ -141,17 +159,19 @@
 
             $(document).on(
                 'click',
-                '.delete-semester-btn',
+                '.delete-classroom-btn',
                 function () {
 
-                    $('#confirm-delete-semester-form')
-                        .attr('action', $(this).data('url'));
+                    let action = $(this).data('url');
+
+                    $('#confirm-delete-classroom-form')
+                        .attr('action', action);
 
                     window.dispatchEvent(
                         new CustomEvent(
                             'open-modal',
                             {
-                                detail: 'confirm-delete-semester',
+                                detail: 'confirm-delete-classroom'
                             }
                         )
                     );

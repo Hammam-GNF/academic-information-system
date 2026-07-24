@@ -48,11 +48,16 @@ class SemesterService implements SemesterServiceInterface
                     return $semester->academicYear?->name ?? '-';
                 })
 
-                ->editColumn('status', function ($semester) {
-                    return $semester->is_active
-                        ? 'Active'
-                        : 'Inactive';
-                })
+                ->editColumn(
+                    'is_active',
+                    fn (Semester $semester)
+                        => view(
+                            'components.badges.status',
+                            [
+                                'active' => $semester->is_active,
+                            ]
+                        )
+                )
 
                 ->addColumn('action', function ($semester) {
                     return view(
