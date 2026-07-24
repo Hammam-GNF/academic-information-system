@@ -44,6 +44,18 @@ class AcademicYearService implements AcademicYearServiceInterface
                 ->addIndexColumn()
 
                 ->editColumn(
+                    'start_date',
+                    fn (AcademicYear $academicYear)
+                        => $academicYear->formatted_start_date
+                )
+
+                ->editColumn(
+                    'end_date',
+                    fn (AcademicYear $academicYear)
+                        => $academicYear->formatted_end_date
+                )
+
+                ->editColumn(
                     'is_active',
                     fn (AcademicYear $academicYear) => view(
                         'components.badges.status',

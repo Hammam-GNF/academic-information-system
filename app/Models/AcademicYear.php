@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class AcademicYear extends Model
 {
     use HasFactory;
-    
+
     /**
      * Get the attributes that should be cast.
      *
@@ -29,6 +29,22 @@ class AcademicYear extends Model
             'end_date' => 'date',
             'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Get the formatted start date.
+     */
+    public function getFormattedStartDateAttribute(): string
+    {
+        return $this->start_date->format('d M Y');
+    }
+
+    /**
+     * Get the formatted end date.
+     */
+    public function getFormattedEndDateAttribute(): string
+    {
+        return $this->end_date->format('d M Y');
     }
 
     /**
