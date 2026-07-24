@@ -6,6 +6,7 @@ use App\Models\AcademicYear;
 use App\Repositories\Contracts\AcademicYearRepositoryInterface;
 use App\Services\Contracts\AcademicYearServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class AcademicYearService implements AcademicYearServiceInterface
         return $this->academicYearRepository->findById($id);
     }
 
-    public function getActive(): ?AcademicYear
+    public function getActive(): Collection
     {
         return $this->academicYearRepository->getActive();
     }
@@ -39,9 +40,7 @@ class AcademicYearService implements AcademicYearServiceInterface
     {
         if ($request->ajax()) {
 
-            return DataTables::of(
-                $this->academicYearRepository->query()
-            )
+            return DataTables::of($this->query())
                 ->addIndexColumn()
 
                 ->editColumn(
@@ -54,18 +53,19 @@ class AcademicYearService implements AcademicYearServiceInterface
                     )
                 )
 
-                ->addColumn('action', function ($academicYear) {
-
-                    return view(
+                ->addColumn(
+                    'action',
+                    fn (AcademicYear $academicYear) => view(
                         'admin.academic-years.datatables.actions',
                         compact('academicYear')
-                    )->render();
-
-                })
+                    )->render()
+                )
 
                 ->rawColumns([
+                    'is_active',
                     'action',
                 ])
+
                 ->make(true);
         }
 
@@ -131,9 +131,7 @@ class AcademicYearService implements AcademicYearServiceInterface
             ])
             ->log('Academic year has been deleted.');
 
-        $this->academicYearRepository->delete(
-            $academicYear
-        );
+        $this->academicYearRepository->delete($academicYear);
 
         return Redirect::route('admin.academic-years.index')
             ->with(

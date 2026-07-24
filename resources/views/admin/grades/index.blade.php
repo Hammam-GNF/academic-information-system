@@ -26,37 +26,16 @@
 
         <x-crud.table-card>
 
-            <table
-                id="grades-table"
-                class="table"
-            >
+            <table id="grades-table" class="table">
 
                 <thead class="table-head">
-
                     <tr>
-
-                        <th class="table-th">
-                            No
-                        </th>
-
-                        <th class="table-th">
-                            Code
-                        </th>
-
-                        <th class="table-th">
-                            Name
-                        </th>
-
-                        <th class="table-th">
-                            Grade Point
-                        </th>
-
-                        <th class="table-th">
-                            Action
-                        </th>
-
+                        <th class="table-th">No</th>
+                        <th class="table-th">Code</th>
+                        <th class="table-th">Name</th>
+                        <th class="table-th">Grade Point</th>
+                        <th class="table-th">Action</th>
                     </tr>
-
                 </thead>
 
                 <tbody></tbody>
@@ -67,6 +46,10 @@
 
     </x-crud.page>
 
+    @push('styles')
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    @endpush
+
     <x-modals.confirm-modal
         name="confirm-delete-grade"
         title="Delete Grade"
@@ -75,96 +58,63 @@
         submit-text="Delete"
     />
 
-    @push('styles')
-
-        <link
-            rel="stylesheet"
-            href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
-        >
-
-    @endpush
-
     @push('scripts')
-
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
         <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
         <script>
-
             $(function () {
 
-                $('#grades-table').DataTable({
-
+                let table = $('#grades-table').DataTable({
                     processing: true,
-
                     serverSide: true,
 
                     ajax: '{{ route("admin.grades.index") }}',
 
                     columns: [
-
                         {
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
                             searchable: false,
                             orderable: false
                         },
-
                         {
                             data: 'code',
                             name: 'code'
                         },
-
                         {
                             data: 'name',
                             name: 'name'
                         },
-
                         {
                             data: 'grade_point',
                             name: 'grade_point'
                         },
-
                         {
                             data: 'action',
                             name: 'action',
                             searchable: false,
                             orderable: false
                         }
-
                     ]
-
                 });
 
             });
 
-            $(document).on(
-                'click',
-                '.delete-grade-btn',
-                function () {
+            $(document).on('click', '.delete-grade-btn', function () {
 
-                    let action = $(this).data('url');
+                let action = $(this).data('url');
 
-                    $('#confirm-delete-grade-form')
-                        .attr('action', action);
+                $('#confirm-delete-grade-form').attr('action', action);
 
-                    window.dispatchEvent(
+                window.dispatchEvent(
+                    new CustomEvent('open-modal', {
+                        detail: 'confirm-delete-grade'
+                    })
+                );
 
-                        new CustomEvent(
-                            'open-modal',
-                            {
-                                detail: 'confirm-delete-grade'
-                            }
-                        )
-
-                    );
-
-                }
-            );
-
+            });
         </script>
-
     @endpush
 
 </x-app-layout>

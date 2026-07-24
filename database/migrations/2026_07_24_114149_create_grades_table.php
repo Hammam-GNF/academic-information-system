@@ -20,14 +20,9 @@ return new class extends Migration
             $table->string('name', 100);
 
             $table->unsignedTinyInteger('minimum_score');
-
             $table->unsignedTinyInteger('maximum_score');
 
-            $table->decimal(
-                'grade_point',
-                3,
-                2
-            );
+            $table->decimal('grade_point', 3, 2);
 
             $table->text('description')
                 ->nullable();
@@ -35,9 +30,8 @@ return new class extends Migration
             $table->boolean('is_active')
                 ->default(true);
 
-            $table->timestamps();
-
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClassroomService implements ClassroomServiceInterface
@@ -17,29 +21,46 @@ class ClassroomService implements ClassroomServiceInterface
         protected ClassroomRepositoryInterface $classroomRepository,
     ) {}
 
-    public function index(Request $request)
+    public function query(): Builder
+    {
+        return $this->classroomRepository->query();
+    }
+
+    public function findById(int $id): ?Classroom
+    {
+        return $this->classroomRepository->findById($id);
+    }
+
+    public function getActive(): Collection
+    {
+        return $this->classroomRepository->getActive();
+    }
+
+    public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
 
             return DataTables::of(
                 $this->query()
             )
-
                 ->addIndexColumn()
 
                 ->editColumn(
                     'department',
-                    fn (Classroom $classroom) => $classroom->department->name
+                    fn (Classroom $classroom)
+                        => $classroom->department?->name ?? '-'
                 )
 
                 ->editColumn(
                     'grade',
-                    fn (Classroom $classroom) => $classroom->grade->name
+                    fn (Classroom $classroom)
+                        => $classroom->grade?->name ?? '-'
                 )
 
                 ->editColumn(
                     'capacity',
-                    fn (Classroom $classroom) => number_format($classroom->capacity)
+                    fn (Classroom $classroom)
+                        => number_format($classroom->capacity)
                 )
 
                 ->editColumn(
@@ -57,7 +78,7 @@ class ClassroomService implements ClassroomServiceInterface
                     fn (Classroom $classroom) => view(
                         'admin.classrooms.datatables.actions',
                         compact('classroom')
-                    )
+                    )->render()
                 )
 
                 ->rawColumns([
@@ -68,17 +89,23 @@ class ClassroomService implements ClassroomServiceInterface
                 ->make(true);
         }
 
-        return view(
-            'admin.classrooms.index'
-        );
+        return view('admin.classrooms.index');
     }
 
     public function create(array $data): RedirectResponse
     {
-        Classroom::create($data);
+        $classroom = $this->classroomRepository->create($data);
 
-        return redirect()
-            ->route('admin.classrooms.index')
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($classroom)
+            ->event('created')
+            ->withProperties([
+                'name' => $classroom->name,
+            ])
+            ->log('Classroom has been created.');
+
+        return Redirect::route('admin.classrooms.index')
             ->with(
                 'success',
                 'Classroom created successfully.'
@@ -90,10 +117,21 @@ class ClassroomService implements ClassroomServiceInterface
         array $data
     ): RedirectResponse {
 
-        $classroom->update($data);
+        $updated = $this->classroomRepository->update(
+            $classroom,
+            $data
+        );
 
-        return redirect()
-            ->route('admin.classrooms.index')
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($updated)
+            ->event('updated')
+            ->withProperties([
+                'name' => $updated->name,
+            ])
+            ->log('Classroom has been updated.');
+
+        return Redirect::route('admin.classrooms.index')
             ->with(
                 'success',
                 'Classroom updated successfully.'
@@ -104,28 +142,23 @@ class ClassroomService implements ClassroomServiceInterface
         Classroom $classroom
     ): RedirectResponse {
 
-        $classroom->delete();
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($classroom)
+            ->event('deleted')
+            ->withProperties([
+                'name' => $classroom->name,
+            ])
+            ->log('Classroom has been deleted.');
 
-        return redirect()
-            ->route('admin.classrooms.index')
+        $this->classroomRepository->delete(
+            $classroom
+        );
+
+        return Redirect::route('admin.classrooms.index')
             ->with(
                 'success',
                 'Classroom deleted successfully.'
             );
-    }
-
-    public function query(): Builder
-    {
-        return $this->classroomRepository->query();
-    }
-
-    public function findById(int $id): ?Classroom
-    {
-        return $this->classroomRepository->findById($id);
-    }
-
-    public function getActive(): Collection
-    {
-        return $this->classroomRepository->getActive();
     }
 }

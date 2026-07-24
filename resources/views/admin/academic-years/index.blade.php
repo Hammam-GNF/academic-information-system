@@ -40,7 +40,7 @@
                         </th>
 
                         <th class="table-th">
-                            Name
+                            Academic Year
                         </th>
 
                         <th class="table-th">
@@ -71,6 +71,13 @@
 
     </x-crud.page>
 
+    @push('styles')
+        <link
+            rel="stylesheet"
+            href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
+        >
+    @endpush
+
     <x-modals.confirm-modal
         name="confirm-delete-academic-year"
         title="Delete Academic Year"
@@ -78,15 +85,6 @@
         method="DELETE"
         submit-text="Delete"
     />
-
-    @push('styles')
-
-        <link
-            rel="stylesheet"
-            href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
-        >
-
-    @endpush
 
     @push('scripts')
 
@@ -98,10 +96,9 @@
 
             $(function () {
 
-                let table = $('#academic-years-table').DataTable({
+                $('#academic-years-table').DataTable({
 
                     processing: true,
-
                     serverSide: true,
 
                     ajax: '{{ route("admin.academic-years.index") }}',
@@ -159,14 +156,12 @@
                         .attr('action', action);
 
                     window.dispatchEvent(
-
                         new CustomEvent(
                             'open-modal',
                             {
                                 detail: 'confirm-delete-academic-year'
                             }
                         )
-
                     );
 
                 }

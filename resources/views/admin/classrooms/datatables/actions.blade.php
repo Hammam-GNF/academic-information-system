@@ -4,7 +4,7 @@
 
         <a
             href="{{ route('admin.classrooms.edit', $classroom) }}"
-            class="btn btn-sm btn-secondary"
+            class="btn btn-primary"
         >
             Edit
         </a>
@@ -15,7 +15,7 @@
 
         <button
             type="button"
-            class="btn btn-sm btn-danger delete-classroom-btn"
+            class="btn btn-danger delete-classroom-btn"
             data-url="{{ route('admin.classrooms.destroy', $classroom) }}"
         >
             Delete

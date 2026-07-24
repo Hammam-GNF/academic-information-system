@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreSubjectRequest;
 use App\Http\Requests\Admin\UpdateSubjectRequest;
-use App\Models\Department;
 use App\Models\Subject;
+use App\Services\Contracts\DepartmentServiceInterface;
 use App\Services\Contracts\SubjectServiceInterface;
 use Illuminate\Http\Request;
 
@@ -14,6 +14,7 @@ class SubjectController extends Controller
 {
     public function __construct(
         protected SubjectServiceInterface $subjectService,
+        protected DepartmentServiceInterface $departmentService,
     ) {}
 
     public function index(Request $request)
@@ -27,13 +28,12 @@ class SubjectController extends Controller
     {
         $this->authorize('create', Subject::class);
 
+        $departments = $this->departmentService
+            ->getActive();
+
         return view(
             'admin.subjects.create',
-            [
-                'departments' => Department::query()
-                    ->orderBy('name')
-                    ->get(),
-            ]
+            compact('departments')
         );
     }
 
@@ -48,21 +48,21 @@ class SubjectController extends Controller
     {
         $this->authorize('update', $subject);
 
+        $departments = $this->departmentService
+            ->getActive();
+
         return view(
             'admin.subjects.edit',
-            [
-                'subject' => $subject,
-
-                'departments' => Department::query()
-                    ->orderBy('name')
-                    ->get(),
-            ]
+            compact(
+                'subject',
+                'departments'
+            )
         );
     }
 
     public function update(
         UpdateSubjectRequest $request,
-        Subject $subject,
+        Subject $subject
     ) {
         return $this->subjectService->update(
             $subject,

@@ -28,8 +28,8 @@ class SemesterController extends Controller
     {
         $this->authorize('create', Semester::class);
 
-        $academicYears = $this->academicYearService->query()
-            ->get();
+        $academicYears = $this->academicYearService
+            ->getActive();
 
         return view(
             'admin.semesters.create',
@@ -48,8 +48,8 @@ class SemesterController extends Controller
     {
         $this->authorize('update', $semester);
 
-        $academicYears = $this->academicYearService->query()
-            ->get();
+        $academicYears = $this->academicYearService
+            ->getActive();
 
         return view(
             'admin.semesters.edit',

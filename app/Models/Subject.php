@@ -19,18 +19,21 @@ class Subject extends Model
 {
     use SoftDeletes;
 
-    public function department(): BelongsTo
-    {
-        return $this->belongsTo(
-            Department::class
-        );
-    }
-
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [
             'credit_hours' => 'integer',
             'is_active' => 'boolean',
         ];
+    }
+
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
     }
 }

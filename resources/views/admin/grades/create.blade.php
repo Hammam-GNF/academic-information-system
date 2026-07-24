@@ -21,7 +21,7 @@
                 @csrf
 
                 <x-forms.field
-                    label="Code"
+                    label="Grade Code"
                     for="code"
                     :error="$errors->get('code')"
                 >
@@ -32,13 +32,15 @@
                         type="text"
                         class="block w-full"
                         :value="old('code')"
+                        placeholder="A"
                         required
+                        autofocus
                     />
 
                 </x-forms.field>
 
                 <x-forms.field
-                    label="Name"
+                    label="Grade Name"
                     for="name"
                     :error="$errors->get('name')"
                     class="mt-4"
@@ -50,6 +52,7 @@
                         type="text"
                         class="block w-full"
                         :value="old('name')"
+                        placeholder="Excellent"
                         required
                     />
 
@@ -69,7 +72,9 @@
                             type="number"
                             min="0"
                             max="100"
+                            class="block w-full"
                             :value="old('minimum_score')"
+                            placeholder="85"
                             required
                         />
 
@@ -87,7 +92,9 @@
                             type="number"
                             min="0"
                             max="100"
+                            class="block w-full"
                             :value="old('maximum_score')"
+                            placeholder="100"
                             required
                         />
 
@@ -109,7 +116,9 @@
                         step="0.01"
                         min="0"
                         max="4"
+                        class="block w-full"
                         :value="old('grade_point')"
+                        placeholder="4.00"
                         required
                     />
 
@@ -126,6 +135,7 @@
                         id="description"
                         name="description"
                         rows="4"
+                        placeholder="Grade for students with outstanding academic performance."
                     >{{ old('description') }}</x-forms.textarea>
 
                 </x-forms.field>
@@ -140,19 +150,20 @@
                     <x-forms.select
                         id="is_active"
                         name="is_active"
+                        class="block w-full"
                         required
                     >
 
                         <option
                             value="1"
-                            @selected(old('is_active') == '1')
+                            @selected(old('is_active', 1) == 1)
                         >
                             Active
                         </option>
 
                         <option
                             value="0"
-                            @selected(old('is_active') == '0')
+                            @selected(old('is_active') == 0)
                         >
                             Inactive
                         </option>

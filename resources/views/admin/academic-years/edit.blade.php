@@ -48,7 +48,10 @@
                         name="start_date"
                         type="date"
                         class="block w-full"
-                        :value="old('start_date', optional($academicYear->start_date)->format('Y-m-d'))"
+                        :value="old(
+                            'start_date',
+                            optional($academicYear->start_date)->format('Y-m-d')
+                        )"
                         required
                     />
                 </x-forms.field>
@@ -64,7 +67,10 @@
                         name="end_date"
                         type="date"
                         class="block w-full"
-                        :value="old('end_date', optional($academicYear->end_date)->format('Y-m-d'))"
+                        :value="old(
+                            'end_date',
+                            optional($academicYear->end_date)->format('Y-m-d')
+                        )"
                         required
                     />
                 </x-forms.field>

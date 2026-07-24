@@ -45,13 +45,15 @@ class GradeService implements GradeServiceInterface
             )
                 ->addIndexColumn()
 
-                ->editColumn('is_active', function ($grade) {
-
-                    return $grade->is_active
-                        ? 'Active'
-                        : 'Inactive';
-
-                })
+                ->editColumn(
+                    'is_active',
+                    fn (Grade $grade) => view(
+                        'components.badges.status',
+                        [
+                            'active' => $grade->is_active,
+                        ]
+                    )
+                )
 
                 ->addColumn('action', function ($grade) {
 

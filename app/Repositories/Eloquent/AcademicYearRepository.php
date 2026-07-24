@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\AcademicYear;
 use App\Repositories\Contracts\AcademicYearRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class AcademicYearRepository extends BaseRepository implements AcademicYearRepositoryInterface
 {
@@ -22,13 +23,14 @@ class AcademicYearRepository extends BaseRepository implements AcademicYearRepos
 
     public function findById(int $id): ?AcademicYear
     {
-        return $this->query()->find($id);
+        return $this->query()
+            ->find($id);
     }
 
-    public function getActive(): ?AcademicYear
+    public function getActive(): Collection
     {
         return $this->query()
             ->where('is_active', true)
-            ->first();
+            ->get();
     }
 }

@@ -4,7 +4,7 @@
 
         <a
             href="{{ route('admin.academic-years.edit', $academicYear) }}"
-            class="btn btn-sm btn-warning"
+            class="btn btn-primary"
         >
             Edit
         </a>
@@ -15,7 +15,7 @@
 
         <button
             type="button"
-            class="btn btn-sm btn-danger delete-academic-year-btn"
+            class="btn btn-danger delete-academic-year-btn"
             data-url="{{ route('admin.academic-years.destroy', $academicYear) }}"
         >
             Delete

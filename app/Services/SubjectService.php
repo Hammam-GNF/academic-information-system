@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubjectService implements SubjectServiceInterface
@@ -17,24 +21,41 @@ class SubjectService implements SubjectServiceInterface
         protected SubjectRepositoryInterface $subjectRepository,
     ) {}
 
-    public function index(Request $request)
+    public function query(): Builder
+    {
+        return $this->subjectRepository->query();
+    }
+
+
+    public function findById(int $id): ?Subject
+    {
+        return $this->subjectRepository->findById($id);
+    }
+
+    public function getActive(): Collection
+    {
+        return $this->subjectRepository->getActive();
+    }
+
+    public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
 
             return DataTables::of(
                 $this->query()
             )
-
                 ->addIndexColumn()
 
                 ->editColumn(
                     'department',
-                    fn (Subject $subject) => $subject->department->name
+                    fn (Subject $subject)
+                        => $subject->department?->name ?? '-'
                 )
 
                 ->editColumn(
                     'credit_hours',
-                    fn (Subject $subject) => $subject->credit_hours.' SKS'
+                    fn (Subject $subject)
+                        => $subject->credit_hours . ' SKS'
                 )
 
                 ->editColumn(
@@ -52,7 +73,7 @@ class SubjectService implements SubjectServiceInterface
                     fn (Subject $subject) => view(
                         'admin.subjects.datatables.actions',
                         compact('subject')
-                    )
+                    )->render()
                 )
 
                 ->rawColumns([
@@ -63,19 +84,26 @@ class SubjectService implements SubjectServiceInterface
                 ->make(true);
         }
 
-        return view(
-            'admin.subjects.index'
-        );
+        return view('admin.subjects.index');
     }
 
     public function create(
         array $data
     ): RedirectResponse {
 
-        Subject::create($data);
+        $subject = $this->subjectRepository->create($data);
 
-        return redirect()
-            ->route('admin.subjects.index')
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($subject)
+            ->event('created')
+            ->withProperties([
+                'code' => $subject->code,
+                'name' => $subject->name,
+            ])
+            ->log('Subject has been created.');
+
+        return Redirect::route('admin.subjects.index')
             ->with(
                 'success',
                 'Subject created successfully.'
@@ -87,10 +115,22 @@ class SubjectService implements SubjectServiceInterface
         array $data
     ): RedirectResponse {
 
-        $subject->update($data);
+        $updated = $this->subjectRepository->update(
+            $subject,
+            $data
+        );
 
-        return redirect()
-            ->route('admin.subjects.index')
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($updated)
+            ->event('updated')
+            ->withProperties([
+                'code' => $updated->code,
+                'name' => $updated->name,
+            ])
+            ->log('Subject has been updated.');
+
+        return Redirect::route('admin.subjects.index')
             ->with(
                 'success',
                 'Subject updated successfully.'
@@ -101,30 +141,24 @@ class SubjectService implements SubjectServiceInterface
         Subject $subject
     ): RedirectResponse {
 
-        $subject->delete();
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($subject)
+            ->event('deleted')
+            ->withProperties([
+                'code' => $subject->code,
+                'name' => $subject->name,
+            ])
+            ->log('Subject has been deleted.');
 
-        return redirect()
-            ->route('admin.subjects.index')
+        $this->subjectRepository->delete(
+            $subject
+        );
+
+        return Redirect::route('admin.subjects.index')
             ->with(
                 'success',
                 'Subject deleted successfully.'
             );
-    }
-
-    public function query(): Builder
-    {
-        return $this->subjectRepository
-            ->query()
-            ->with('department');
-    }
-
-    public function findById(int $id): ?Subject
-    {
-        return $this->subjectRepository->findById($id);
-    }
-
-    public function getActive(): Collection
-    {
-        return $this->subjectRepository->getActive();
     }
 }

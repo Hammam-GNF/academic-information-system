@@ -34,7 +34,7 @@
                         required
                     >
 
-                        @foreach($departments as $department)
+                        @foreach ($departments as $department)
 
                             <option
                                 value="{{ $department->id }}"
@@ -49,7 +49,6 @@
 
                 </x-forms.field>
 
-
                 <x-forms.field
                     label="Subject Code"
                     for="code"
@@ -63,11 +62,11 @@
                         type="text"
                         class="block w-full"
                         :value="old('code', $subject->code)"
+                        placeholder="e.g. MAT101, BIO201, ENG301"
                         required
                     />
 
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Subject Name"
@@ -82,11 +81,11 @@
                         type="text"
                         class="block w-full"
                         :value="old('name', $subject->name)"
+                        placeholder="e.g. Mathematics, Biology, English"
                         required
                     />
 
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Credit Hours (SKS)"
@@ -103,11 +102,11 @@
                         max="12"
                         class="block w-full"
                         :value="old('credit_hours', $subject->credit_hours)"
+                        placeholder="e.g. 2 or 3"
                         required
                     />
 
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Description"
@@ -116,21 +115,21 @@
                     class="mt-4"
                 >
 
-                    <textarea
+                    <x-forms.textarea
                         id="description"
                         name="description"
                         rows="4"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    >{{ old('description', $subject->description) }}</textarea>
+                        class="block w-full"
+                        placeholder="Enter additional information about this subject (optional)."
+                    >{{ old('description', $subject->description) }}</x-forms.textarea>
 
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Status"
                     for="is_active"
                     :error="$errors->get('is_active')"
-                    class="mt-6"
+                    class="mt-4"
                 >
 
                     <x-forms.select
@@ -142,14 +141,14 @@
 
                         <option
                             value="1"
-                            {{ old('is_active', $subject->is_active) ? 'selected' : '' }}
+                            @selected(old('is_active', $subject->is_active) == 1)
                         >
                             Active
                         </option>
 
                         <option
                             value="0"
-                            {{ !old('is_active', $subject->is_active) ? 'selected' : '' }}
+                            @selected(old('is_active', $subject->is_active) == 0)
                         >
                             Inactive
                         </option>
@@ -157,7 +156,6 @@
                     </x-forms.select>
 
                 </x-forms.field>
-
 
                 <x-crud.form-actions>
 

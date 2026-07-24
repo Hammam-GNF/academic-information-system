@@ -36,8 +36,10 @@ class DepartmentService implements DepartmentServiceInterface
         return $this->departmentRepository->getActive();
     }
 
-    public function index(Request $request): View|JsonResponse
-    {
+    public function index(
+        Request $request
+    ): View|JsonResponse {
+
         if ($request->ajax()) {
 
             return DataTables::of(
@@ -55,16 +57,16 @@ class DepartmentService implements DepartmentServiceInterface
                     )
                 )
 
-                ->addColumn('action', function ($department) {
-
-                    return view(
+                ->addColumn(
+                    'action',
+                    fn (Department $department) => view(
                         'admin.departments.datatables.actions',
                         compact('department')
-                    )->render();
-
-                })
+                    )->render()
+                )
 
                 ->rawColumns([
+                    'is_active',
                     'action',
                 ])
 
@@ -100,18 +102,18 @@ class DepartmentService implements DepartmentServiceInterface
         array $data
     ): RedirectResponse {
 
-        $department = $this->departmentRepository->update(
+        $updated = $this->departmentRepository->update(
             $department,
             $data
         );
 
         activity()
             ->causedBy(Auth::user())
-            ->performedOn($department)
+            ->performedOn($updated)
             ->event('updated')
             ->withProperties([
-                'code' => $department->code,
-                'name' => $department->name,
+                'code' => $updated->code,
+                'name' => $updated->name,
             ])
             ->log('Department has been updated.');
 

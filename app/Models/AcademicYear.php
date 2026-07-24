@@ -14,6 +14,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class AcademicYear extends Model
 {
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [
@@ -23,6 +28,9 @@ class AcademicYear extends Model
         ];
     }
 
+    /**
+     * Get the semesters for the academic year.
+     */
     public function semesters(): HasMany
     {
         return $this->hasMany(Semester::class);

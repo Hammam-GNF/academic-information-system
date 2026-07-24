@@ -25,14 +25,12 @@
                     for="academic_year_id"
                     :error="$errors->get('academic_year_id')"
                 >
-
                     <x-forms.select
                         id="academic_year_id"
                         name="academic_year_id"
                         class="block w-full"
                         required
                     >
-
                         <option value="">
                             Select Academic Year
                         </option>
@@ -49,7 +47,6 @@
                         @endforeach
 
                     </x-forms.select>
-
                 </x-forms.field>
 
                 <x-forms.field
@@ -58,7 +55,6 @@
                     :error="$errors->get('name')"
                     class="mt-4"
                 >
-
                     <x-forms.text-input
                         id="name"
                         name="name"
@@ -66,8 +62,8 @@
                         class="block w-full"
                         :value="old('name')"
                         required
+                        autofocus
                     />
-
                 </x-forms.field>
 
                 <x-forms.field
@@ -108,30 +104,27 @@
                     :error="$errors->get('is_active')"
                     class="mt-4"
                 >
-
                     <x-forms.select
                         id="is_active"
                         name="is_active"
                         class="block w-full"
                         required
                     >
-
-                        <option
-                            value="0"
-                            @selected(old('is_active') == '0')
-                        >
-                            Inactive
-                        </option>
-
                         <option
                             value="1"
-                            @selected(old('is_active') == '1')
+                            @selected(old('is_active') == 1)
                         >
                             Active
                         </option>
 
-                    </x-forms.select>
+                        <option
+                            value="0"
+                            @selected(old('is_active', 0) == 0)
+                        >
+                            Inactive
+                        </option>
 
+                    </x-forms.select>
                 </x-forms.field>
 
                 <x-crud.form-actions>

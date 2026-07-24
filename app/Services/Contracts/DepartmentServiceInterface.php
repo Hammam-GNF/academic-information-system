@@ -18,9 +18,13 @@ interface DepartmentServiceInterface
 
     public function getActive(): Collection;
 
-    public function index(Request $request): View|JsonResponse;
+    public function index(
+        Request $request
+    ): View|JsonResponse;
 
-    public function create(array $data): RedirectResponse;
+    public function create(
+        array $data
+    ): RedirectResponse;
 
     public function update(
         Department $department,

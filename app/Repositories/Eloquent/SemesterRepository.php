@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Semester;
 use App\Repositories\Contracts\SemesterRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class SemesterRepository extends BaseRepository implements SemesterRepositoryInterface
 {
@@ -23,13 +24,14 @@ class SemesterRepository extends BaseRepository implements SemesterRepositoryInt
 
     public function findById(int $id): ?Semester
     {
-        return $this->query()->find($id);
+        return $this->query()
+            ->find($id);
     }
 
-    public function getActive(): ?Semester
+    public function getActive(): Collection
     {
         return $this->query()
             ->where('is_active', true)
-            ->first();
+            ->get();
     }
 }

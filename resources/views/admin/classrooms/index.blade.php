@@ -24,6 +24,20 @@
 
         </x-slot>
 
+        <x-crud.toolbar>
+
+            <x-slot name="start">
+
+                {{-- Reserved for future filters
+                     Department
+                     Grade
+                     Status
+                --}}
+
+            </x-slot>
+
+        </x-crud.toolbar>
+
         <x-crud.table-card>
 
             <table
@@ -157,27 +171,19 @@
 
             });
 
-            $(document).on(
-                'click',
-                '.delete-classroom-btn',
-                function () {
+            $(document).on('click', '.delete-classroom-btn', function () {
 
-                    let action = $(this).data('url');
+                let action = $(this).data('url');
 
-                    $('#confirm-delete-classroom-form')
-                        .attr('action', action);
+                $('#confirm-delete-classroom-form').attr('action', action);
 
-                    window.dispatchEvent(
-                        new CustomEvent(
-                            'open-modal',
-                            {
-                                detail: 'confirm-delete-classroom'
-                            }
-                        )
-                    );
+                window.dispatchEvent(
+                    new CustomEvent('open-modal', {
+                        detail: 'confirm-delete-classroom'
+                    })
+                );
 
-                }
-            );
+            });
 
         </script>
 

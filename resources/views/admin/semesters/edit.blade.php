@@ -26,14 +26,12 @@
                     for="academic_year_id"
                     :error="$errors->get('academic_year_id')"
                 >
-
                     <x-forms.select
                         id="academic_year_id"
                         name="academic_year_id"
                         class="block w-full"
                         required
                     >
-
                         @foreach ($academicYears as $academicYear)
 
                             <option
@@ -51,7 +49,6 @@
                         @endforeach
 
                     </x-forms.select>
-
                 </x-forms.field>
 
                 <x-forms.field
@@ -60,7 +57,6 @@
                     :error="$errors->get('name')"
                     class="mt-4"
                 >
-
                     <x-forms.text-input
                         id="name"
                         name="name"
@@ -68,8 +64,8 @@
                         class="block w-full"
                         :value="old('name', $semester->name)"
                         required
+                        autofocus
                     />
-
                 </x-forms.field>
 
                 <x-forms.field
@@ -83,7 +79,7 @@
                         name="start_date"
                         type="date"
                         class="block w-full"
-                        :value="old('start_date', optional($academicYear->start_date)->format('Y-m-d'))"
+                        :value="old('start_date', optional($semester->start_date)->format('Y-m-d'))"
                         required
                     />
                 </x-forms.field>
@@ -99,7 +95,7 @@
                         name="end_date"
                         type="date"
                         class="block w-full"
-                        :value="old('end_date', optional($academicYear->end_date)->format('Y-m-d'))"
+                        :value="old('end_date', optional($semester->end_date)->format('Y-m-d'))"
                         required
                     />
                 </x-forms.field>
@@ -110,46 +106,33 @@
                     :error="$errors->get('is_active')"
                     class="mt-4"
                 >
-
                     <x-forms.select
                         id="is_active"
                         name="is_active"
                         class="block w-full"
                         required
                     >
-
-                        <option
-                            value="0"
-                            @selected(
-                                old(
-                                    'is_active',
-                                    $semester->is_active
-                                ) == 0
-                            )
-                        >
-                            Inactive
-                        </option>
-
                         <option
                             value="1"
-                            @selected(
-                                old(
-                                    'is_active',
-                                    $semester->is_active
-                                ) == 1
-                            )
+                            @selected(old('is_active', $semester->is_active) == 1)
                         >
                             Active
                         </option>
 
-                    </x-forms.select>
+                        <option
+                            value="0"
+                            @selected(old('is_active', $semester->is_active) == 0)
+                        >
+                            Inactive
+                        </option>
 
+                    </x-forms.select>
                 </x-forms.field>
 
                 <x-crud.form-actions>
 
                     <x-buttons.primary>
-                        Update Semester
+                        Save Semester
                     </x-buttons.primary>
 
                     <x-buttons.secondary

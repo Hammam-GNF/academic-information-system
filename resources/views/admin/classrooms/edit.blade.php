@@ -34,6 +34,10 @@
                         required
                     >
 
+                        <option value="">
+                            Select Department
+                        </option>
+
                         @foreach ($departments as $department)
 
                             <option
@@ -49,7 +53,6 @@
 
                 </x-forms.field>
 
-
                 <x-forms.field
                     label="Grade"
                     for="grade_id"
@@ -63,6 +66,10 @@
                         class="block w-full"
                         required
                     >
+
+                        <option value="">
+                            Select Grade
+                        </option>
 
                         @foreach ($grades as $grade)
 
@@ -79,27 +86,6 @@
 
                 </x-forms.field>
 
-
-                <x-forms.field
-                    label="Classroom Code"
-                    for="code"
-                    :error="$errors->get('code')"
-                    class="mt-4"
-                >
-
-                    <x-forms.text-input
-                        id="code"
-                        name="code"
-                        type="text"
-                        class="block w-full"
-                        :value="old('code', $classroom->code)"
-                        placeholder="XII-IPA-1"
-                        required
-                    />
-
-                </x-forms.field>
-
-
                 <x-forms.field
                     label="Classroom Name"
                     for="name"
@@ -113,12 +99,12 @@
                         type="text"
                         class="block w-full"
                         :value="old('name', $classroom->name)"
-                        placeholder="Class XII IPA 1"
+                        placeholder="Example: Class A, Laboratory 1, Multimedia Room"
                         required
+                        autofocus
                     />
 
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Capacity"
@@ -132,13 +118,14 @@
                         name="capacity"
                         type="number"
                         min="1"
+                        max="100"
                         class="block w-full"
                         :value="old('capacity', $classroom->capacity)"
+                        placeholder="Example: 36"
                         required
                     />
 
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Description"
@@ -147,21 +134,21 @@
                     class="mt-4"
                 >
 
-                    <textarea
+                    <x-forms.textarea
                         id="description"
                         name="description"
                         rows="4"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    >{{ old('description', $classroom->description) }}</textarea>
+                        class="block w-full"
+                        placeholder="Example: Classroom for Grade 10 students with a maximum capacity of 36 students."
+                    >{{ old('description', $classroom->description) }}</x-forms.textarea>
 
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Status"
                     for="is_active"
                     :error="$errors->get('is_active')"
-                    class="mt-6"
+                    class="mt-4"
                 >
 
                     <x-forms.select
@@ -173,14 +160,14 @@
 
                         <option
                             value="1"
-                            {{ old('is_active', $classroom->is_active) ? 'selected' : '' }}
+                            @selected(old('is_active', $classroom->is_active) == 1)
                         >
                             Active
                         </option>
 
                         <option
                             value="0"
-                            {{ ! old('is_active', $classroom->is_active) ? 'selected' : '' }}
+                            @selected(old('is_active', $classroom->is_active) == 0)
                         >
                             Inactive
                         </option>
@@ -189,11 +176,10 @@
 
                 </x-forms.field>
 
-
                 <x-crud.form-actions>
 
                     <x-buttons.primary>
-                        Save Classroom
+                        Update Classroom
                     </x-buttons.primary>
 
                     <x-buttons.secondary

@@ -24,6 +24,8 @@
 
         </x-slot>
 
+        <x-crud.toolbar />
+
         <x-crud.table-card>
 
             <table
@@ -44,7 +46,7 @@
                         </th>
 
                         <th class="table-th">
-                            Name
+                            Semester
                         </th>
 
                         <th class="table-th">
@@ -67,14 +69,6 @@
 
     </x-crud.page>
 
-    <x-modals.confirm-modal
-        name="confirm-delete-semester"
-        title="Delete Semester"
-        message="Are you sure you want to delete this semester?"
-        method="DELETE"
-        submit-text="Delete"
-    />
-
     @push('styles')
 
         <link
@@ -83,6 +77,14 @@
         >
 
     @endpush
+
+    <x-modals.confirm-modal
+        name="confirm-delete-semester"
+        title="Delete Semester"
+        message="Are you sure you want to delete this semester?"
+        method="DELETE"
+        submit-text="Delete"
+    />
 
     @push('scripts')
 
@@ -94,13 +96,13 @@
 
             $(function () {
 
-                $('#semesters-table').DataTable({
+                let table = $('#semesters-table').DataTable({
 
                     processing: true,
 
                     serverSide: true,
 
-                    ajax: '{{ route('admin.semesters.index') }}',
+                    ajax: '{{ route("admin.semesters.index") }}',
 
                     columns: [
 
@@ -139,25 +141,20 @@
 
             });
 
-            $(document).on(
-                'click',
-                '.delete-semester-btn',
-                function () {
+            $(document).on('click', '.delete-semester-btn', function () {
 
-                    $('#confirm-delete-semester-form')
-                        .attr('action', $(this).data('url'));
+                let action = $(this).data('url');
 
-                    window.dispatchEvent(
-                        new CustomEvent(
-                            'open-modal',
-                            {
-                                detail: 'confirm-delete-semester',
-                            }
-                        )
-                    );
+                $('#confirm-delete-semester-form')
+                    .attr('action', action);
 
-                }
-            );
+                window.dispatchEvent(
+                    new CustomEvent('open-modal', {
+                        detail: 'confirm-delete-semester'
+                    })
+                );
+
+            });
 
         </script>
 

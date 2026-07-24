@@ -6,6 +6,7 @@ use App\Models\Semester;
 use App\Repositories\Contracts\SemesterRepositoryInterface;
 use App\Services\Contracts\SemesterServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class SemesterService implements SemesterServiceInterface
         return $this->semesterRepository->findById($id);
     }
 
-    public function getActive(): ?Semester
+    public function getActive(): Collection
     {
         return $this->semesterRepository->getActive();
     }
@@ -39,14 +40,14 @@ class SemesterService implements SemesterServiceInterface
     {
         if ($request->ajax()) {
 
-            return DataTables::of(
-                $this->query()
-            )
+            return DataTables::of($this->query())
                 ->addIndexColumn()
 
-                ->addColumn('academic_year', function ($semester) {
-                    return $semester->academicYear?->name ?? '-';
-                })
+                ->addColumn(
+                    'academic_year',
+                    fn (Semester $semester)
+                        => $semester->academicYear?->name ?? '-'
+                )
 
                 ->editColumn(
                     'is_active',
@@ -58,16 +59,19 @@ class SemesterService implements SemesterServiceInterface
                     )
                 )
 
-                ->addColumn('action', function ($semester) {
-                    return view(
+                ->addColumn(
+                    'action',
+                    fn (Semester $semester) => view(
                         'admin.semesters.datatables.actions',
                         compact('semester')
-                    )->render();
-                })
+                    )->render()
+                )
 
                 ->rawColumns([
+                    'is_active',
                     'action',
                 ])
+
                 ->make(true);
         }
 
@@ -99,17 +103,17 @@ class SemesterService implements SemesterServiceInterface
         array $data
     ): RedirectResponse {
 
-        $semester = $this->semesterRepository->update(
+        $updated = $this->semesterRepository->update(
             $semester,
             $data
         );
 
         activity()
             ->causedBy(Auth::user())
-            ->performedOn($semester)
+            ->performedOn($updated)
             ->event('updated')
             ->withProperties([
-                'name' => $semester->name,
+                'name' => $updated->name,
             ])
             ->log('Semester has been updated.');
 

@@ -24,6 +24,7 @@
 
         </x-slot>
 
+        <x-crud.toolbar />
 
         <x-crud.table-card>
 
@@ -70,18 +71,7 @@
 
         </x-crud.table-card>
 
-
     </x-crud.page>
-
-
-    <x-modals.confirm-modal
-        name="confirm-delete-department"
-        title="Delete Department"
-        message="Are you sure you want to delete this department?"
-        method="DELETE"
-        submit-text="Delete"
-    />
-
 
     @push('styles')
 
@@ -92,6 +82,13 @@
 
     @endpush
 
+    <x-modals.confirm-modal
+        name="confirm-delete-department"
+        title="Delete Department"
+        message="Are you sure you want to delete this department?"
+        method="DELETE"
+        submit-text="Delete"
+    />
 
     @push('scripts')
 
@@ -99,12 +96,11 @@
 
         <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
-
         <script>
 
             $(function () {
 
-                $('#departments-table').DataTable({
+                let table = $('#departments-table').DataTable({
 
                     processing: true,
 
@@ -154,38 +150,23 @@
 
             });
 
+            $(document).on('click', '.delete-department-btn', function () {
 
-            $(document).on(
-                'click',
-                '.delete-department-btn',
-                function () {
+                let action = $(this).data('url');
 
-                    let action = $(this).data('url');
+                $('#confirm-delete-department-form')
+                    .attr('action', action);
 
+                window.dispatchEvent(
+                    new CustomEvent('open-modal', {
+                        detail: 'confirm-delete-department'
+                    })
+                );
 
-                    $('#confirm-delete-department-form')
-                        .attr('action', action);
-
-
-                    window.dispatchEvent(
-
-                        new CustomEvent(
-                            'open-modal',
-                            {
-                                detail: 'confirm-delete-department'
-                            }
-                        )
-
-                    );
-
-                }
-            );
-
+            });
 
         </script>
 
-
     @endpush
-
 
 </x-app-layout>

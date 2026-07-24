@@ -81,15 +81,18 @@
                         class="block w-full"
                         required
                     >
-                        <option value="0">
-                            Inactive
-                        </option>
-
                         <option
                             value="1"
                             {{ old('is_active') == 1 ? 'selected' : '' }}
                         >
                             Active
+                        </option>
+
+                        <option
+                            value="0"
+                            {{ old('is_active', 0) == 0 ? 'selected' : '' }}
+                        >
+                            Inactive
                         </option>
                     </x-forms.select>
                 </x-forms.field>

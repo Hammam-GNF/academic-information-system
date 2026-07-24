@@ -19,6 +19,11 @@ class Classroom extends Model
 {
     use SoftDeletes;
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [
@@ -29,15 +34,11 @@ class Classroom extends Model
 
     public function department(): BelongsTo
     {
-        return $this->belongsTo(
-            Department::class
-        );
+        return $this->belongsTo(Department::class);
     }
 
     public function grade(): BelongsTo
     {
-        return $this->belongsTo(
-            Grade::class
-        );
+        return $this->belongsTo(Grade::class);
     }
 }

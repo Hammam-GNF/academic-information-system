@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subjects', function (Blueprint $table) {
-
             $table->id();
 
             $table->foreignId('department_id')
@@ -34,10 +33,8 @@ return new class extends Migration
             $table->boolean('is_active')
                 ->default(true);
 
-            $table->timestamps();
-
             $table->softDeletes();
-
+            $table->timestamps();
         });
     }
 

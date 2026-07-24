@@ -4,7 +4,7 @@
 
         <a
             href="{{ route('admin.semesters.edit', $semester) }}"
-            class="btn btn-sm btn-warning"
+            class="btn btn-primary"
         >
             Edit
         </a>
@@ -15,7 +15,7 @@
 
         <button
             type="button"
-            class="btn btn-sm btn-danger delete-semester-btn"
+            class="btn btn-danger delete-semester-btn"
             data-url="{{ route('admin.semesters.destroy', $semester) }}"
         >
             Delete

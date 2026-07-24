@@ -33,7 +33,9 @@
                         type="text"
                         class="block w-full"
                         :value="old('code', $grade->code)"
+                        placeholder="A"
                         required
+                        autofocus
                     />
 
                 </x-forms.field>
@@ -51,12 +53,13 @@
                         type="text"
                         class="block w-full"
                         :value="old('name', $grade->name)"
+                        placeholder="Excellent"
                         required
                     />
 
                 </x-forms.field>
 
-                <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 
                     <x-forms.field
                         label="Minimum Score"
@@ -72,6 +75,7 @@
                             max="100"
                             class="block w-full"
                             :value="old('minimum_score', $grade->minimum_score)"
+                            placeholder="85"
                             required
                         />
 
@@ -91,6 +95,7 @@
                             max="100"
                             class="block w-full"
                             :value="old('maximum_score', $grade->maximum_score)"
+                            placeholder="100"
                             required
                         />
 
@@ -114,6 +119,7 @@
                         max="4"
                         class="block w-full"
                         :value="old('grade_point', $grade->grade_point)"
+                        placeholder="4.00"
                         required
                     />
 
@@ -129,8 +135,8 @@
                     <x-forms.textarea
                         id="description"
                         name="description"
-                        rows="3"
-                        class="block w-full"
+                        rows="4"
+                        placeholder="Grade for students with outstanding academic performance."
                     >{{ old('description', $grade->description) }}</x-forms.textarea>
 
                 </x-forms.field>

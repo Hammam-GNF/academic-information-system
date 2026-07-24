@@ -16,8 +16,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ])]
 class Department extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
+    }
 
     public function classrooms(): HasMany
     {

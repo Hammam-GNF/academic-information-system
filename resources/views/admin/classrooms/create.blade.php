@@ -98,7 +98,9 @@
                         type="text"
                         class="block w-full"
                         :value="old('name')"
+                        placeholder="e.g. Class VII A"
                         required
+                        autofocus
                     />
 
                 </x-forms.field>
@@ -118,6 +120,7 @@
                         max="100"
                         class="block w-full"
                         :value="old('capacity', 36)"
+                        placeholder="e.g. 36"
                         required
                     />
 
@@ -134,7 +137,7 @@
                         id="description"
                         name="description"
                         rows="4"
-                        class="block w-full"
+                        placeholder="e.g. Regular classroom for Grade VII students."
                     >{{ old('description') }}</x-forms.textarea>
 
                 </x-forms.field>

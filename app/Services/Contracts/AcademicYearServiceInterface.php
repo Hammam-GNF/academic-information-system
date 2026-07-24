@@ -4,6 +4,7 @@ namespace App\Services\Contracts;
 
 use App\Models\AcademicYear;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -15,11 +16,15 @@ interface AcademicYearServiceInterface
 
     public function findById(int $id): ?AcademicYear;
 
-    public function getActive(): ?AcademicYear;
+    public function getActive(): Collection;
 
-    public function index(Request $request): View|JsonResponse;
+    public function index(
+        Request $request
+    ): View|JsonResponse;
 
-    public function create(array $data): RedirectResponse;
+    public function create(
+        array $data
+    ): RedirectResponse;
 
     public function update(
         AcademicYear $academicYear,

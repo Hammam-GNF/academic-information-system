@@ -4,19 +4,18 @@
 
         <a
             href="{{ route('admin.departments.edit', $department) }}"
-            class="btn btn-sm btn-warning"
+            class="btn btn-primary"
         >
             Edit
         </a>
 
     @endcan
 
-
     @can('delete', $department)
 
         <button
             type="button"
-            class="btn btn-sm btn-danger delete-department-btn"
+            class="btn btn-danger delete-department-btn"
             data-url="{{ route('admin.departments.destroy', $department) }}"
         >
             Delete

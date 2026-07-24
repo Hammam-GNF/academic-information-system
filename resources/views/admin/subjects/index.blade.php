@@ -24,6 +24,20 @@
 
         </x-slot>
 
+        <x-crud.toolbar>
+
+            <x-slot name="start">
+
+                {{-- Reserved for future filters
+                     Department
+                     Status
+                     Credit Hours
+                --}}
+
+            </x-slot>
+
+        </x-crud.toolbar>
+
         <x-crud.table-card>
 
             <table
@@ -75,7 +89,6 @@
 
     </x-crud.page>
 
-
     <x-modals.confirm-modal
         name="confirm-delete-subject"
         title="Delete Subject"
@@ -83,7 +96,6 @@
         method="DELETE"
         submit-text="Delete"
     />
-
 
     @push('styles')
 
@@ -93,7 +105,6 @@
         >
 
     @endpush
-
 
     @push('scripts')
 
@@ -160,30 +171,19 @@
 
             });
 
+            $(document).on('click', '.delete-subject-btn', function () {
 
-            $(document).on(
-                'click',
-                '.delete-subject-btn',
-                function () {
+                let action = $(this).data('url');
 
-                    let action = $(this).data('url');
+                $('#confirm-delete-subject-form').attr('action', action);
 
-                    $('#confirm-delete-subject-form')
-                        .attr('action', action);
+                window.dispatchEvent(
+                    new CustomEvent('open-modal', {
+                        detail: 'confirm-delete-subject'
+                    })
+                );
 
-                    window.dispatchEvent(
-
-                        new CustomEvent(
-                            'open-modal',
-                            {
-                                detail: 'confirm-delete-subject'
-                            }
-                        )
-
-                    );
-
-                }
-            );
+            });
 
         </script>
 

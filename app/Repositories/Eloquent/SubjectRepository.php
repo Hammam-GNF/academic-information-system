@@ -7,26 +7,31 @@ use App\Repositories\Contracts\SubjectRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class SubjectRepository implements SubjectRepositoryInterface
+class SubjectRepository extends BaseRepository implements SubjectRepositoryInterface
 {
+    public function __construct(Subject $model)
+    {
+        parent::__construct($model);
+    }
+
     public function query(): Builder
     {
-        return Subject::query()
-            ->with('department');
+        return $this->model
+            ->newQuery()
+            ->with('department')
+            ->latest();
     }
 
     public function findById(int $id): ?Subject
     {
-        return Subject::query()
-            ->with('department')
+        return $this->query()
             ->find($id);
     }
 
     public function getActive(): Collection
     {
-        return Subject::query()
+        return $this->query()
             ->where('is_active', true)
-            ->orderBy('name')
             ->get();
     }
 }

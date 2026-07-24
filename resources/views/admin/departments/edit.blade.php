@@ -26,7 +26,6 @@
                     for="code"
                     :error="$errors->get('code')"
                 >
-
                     <x-forms.text-input
                         id="code"
                         name="code"
@@ -37,9 +36,7 @@
                         required
                         autofocus
                     />
-
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Department Name"
@@ -47,7 +44,6 @@
                     :error="$errors->get('name')"
                     class="mt-4"
                 >
-
                     <x-forms.text-input
                         id="name"
                         name="name"
@@ -57,9 +53,7 @@
                         placeholder="Teknik Informatika"
                         required
                     />
-
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Description"
@@ -67,16 +61,13 @@
                     :error="$errors->get('description')"
                     class="mt-4"
                 >
-
-                    <textarea
+                    <x-forms.textarea
                         id="description"
                         name="description"
                         rows="4"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    >{{ old('description', $department->description) }}</textarea>
-
+                        class="block w-full"
+                    >{{ old('description', $department->description) }}</x-forms.textarea>
                 </x-forms.field>
-
 
                 <x-forms.field
                     label="Status"
@@ -84,39 +75,34 @@
                     :error="$errors->get('is_active')"
                     class="mt-6"
                 >
-
                     <x-forms.select
                         id="is_active"
                         name="is_active"
                         class="block w-full"
                         required
                     >
-
                         <option
                             value="1"
-                            {{ old('is_active', $department->is_active) ? 'selected' : '' }}
+                            @selected(old('is_active', $department->is_active) == 1)
                         >
                             Active
                         </option>
 
                         <option
                             value="0"
-                            {{ ! old('is_active', $department->is_active) ? 'selected' : '' }}
+                            @selected(old('is_active', $department->is_active) == 0)
                         >
                             Inactive
                         </option>
 
                     </x-forms.select>
-
                 </x-forms.field>
-
 
                 <x-crud.form-actions>
 
                     <x-buttons.primary>
                         Save Department
                     </x-buttons.primary>
-
 
                     <x-buttons.secondary
                         type="button"
@@ -126,7 +112,6 @@
                     </x-buttons.secondary>
 
                 </x-crud.form-actions>
-
 
             </form>
 

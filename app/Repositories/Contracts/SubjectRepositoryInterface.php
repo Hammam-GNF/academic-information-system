@@ -6,7 +6,7 @@ use App\Models\Subject;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-interface SubjectRepositoryInterface
+interface SubjectRepositoryInterface extends BaseRepositoryInterface
 {
     public function query(): Builder;
 
