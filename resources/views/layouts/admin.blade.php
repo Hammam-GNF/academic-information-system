@@ -127,6 +127,58 @@
 
             </nav>
 
+            <br>
+
+            <p
+                class="px-3 mb-3 text-xs font-semibold tracking-wider uppercase text-gray-400"
+            >
+                Academic Structure
+            </p>
+
+            <nav class="space-y-1">
+
+                <a
+                    href="{{ route('admin.academic-years.index') }}"
+                    class="{{ request()->routeIs('admin.academic-years.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Academic Years
+                </a>
+
+                <a
+                    href="{{ route('admin.semesters.index') }}"
+                    class="{{ request()->routeIs('admin.semesters.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Semesters
+                </a>
+
+                <a
+                    href="{{ route('admin.departments.index') }}"
+                    class="{{ request()->routeIs('admin.departments.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Departments
+                </a>
+
+                <a
+                    href="{{ route('admin.media.index') }}"
+                    class="{{ request()->routeIs('admin.media.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex items-center rounded-lg px-3 py-2 transition"
+                >
+                    Media Library
+                </a>
+
+            </nav>
+
         </div>
 
     </aside>

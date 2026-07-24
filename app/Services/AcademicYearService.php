@@ -6,7 +6,10 @@ use App\Models\AcademicYear;
 use App\Repositories\Contracts\AcademicYearRepositoryInterface;
 use App\Services\Contracts\AcademicYearServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
@@ -51,7 +54,10 @@ class AcademicYearService implements AcademicYearServiceInterface
 
                 ->addColumn('action', function ($academicYear) {
 
-                    return '';
+                    return view(
+                        'admin.academic-years.datatables.actions',
+                        compact('academicYear')
+                    )->render();
 
                 })
 
@@ -64,23 +70,73 @@ class AcademicYearService implements AcademicYearServiceInterface
         return view('admin.academic-years.index');
     }
 
-    public function create(array $data): AcademicYear
+    public function create(array $data): RedirectResponse
     {
-        return $this->academicYearRepository->create($data);
+        $academicYear = $this->academicYearRepository->create($data);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($academicYear)
+            ->event('created')
+            ->withProperties([
+                'name' => $academicYear->name,
+            ])
+            ->log('Academic year has been created.');
+
+        return Redirect::route('admin.academic-years.index')
+            ->with(
+                'success',
+                'Academic year created successfully.'
+            );
     }
 
     public function update(
         AcademicYear $academicYear,
         array $data
-    ): AcademicYear {
-        return $this->academicYearRepository->update(
+    ): RedirectResponse {
+
+        $updated = $this->academicYearRepository->update(
             $academicYear,
             $data
         );
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($updated)
+            ->event('updated')
+            ->withProperties([
+                'name' => $updated->name,
+            ])
+            ->log('Academic year has been updated.');
+
+        return Redirect::route('admin.academic-years.index')
+            ->with(
+                'success',
+                'Academic year updated successfully.'
+            );
     }
 
-    public function delete(AcademicYear $academicYear): bool
-    {
-        return $this->academicYearRepository->delete($academicYear);
+    public function delete(
+        AcademicYear $academicYear
+    ): RedirectResponse {
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($academicYear)
+            ->event('deleted')
+            ->withProperties([
+                'name' => $academicYear->name,
+            ])
+            ->log('Academic year has been deleted.');
+
+        $this->academicYearRepository->delete(
+            $academicYear
+        );
+
+        return Redirect::route('admin.academic-years.index')
+            ->with(
+                'success',
+                'Academic year deleted successfully.'
+            );
     }
 }

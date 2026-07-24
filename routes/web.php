@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\SettingController;
@@ -67,6 +68,8 @@ Route::prefix('admin')
         Route::resource('academic-years', AcademicYearController::class);
 
         Route::resource('semesters', SemesterController::class);
+
+        Route::resource('departments', DepartmentController::class);
 
         Route::get('users/{user}/change-password', [UserController::class, 'changePassword'])
             ->name('users.change-password');

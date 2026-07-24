@@ -17,11 +17,15 @@ class AcademicYearController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', AcademicYear::class);
+
         return $this->academicYearService->index($request);
     }
 
     public function create()
     {
+        $this->authorize('create', AcademicYear::class);
+        
         return view('admin.academic-years.create');
     }
 
@@ -34,6 +38,8 @@ class AcademicYearController extends Controller
 
     public function edit(AcademicYear $academicYear)
     {
+        $this->authorize('update', $academicYear);
+
         return view(
             'admin.academic-years.edit',
             compact('academicYear')
@@ -52,6 +58,8 @@ class AcademicYearController extends Controller
 
     public function destroy(AcademicYear $academicYear)
     {
+        $this->authorize('delete', $academicYear);
+
         return $this->academicYearService->delete(
             $academicYear
         );

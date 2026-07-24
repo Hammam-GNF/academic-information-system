@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\AcademicYearRepositoryInterface;
+use App\Repositories\Contracts\DepartmentRepositoryInterface;
 use App\Repositories\Contracts\MediaRepositoryInterface;
 use App\Repositories\Contracts\SemesterRepositoryInterface;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\AcademicYearRepository;
+use App\Repositories\Eloquent\DepartmentRepository;
 use App\Repositories\Eloquent\MediaRepository;
 use App\Repositories\Eloquent\SemesterRepository;
 use App\Repositories\Eloquent\SettingRepository;
@@ -16,11 +18,13 @@ use App\Services\AcademicYearService;
 use App\Services\AuthService;
 use App\Services\Contracts\AcademicYearServiceInterface;
 use App\Services\Contracts\AuthServiceInterface;
+use App\Services\Contracts\DepartmentServiceInterface;
 use App\Services\Contracts\MediaServiceInterface;
 use App\Services\Contracts\ProfileServiceInterface;
 use App\Services\Contracts\SemesterServiceInterface;
 use App\Services\Contracts\SettingServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
+use App\Services\DepartmentService;
 use App\Services\MediaService;
 use App\Services\ProfileService;
 use App\Services\SemesterService;
@@ -90,6 +94,16 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             SemesterServiceInterface::class,
             SemesterService::class
+        );
+
+        $this->app->bind(
+            DepartmentRepositoryInterface::class,
+            DepartmentRepository::class
+        );
+
+        $this->app->bind(
+            DepartmentServiceInterface::class,
+            DepartmentService::class
         );
     }
 

@@ -73,6 +73,38 @@
                 </x-forms.field>
 
                 <x-forms.field
+                    label="Start Date"
+                    for="start_date"
+                    :error="$errors->get('start_date')"
+                    class="mt-4"
+                >
+                    <x-forms.text-input
+                        id="start_date"
+                        name="start_date"
+                        type="date"
+                        class="block w-full"
+                        :value="old('start_date', optional($academicYear->start_date)->format('Y-m-d'))"
+                        required
+                    />
+                </x-forms.field>
+
+                <x-forms.field
+                    label="End Date"
+                    for="end_date"
+                    :error="$errors->get('end_date')"
+                    class="mt-4"
+                >
+                    <x-forms.text-input
+                        id="end_date"
+                        name="end_date"
+                        type="date"
+                        class="block w-full"
+                        :value="old('end_date', optional($academicYear->end_date)->format('Y-m-d'))"
+                        required
+                    />
+                </x-forms.field>
+
+                <x-forms.field
                     label="Status"
                     for="is_active"
                     :error="$errors->get('is_active')"

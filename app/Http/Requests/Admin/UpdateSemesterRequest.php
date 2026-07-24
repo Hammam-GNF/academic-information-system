@@ -8,7 +8,10 @@ class UpdateSemesterRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can(
+            'update',
+            $this->route('semester')
+        );
     }
 
     public function rules(): array

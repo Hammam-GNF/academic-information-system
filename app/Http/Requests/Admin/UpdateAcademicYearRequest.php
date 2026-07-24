@@ -9,7 +9,10 @@ class UpdateAcademicYearRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can(
+            'update',
+            $this->route('academic_year')
+        );
     }
 
     public function rules(): array

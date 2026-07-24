@@ -1,33 +1,34 @@
 <x-app-layout>
 
     <x-slot name="header">
-        Academic Year Management
+        Department Management
     </x-slot>
 
     <x-crud.page
-        title="Academic Year Management"
-        description="Manage academic years used by the academic information system."
+        title="Department Management"
+        description="Manage departments used by the academic information system."
     >
 
         <x-slot name="actions">
 
-            @can('create', App\Models\AcademicYear::class)
+            @can('create', App\Models\Department::class)
 
                 <a
-                    href="{{ route('admin.academic-years.create') }}"
+                    href="{{ route('admin.departments.create') }}"
                     class="btn btn-primary"
                 >
-                    Create Academic Year
+                    Create Department
                 </a>
 
             @endcan
 
         </x-slot>
 
+
         <x-crud.table-card>
 
             <table
-                id="academic-years-table"
+                id="departments-table"
                 class="table"
             >
 
@@ -40,15 +41,15 @@
                         </th>
 
                         <th class="table-th">
+                            Code
+                        </th>
+
+                        <th class="table-th">
                             Name
                         </th>
 
                         <th class="table-th">
-                            Start Date
-                        </th>
-
-                        <th class="table-th">
-                            End Date
+                            Description
                         </th>
 
                         <th class="table-th">
@@ -69,15 +70,18 @@
 
         </x-crud.table-card>
 
+
     </x-crud.page>
 
+
     <x-modals.confirm-modal
-        name="confirm-delete-academic-year"
-        title="Delete Academic Year"
-        message="Are you sure you want to delete this academic year?"
+        name="confirm-delete-department"
+        title="Delete Department"
+        message="Are you sure you want to delete this department?"
         method="DELETE"
         submit-text="Delete"
     />
+
 
     @push('styles')
 
@@ -88,23 +92,25 @@
 
     @endpush
 
+
     @push('scripts')
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
         <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
+
         <script>
 
             $(function () {
 
-                let table = $('#academic-years-table').DataTable({
+                $('#departments-table').DataTable({
 
                     processing: true,
 
                     serverSide: true,
 
-                    ajax: '{{ route("admin.academic-years.index") }}',
+                    ajax: '{{ route("admin.departments.index") }}',
 
                     columns: [
 
@@ -116,18 +122,18 @@
                         },
 
                         {
+                            data: 'code',
+                            name: 'code'
+                        },
+
+                        {
                             data: 'name',
                             name: 'name'
                         },
 
                         {
-                            data: 'start_date',
-                            name: 'start_date'
-                        },
-
-                        {
-                            data: 'end_date',
-                            name: 'end_date'
+                            data: 'description',
+                            name: 'description'
                         },
 
                         {
@@ -148,22 +154,25 @@
 
             });
 
+
             $(document).on(
                 'click',
-                '.delete-academic-year-btn',
+                '.delete-department-btn',
                 function () {
 
                     let action = $(this).data('url');
 
-                    $('#confirm-delete-academic-year-form')
+
+                    $('#confirm-delete-department-form')
                         .attr('action', action);
+
 
                     window.dispatchEvent(
 
                         new CustomEvent(
                             'open-modal',
                             {
-                                detail: 'confirm-delete-academic-year'
+                                detail: 'confirm-delete-department'
                             }
                         )
 
@@ -172,8 +181,11 @@
                 }
             );
 
+
         </script>
 
+
     @endpush
+
 
 </x-app-layout>
