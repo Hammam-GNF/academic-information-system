@@ -276,6 +276,77 @@
 
         </div>
 
+        {{-- ========================= --}}
+        {{-- Master SDM Management --}}
+        {{-- ========================= --}}
+
+        <div
+            x-data="{
+                open:
+                    {{ request()->routeIs('admin.students.*')
+                        || request()->routeIs('admin.semesters.*')
+                        || request()->routeIs('admin.departments.*')
+                        || request()->routeIs('admin.grades.*')
+                        || request()->routeIs('admin.classrooms.*')
+                        || request()->routeIs('admin.subjects.*')
+                            ? 'true'
+                            : 'false'
+                    }}
+            }"
+            class="mt-8"
+        >
+
+            <button
+                @click="open = ! open"
+                class="flex w-full items-center justify-between px-3 text-xs font-semibold uppercase tracking-wider text-gray-400"
+            >
+
+                <span>
+                    Master SDM
+                </span>
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 transition-transform"
+                    :class="{ 'rotate-180': open }"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                    />
+
+                </svg>
+
+            </button>
+
+            <nav
+                x-show="open"
+                x-collapse
+                class="mt-3 space-y-1"
+            >
+
+                <a
+                    href="{{ route('admin.students.index') }}"
+                    class="{{ request()->routeIs('admin.students.*')
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    }} flex rounded-lg px-3 py-2 transition"
+                >
+                    Students
+                </a>
+
+                
+
+            </nav>
+
+        </div>
+
     </div>
 
 </aside>
