@@ -18,7 +18,6 @@ class StudentSeeder extends Seeder
             return;
         }
 
-
         $students = [
             [
                 'name' => 'Ahmad Fauzan',
@@ -96,7 +95,6 @@ class StudentSeeder extends Seeder
             ],
         ];
 
-
         foreach ($students as $index => $student) {
 
             Student::updateOrCreate(
@@ -156,7 +154,6 @@ class StudentSeeder extends Seeder
             );
 
         }
-
 
         Student::factory()
             ->count(35)

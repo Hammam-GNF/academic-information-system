@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\User;
 
@@ -58,7 +59,7 @@ it('user role cannot create student', function () {
     $user = User::factory()->create();
     $user->assignRole('user');
 
-    $classroom = \App\Models\Classroom::factory()->create();
+    $classroom = Classroom::factory()->create();
 
     $this->actingAs($user)
         ->post(route('admin.students.store'), [

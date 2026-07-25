@@ -284,13 +284,8 @@
             x-data="{
                 open:
                     {{ request()->routeIs('admin.students.*')
-                        || request()->routeIs('admin.semesters.*')
-                        || request()->routeIs('admin.departments.*')
-                        || request()->routeIs('admin.grades.*')
-                        || request()->routeIs('admin.classrooms.*')
-                        || request()->routeIs('admin.subjects.*')
-                            ? 'true'
-                            : 'false'
+                        ? 'true'
+                        : 'false'
                     }}
             }"
             class="mt-8"
@@ -325,6 +320,7 @@
 
             </button>
 
+
             <nav
                 x-show="open"
                 x-collapse
@@ -336,12 +332,10 @@
                     class="{{ request()->routeIs('admin.students.*')
                         ? 'bg-indigo-50 text-indigo-700 font-semibold'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                    }} flex rounded-lg px-3 py-2 transition"
+                    }} flex items-center rounded-lg px-3 py-2 transition"
                 >
                     Students
                 </a>
-
-                
 
             </nav>
 

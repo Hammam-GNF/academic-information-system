@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
             AcademicSeeder::class,
             StudentSeeder::class,
-            
+
         ]);
 
         User::factory()
