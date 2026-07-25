@@ -79,6 +79,15 @@ Route::prefix('admin')
 
         Route::resource('classrooms', ClassroomController::class);
 
+        Route::get('students-export', [StudentController::class, 'export'])
+            ->name('students.export');
+
+        Route::get('students-import-template', [StudentController::class, 'downloadTemplate'])
+            ->name('students.import-template');
+
+        Route::post('students-import', [StudentController::class, 'import'])
+            ->name('students.import');
+
         Route::resource('students', StudentController::class);
 
         Route::resource('subjects', SubjectController::class);

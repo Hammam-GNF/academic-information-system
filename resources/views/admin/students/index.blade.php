@@ -11,6 +11,36 @@
 
         <x-slot name="actions">
 
+            @can('viewAny', App\Models\Student::class)
+
+                <div x-data="{ loading: false }">
+
+                    <x-buttons.download
+                        id="export-students-btn"
+                        loading-text="Exporting Excel..."
+                    >
+                        Export Excel
+                    </x-buttons.download>
+
+                </div>
+
+            @endcan
+
+            @can('create', App\Models\Student::class)
+
+                <div x-data="{ loading: false }">
+
+                    <x-buttons.download
+                        id="import-students-btn"
+                        loading-text="Opening..."
+                    >
+                        Import Excel
+                    </x-buttons.download>
+
+                </div>
+
+            @endcan
+
             @can('create', App\Models\Student::class)
 
                 <a
@@ -23,6 +53,8 @@
             @endcan
 
         </x-slot>
+
+        <x-feedback.import-errors />
 
         <x-crud.table-card>
 
@@ -86,6 +118,12 @@
         message="Are you sure you want to delete this student?"
         method="DELETE"
         submit-text="Delete"
+    />
+
+    <x-modals.import-modal
+        name="import-students"
+        title="Import Students"
+        action="{{ route('admin.students.import') }}"
     />
 
     @push('scripts')
@@ -169,7 +207,74 @@
                 }
             );
 
+            $(document).on(
+                'click',
+                '#export-students-btn',
+                function () {
+
+                    let button = this;
+
+                    let alpine = Alpine.$data(
+                        button.parentElement
+                    );
+
+                    alpine.loading = true;
+
+                    window.location.href =
+                        '{{ route("admin.students.export") }}';
+
+                    setTimeout(
+                        () => {
+                            alpine.loading = false;
+                        },
+                        3000
+                    );
+
+                }
+            );
+
+            $(document).on(
+                'click',
+                '#import-students-btn',
+                function () {
+
+                    window.dispatchEvent(
+                        new CustomEvent(
+                            'open-modal',
+                            {
+                                detail: 'import-students'
+                            }
+                        )
+                    );
+
+                }
+            );
+
         </script>
+
+        @if ($errors->has('import'))
+
+            <script>
+
+                window.addEventListener(
+                    'load',
+                    function () {
+
+                        window.dispatchEvent(
+                            new CustomEvent(
+                                'open-modal',
+                                {
+                                    detail: 'import-students'
+                                }
+                            )
+                        );
+
+                    }
+                );
+
+            </script>
+
+        @endif
 
     @endpush
 

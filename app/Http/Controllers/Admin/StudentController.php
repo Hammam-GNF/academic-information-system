@@ -8,7 +8,9 @@ use App\Http\Requests\Admin\UpdateStudentRequest;
 use App\Models\Student;
 use App\Services\Contracts\ClassroomServiceInterface;
 use App\Services\Contracts\StudentServiceInterface;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class StudentController extends Controller
 {
@@ -83,5 +85,52 @@ class StudentController extends Controller
         return $this->studentService->delete(
             $student
         );
+    }
+
+    public function export(): BinaryFileResponse
+    {
+        $this->authorize(
+            'viewAny',
+            Student::class
+        );
+
+        return $this->studentService->export();
+    }
+
+    public function import(
+        Request $request
+    ): RedirectResponse {
+
+        $this->authorize(
+            'create',
+            Student::class
+        );
+
+        $request->validate([
+
+            'file' => [
+                'required',
+                'file',
+                'mimes:xlsx,xls',
+            ],
+
+        ]);
+
+        return $this->studentService
+            ->import(
+                $request->file('file')
+            );
+
+    }
+
+    public function downloadTemplate(): BinaryFileResponse
+    {
+        $this->authorize(
+            'create',
+            Student::class
+        );
+
+        return $this->studentService
+            ->downloadTemplate();
     }
 }

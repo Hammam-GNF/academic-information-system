@@ -37,6 +37,13 @@ class StoreStudentRequest extends FormRequest
                 'unique:students,student_number',
             ],
 
+            'nisn' => [
+                'nullable',
+                'string',
+                'max:20',
+                'unique:students,nisn',
+            ],
+
             'name' => [
                 'required',
                 'string',

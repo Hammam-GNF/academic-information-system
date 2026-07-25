@@ -45,6 +45,17 @@ class UpdateStudentRequest extends FormRequest
                 )->ignore($student),
             ],
 
+            'nisn' => [
+                'nullable',
+                'string',
+                'max:20',
+
+                Rule::unique(
+                    'students',
+                    'nisn'
+                )->ignore($student),
+            ],
+
             'name' => [
                 'required',
                 'string',

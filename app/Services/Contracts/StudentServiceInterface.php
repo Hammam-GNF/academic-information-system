@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 interface StudentServiceInterface
@@ -39,4 +41,11 @@ interface StudentServiceInterface
         Student $student
     ): RedirectResponse;
 
+    public function export(): BinaryFileResponse;
+
+    public function import(
+        UploadedFile $file
+    ): RedirectResponse;
+
+    public function downloadTemplate(): BinaryFileResponse;
 }

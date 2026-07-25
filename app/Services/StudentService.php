@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Exports\StudentsExport;
+use App\Exports\StudentTemplateExport;
+use App\Imports\StudentsImport;
 use App\Models\Student;
 use App\Repositories\Contracts\StudentRepositoryInterface;
 use App\Services\Contracts\StudentServiceInterface;
@@ -9,10 +12,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -212,5 +219,70 @@ class StudentService implements StudentServiceInterface
                 'success',
                 'Student deleted successfully.'
             );
+    }
+
+    public function export(): BinaryFileResponse
+    {
+        return Excel::download(
+            new StudentsExport(),
+            'students-'.now()->format('Y-m-d').'.xlsx'
+        );
+    }
+
+    public function import(
+        UploadedFile $file
+    ): RedirectResponse {
+
+        $import = new StudentsImport();
+
+        Excel::import(
+            $import,
+            $file
+        );
+
+        activity()
+            ->causedBy(Auth::user())
+            ->event('imported')
+            ->withProperties([
+
+                'filename' => $file->getClientOriginalName(),
+
+                'success' => $import->successCount(),
+
+                'failed' => $import->failedCount(),
+
+            ])
+            ->log('Students have been imported.');
+
+        $message = "{$import->successCount()} students imported successfully.";
+
+        if ($import->failedCount() > 0) {
+
+            $message .= " {$import->failedCount()} rows were skipped.";
+
+        }
+
+        return Redirect::route(
+            'admin.students.index'
+        )
+
+            ->with(
+                'success',
+                $message
+            )
+
+            ->with(
+                'import_errors',
+                $import->errors()
+            );
+
+    }
+
+    public function downloadTemplate(): BinaryFileResponse
+    {
+        return Excel::download(
+            new StudentTemplateExport(),
+            'student-import-template.xlsx'
+        );
     }
 }
