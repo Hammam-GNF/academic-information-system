@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
 
             AcademicSeeder::class,
+            StudentSeeder::class,
+
         ]);
 
         User::factory()

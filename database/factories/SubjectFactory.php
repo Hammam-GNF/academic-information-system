@@ -3,10 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Department;
+use App\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<\App\Models\Subject>
+ * @extends Factory<Subject>
  */
 class SubjectFactory extends Factory
 {
@@ -41,14 +42,12 @@ class SubjectFactory extends Factory
         ];
     }
 
-
     public function active(): static
     {
         return $this->state(fn () => [
             'is_active' => true,
         ]);
     }
-
 
     public function inactive(): static
     {

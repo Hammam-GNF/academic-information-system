@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
@@ -77,6 +78,17 @@ Route::prefix('admin')
         Route::resource('grades', GradeController::class);
 
         Route::resource('classrooms', ClassroomController::class);
+
+        Route::get('students-export', [StudentController::class, 'export'])
+            ->name('students.export');
+
+        Route::get('students-import-template', [StudentController::class, 'downloadTemplate'])
+            ->name('students.import-template');
+
+        Route::post('students-import', [StudentController::class, 'import'])
+            ->name('students.import');
+
+        Route::resource('students', StudentController::class);
 
         Route::resource('subjects', SubjectController::class);
 

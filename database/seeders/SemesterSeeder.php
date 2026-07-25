@@ -27,7 +27,6 @@ class SemesterSeeder extends Seeder
             ]
         );
 
-
         Semester::updateOrCreate(
             [
                 'academic_year_id' => $academicYear->id,
@@ -40,12 +39,10 @@ class SemesterSeeder extends Seeder
             ]
         );
 
-
         $previousYear = AcademicYear::where(
             'name',
             '2024/2025'
         )->first();
-
 
         Semester::updateOrCreate(
             [
@@ -58,7 +55,6 @@ class SemesterSeeder extends Seeder
                 'is_active' => false,
             ]
         );
-
 
         Semester::updateOrCreate(
             [

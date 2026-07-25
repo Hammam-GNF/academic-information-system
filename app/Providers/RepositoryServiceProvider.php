@@ -9,6 +9,7 @@ use App\Repositories\Contracts\GradeRepositoryInterface;
 use App\Repositories\Contracts\MediaRepositoryInterface;
 use App\Repositories\Contracts\SemesterRepositoryInterface;
 use App\Repositories\Contracts\SettingRepositoryInterface;
+use App\Repositories\Contracts\StudentRepositoryInterface;
 use App\Repositories\Contracts\SubjectRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\AcademicYearRepository;
@@ -18,6 +19,7 @@ use App\Repositories\Eloquent\GradeRepository;
 use App\Repositories\Eloquent\MediaRepository;
 use App\Repositories\Eloquent\SemesterRepository;
 use App\Repositories\Eloquent\SettingRepository;
+use App\Repositories\Eloquent\StudentRepository;
 use App\Repositories\Eloquent\SubjectRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Services\AcademicYearService;
@@ -32,6 +34,8 @@ use App\Services\Contracts\MediaServiceInterface;
 use App\Services\Contracts\ProfileServiceInterface;
 use App\Services\Contracts\SemesterServiceInterface;
 use App\Services\Contracts\SettingServiceInterface;
+use App\Services\Contracts\StudentPhotoServiceInterface;
+use App\Services\Contracts\StudentServiceInterface;
 use App\Services\Contracts\SubjectServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use App\Services\DepartmentService;
@@ -40,6 +44,8 @@ use App\Services\MediaService;
 use App\Services\ProfileService;
 use App\Services\SemesterService;
 use App\Services\SettingService;
+use App\Services\StudentPhotoService;
+use App\Services\StudentService;
 use App\Services\SubjectService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
@@ -146,6 +152,21 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             SubjectServiceInterface::class,
             SubjectService::class
+        );
+
+        $this->app->bind(
+            StudentRepositoryInterface::class,
+            StudentRepository::class
+        );
+
+        $this->app->bind(
+            StudentServiceInterface::class,
+            StudentService::class
+        );
+
+        $this->app->bind(
+            StudentPhotoServiceInterface::class,
+            StudentPhotoService::class
         );
     }
 

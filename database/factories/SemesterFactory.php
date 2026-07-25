@@ -3,10 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\AcademicYear;
+use App\Models\Semester;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<\App\Models\Semester>
+ * @extends Factory<Semester>
  */
 class SemesterFactory extends Factory
 {
@@ -37,14 +38,12 @@ class SemesterFactory extends Factory
         ];
     }
 
-
     public function active(): static
     {
         return $this->state(fn () => [
             'is_active' => true,
         ]);
     }
-
 
     public function inactive(): static
     {

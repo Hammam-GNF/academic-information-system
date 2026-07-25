@@ -45,8 +45,7 @@ class SemesterService implements SemesterServiceInterface
 
                 ->addColumn(
                     'academic_year',
-                    fn (Semester $semester)
-                        => $semester->academicYear?->name ?? '-'
+                    fn (Semester $semester) => $semester->academicYear?->name ?? '-'
                 )
 
                 ->editColumn(

@@ -45,14 +45,12 @@ class AcademicYearService implements AcademicYearServiceInterface
 
                 ->editColumn(
                     'start_date',
-                    fn (AcademicYear $academicYear)
-                        => $academicYear->formatted_start_date
+                    fn (AcademicYear $academicYear) => $academicYear->formatted_start_date
                 )
 
                 ->editColumn(
                     'end_date',
-                    fn (AcademicYear $academicYear)
-                        => $academicYear->formatted_end_date
+                    fn (AcademicYear $academicYear) => $academicYear->formatted_end_date
                 )
 
                 ->editColumn(

@@ -14,7 +14,7 @@ class AcademicSeeder extends Seeder
             DepartmentSeeder::class,
             GradeSeeder::class,
             ClassroomSeeder::class,
-            SubjectSeeder::class
+            SubjectSeeder::class,
         ]);
     }
 }
