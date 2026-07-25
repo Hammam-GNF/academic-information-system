@@ -29,7 +29,6 @@ class ClassroomSeeder extends Seeder
                 'description' => 'Kelas Teknik Informatika B.',
             ],
 
-
             [
                 'department' => 'SI',
                 'grade' => 'A',
@@ -46,7 +45,6 @@ class ClassroomSeeder extends Seeder
                 'description' => 'Kelas Sistem Informasi B.',
             ],
 
-
             [
                 'department' => 'AK',
                 'grade' => 'A',
@@ -54,7 +52,6 @@ class ClassroomSeeder extends Seeder
                 'capacity' => 35,
                 'description' => 'Kelas Akuntansi A.',
             ],
-
 
             [
                 'department' => 'MN',
@@ -66,7 +63,6 @@ class ClassroomSeeder extends Seeder
 
         ];
 
-
         foreach ($classrooms as $classroom) {
 
             $department = Department::where(
@@ -74,12 +70,10 @@ class ClassroomSeeder extends Seeder
                 $classroom['department']
             )->firstOrFail();
 
-
             $grade = Grade::where(
                 'code',
                 $classroom['grade']
             )->firstOrFail();
-
 
             Classroom::updateOrCreate(
                 [

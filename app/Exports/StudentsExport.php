@@ -8,10 +8,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class StudentsExport implements
-    FromCollection,
-    WithHeadings,
-    ShouldAutoSize
+class StudentsExport implements FromCollection, ShouldAutoSize, WithHeadings
 {
     /**
      * @return Collection<int, array<string, mixed>>

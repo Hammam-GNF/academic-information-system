@@ -7,6 +7,7 @@ use App\Exports\StudentTemplateExport;
 use App\Imports\StudentsImport;
 use App\Models\Student;
 use App\Repositories\Contracts\StudentRepositoryInterface;
+use App\Services\Contracts\StudentPhotoServiceInterface;
 use App\Services\Contracts\StudentServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,8 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -27,6 +26,7 @@ class StudentService implements StudentServiceInterface
 {
     public function __construct(
         protected StudentRepositoryInterface $studentRepository,
+        protected StudentPhotoServiceInterface $photoService,
     ) {}
 
     public function query(): Builder
@@ -54,6 +54,7 @@ class StudentService implements StudentServiceInterface
             ->findByStudentNumber(
                 $studentNumber
             );
+
     }
 
     public function index(
@@ -78,16 +79,16 @@ class StudentService implements StudentServiceInterface
 
                 ->addColumn(
                     'classroom',
-                    fn (Student $student)
-                        => $student->classroom
-                            ? $student->classroom->grade->name.' - '.$student->classroom->name
+                    fn (Student $student) => $student->classroom
+                            ? $student->classroom->grade->name
+                                .' - '
+                                .$student->classroom->name
                             : '-'
                 )
 
                 ->editColumn(
                     'gender',
-                    fn (Student $student)
-                        => ucfirst($student->gender)
+                    fn (Student $student) => ucfirst($student->gender)
                 )
 
                 ->editColumn(
@@ -115,6 +116,7 @@ class StudentService implements StudentServiceInterface
                 ])
 
                 ->make(true);
+
         }
 
         return view('admin.students.index');
@@ -126,10 +128,8 @@ class StudentService implements StudentServiceInterface
 
         if (isset($data['photo'])) {
 
-            $data['photo'] = $data['photo']->store(
-                'students',
-                'public'
-            );
+            $data['photo'] = $this->photoService
+                ->upload($data['photo']);
 
         }
 
@@ -151,6 +151,7 @@ class StudentService implements StudentServiceInterface
                 'success',
                 'Student created successfully.'
             );
+
     }
 
     public function update(
@@ -160,17 +161,11 @@ class StudentService implements StudentServiceInterface
 
         if (isset($data['photo'])) {
 
-            if ($student->photo) {
-
-                Storage::disk('public')
-                    ->delete($student->photo);
-
-            }
-
-            $data['photo'] = $data['photo']->store(
-                'students',
-                'public'
-            );
+            $data['photo'] = $this->photoService
+                ->replace(
+                    $student,
+                    $data['photo']
+                );
 
         }
 
@@ -195,11 +190,15 @@ class StudentService implements StudentServiceInterface
                 'success',
                 'Student updated successfully.'
             );
+
     }
 
     public function delete(
         Student $student
     ): RedirectResponse {
+
+        $this->photoService
+            ->delete($student);
 
         activity()
             ->causedBy(Auth::user())
@@ -219,12 +218,13 @@ class StudentService implements StudentServiceInterface
                 'success',
                 'Student deleted successfully.'
             );
+
     }
 
     public function export(): BinaryFileResponse
     {
         return Excel::download(
-            new StudentsExport(),
+            new StudentsExport,
             'students-'.now()->format('Y-m-d').'.xlsx'
         );
     }
@@ -233,7 +233,7 @@ class StudentService implements StudentServiceInterface
         UploadedFile $file
     ): RedirectResponse {
 
-        $import = new StudentsImport();
+        $import = new StudentsImport;
 
         Excel::import(
             $import,
@@ -244,13 +244,9 @@ class StudentService implements StudentServiceInterface
             ->causedBy(Auth::user())
             ->event('imported')
             ->withProperties([
-
                 'filename' => $file->getClientOriginalName(),
-
                 'success' => $import->successCount(),
-
                 'failed' => $import->failedCount(),
-
             ])
             ->log('Students have been imported.');
 
@@ -281,7 +277,7 @@ class StudentService implements StudentServiceInterface
     public function downloadTemplate(): BinaryFileResponse
     {
         return Excel::download(
-            new StudentTemplateExport(),
+            new StudentTemplateExport,
             'student-import-template.xlsx'
         );
     }

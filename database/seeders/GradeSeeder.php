@@ -81,7 +81,6 @@ class GradeSeeder extends Seeder
             ],
         ];
 
-
         foreach ($grades as $grade) {
 
             Grade::updateOrCreate(

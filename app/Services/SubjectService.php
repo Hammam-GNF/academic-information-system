@@ -26,7 +26,6 @@ class SubjectService implements SubjectServiceInterface
         return $this->subjectRepository->query();
     }
 
-
     public function findById(int $id): ?Subject
     {
         return $this->subjectRepository->findById($id);
@@ -48,14 +47,12 @@ class SubjectService implements SubjectServiceInterface
 
                 ->editColumn(
                     'department',
-                    fn (Subject $subject)
-                        => $subject->department?->name ?? '-'
+                    fn (Subject $subject) => $subject->department?->name ?? '-'
                 )
 
                 ->editColumn(
                     'credit_hours',
-                    fn (Subject $subject)
-                        => $subject->credit_hours . ' SKS'
+                    fn (Subject $subject) => $subject->credit_hours.' SKS'
                 )
 
                 ->editColumn(

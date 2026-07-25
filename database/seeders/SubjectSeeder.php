@@ -40,7 +40,6 @@ class SubjectSeeder extends Seeder
                 'credit_hours' => 3,
             ],
 
-
             [
                 'department' => 'SI',
                 'code' => 'SI001',
@@ -62,7 +61,6 @@ class SubjectSeeder extends Seeder
                 'credit_hours' => 3,
             ],
 
-
             [
                 'department' => 'AK',
                 'code' => 'AK001',
@@ -76,7 +74,6 @@ class SubjectSeeder extends Seeder
                 'name' => 'Tax Accounting',
                 'credit_hours' => 2,
             ],
-
 
             [
                 'department' => 'MN',
@@ -94,14 +91,12 @@ class SubjectSeeder extends Seeder
 
         ];
 
-
         foreach ($subjects as $subject) {
 
             $department = Department::where(
                 'code',
                 $subject['department']
             )->firstOrFail();
-
 
             Subject::updateOrCreate(
                 [

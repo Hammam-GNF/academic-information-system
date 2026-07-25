@@ -8,10 +8,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class StudentTemplateExport implements
-    FromCollection,
-    WithHeadings,
-    ShouldAutoSize
+class StudentTemplateExport implements FromCollection, ShouldAutoSize, WithHeadings
 {
     public function collection(): Collection
     {

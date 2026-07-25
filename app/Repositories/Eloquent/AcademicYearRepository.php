@@ -27,7 +27,6 @@ class AcademicYearRepository extends BaseRepository implements AcademicYearRepos
             ->find($id);
     }
 
-
     public function getActive(): Collection
     {
         return $this->query()

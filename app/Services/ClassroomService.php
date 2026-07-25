@@ -47,20 +47,17 @@ class ClassroomService implements ClassroomServiceInterface
 
                 ->editColumn(
                     'department',
-                    fn (Classroom $classroom)
-                        => $classroom->department?->name ?? '-'
+                    fn (Classroom $classroom) => $classroom->department?->name ?? '-'
                 )
 
                 ->editColumn(
                     'grade',
-                    fn (Classroom $classroom)
-                        => $classroom->grade?->name ?? '-'
+                    fn (Classroom $classroom) => $classroom->grade?->name ?? '-'
                 )
 
                 ->editColumn(
                     'capacity',
-                    fn (Classroom $classroom)
-                        => number_format($classroom->capacity)
+                    fn (Classroom $classroom) => number_format($classroom->capacity)
                 )
 
                 ->editColumn(

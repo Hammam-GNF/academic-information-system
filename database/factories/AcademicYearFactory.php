@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\AcademicYear;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<\App\Models\AcademicYear>
+ * @extends Factory<AcademicYear>
  */
 class AcademicYearFactory extends Factory
 {
@@ -17,16 +18,15 @@ class AcademicYearFactory extends Factory
         );
 
         return [
-            'name' => $startYear . '/' . ($startYear + 1),
+            'name' => $startYear.'/'.($startYear + 1),
 
-            'start_date' => $startYear . '-07-01',
+            'start_date' => $startYear.'-07-01',
 
-            'end_date' => ($startYear + 1) . '-06-30',
+            'end_date' => ($startYear + 1).'-06-30',
 
             'is_active' => fake()->boolean(),
         ];
     }
-
 
     public function active(): static
     {
@@ -34,7 +34,6 @@ class AcademicYearFactory extends Factory
             'is_active' => true,
         ]);
     }
-
 
     public function inactive(): static
     {

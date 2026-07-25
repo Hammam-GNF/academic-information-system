@@ -39,7 +39,6 @@ class DepartmentSeeder extends Seeder
             ],
         ];
 
-
         foreach ($departments as $department) {
 
             Department::updateOrCreate(

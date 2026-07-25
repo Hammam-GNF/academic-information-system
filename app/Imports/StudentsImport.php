@@ -7,13 +7,10 @@ use App\Models\Student;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class StudentsImport implements
-    ToCollection,
-    WithHeadingRow
+class StudentsImport implements ToCollection, WithHeadingRow
 {
     protected array $errors = [];
 
@@ -184,8 +181,7 @@ class StudentsImport implements
 
                 'email' => $row['email'],
 
-                'is_active' =>
-                    $row['status'] === 'Active',
+                'is_active' => $row['status'] === 'Active',
 
             ]);
 

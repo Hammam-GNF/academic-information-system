@@ -29,11 +29,11 @@ return new class extends Migration
                 'female',
             ]);
 
-            $table->string('birth_place');
+            $table->string('birth_place', 100);
             $table->date('birth_date');
 
-            $table->string('phone', 25)->nullable();
-            $table->string('email')->nullable();
+            $table->string('phone', 30)->nullable();
+            $table->string('email')->nullable()->unique();
 
             $table->text('address')->nullable();
 

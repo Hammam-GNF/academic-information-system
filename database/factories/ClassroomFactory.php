@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Classroom;
 use App\Models\Department;
 use App\Models\Grade;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<\App\Models\Classroom>
+ * @extends Factory<Classroom>
  */
 class ClassroomFactory extends Factory
 {
@@ -38,14 +39,12 @@ class ClassroomFactory extends Factory
         ];
     }
 
-
     public function active(): static
     {
         return $this->state(fn () => [
             'is_active' => true,
         ]);
     }
-
 
     public function inactive(): static
     {

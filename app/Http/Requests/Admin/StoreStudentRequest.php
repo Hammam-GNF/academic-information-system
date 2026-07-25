@@ -5,6 +5,7 @@ namespace App\Http\Requests\Admin;
 use App\Models\Student;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreStudentRequest extends FormRequest
 {
@@ -17,8 +18,6 @@ class StoreStudentRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
@@ -34,14 +33,20 @@ class StoreStudentRequest extends FormRequest
                 'required',
                 'string',
                 'max:30',
-                'unique:students,student_number',
+                Rule::unique(
+                    'students',
+                    'student_number'
+                ),
             ],
 
             'nisn' => [
                 'nullable',
                 'string',
                 'max:20',
-                'unique:students,nisn',
+                Rule::unique(
+                    'students',
+                    'nisn'
+                ),
             ],
 
             'name' => [
@@ -88,7 +93,10 @@ class StoreStudentRequest extends FormRequest
                 'nullable',
                 'email',
                 'max:255',
-                'unique:students,email',
+                Rule::unique(
+                    'students',
+                    'email'
+                ),
             ],
 
             'is_active' => [

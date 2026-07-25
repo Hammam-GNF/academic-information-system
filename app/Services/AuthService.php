@@ -43,7 +43,7 @@ class AuthService implements AuthServiceInterface
     private function redirectAfterVerification(User $user): RedirectResponse
     {
         return redirect()
-            ->to($this->getDashboardRoute($user) . '?verified=1')
+            ->to($this->getDashboardRoute($user).'?verified=1')
             ->with(
                 'success',
                 'Your email has been verified successfully.'
