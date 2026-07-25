@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
@@ -61,6 +62,14 @@ class StudentService implements StudentServiceInterface
                 ->addIndexColumn()
 
                 ->addColumn(
+                    'student',
+                    fn (Student $student) => view(
+                        'admin.students.datatables.student',
+                        compact('student')
+                    )->render()
+                )
+
+                ->addColumn(
                     'classroom',
                     fn (Student $student)
                         => $student->classroom
@@ -93,6 +102,7 @@ class StudentService implements StudentServiceInterface
                 )
 
                 ->rawColumns([
+                    'student',
                     'is_active',
                     'action',
                 ])
@@ -106,6 +116,15 @@ class StudentService implements StudentServiceInterface
     public function create(
         array $data
     ): RedirectResponse {
+
+        if (isset($data['photo'])) {
+
+            $data['photo'] = $data['photo']->store(
+                'students',
+                'public'
+            );
+
+        }
 
         $student = $this->studentRepository
             ->create($data);
@@ -131,6 +150,22 @@ class StudentService implements StudentServiceInterface
         Student $student,
         array $data
     ): RedirectResponse {
+
+        if (isset($data['photo'])) {
+
+            if ($student->photo) {
+
+                Storage::disk('public')
+                    ->delete($student->photo);
+
+            }
+
+            $data['photo'] = $data['photo']->store(
+                'students',
+                'public'
+            );
+
+        }
 
         $updated = $this->studentRepository
             ->update(

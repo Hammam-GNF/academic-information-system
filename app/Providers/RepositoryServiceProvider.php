@@ -34,6 +34,7 @@ use App\Services\Contracts\MediaServiceInterface;
 use App\Services\Contracts\ProfileServiceInterface;
 use App\Services\Contracts\SemesterServiceInterface;
 use App\Services\Contracts\SettingServiceInterface;
+use App\Services\Contracts\StudentPhotoServiceInterface;
 use App\Services\Contracts\StudentServiceInterface;
 use App\Services\Contracts\SubjectServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
@@ -43,6 +44,7 @@ use App\Services\MediaService;
 use App\Services\ProfileService;
 use App\Services\SemesterService;
 use App\Services\SettingService;
+use App\Services\StudentPhotoService;
 use App\Services\StudentService;
 use App\Services\SubjectService;
 use App\Services\UserService;
@@ -160,6 +162,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             StudentServiceInterface::class,
             StudentService::class
+        );
+
+        $this->app->bind(
+            StudentPhotoServiceInterface::class,
+            StudentPhotoService::class
         );
     }
 

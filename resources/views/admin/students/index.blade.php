@@ -40,11 +40,7 @@
                         </th>
 
                         <th class="table-th">
-                            Student Number
-                        </th>
-
-                        <th class="table-th">
-                            Student Name
+                            Student
                         </th>
 
                         <th class="table-th">
@@ -119,12 +115,7 @@
                         },
 
                         {
-                            data: 'student_number',
-                            name: 'student_number'
-                        },
-
-                        {
-                            data: 'name',
+                            data: 'student',
                             name: 'name'
                         },
 

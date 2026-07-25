@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'phone',
     'email',
     'address',
+    'photo',
     'is_active',
 ])]
 class Student extends Model
