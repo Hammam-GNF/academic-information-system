@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
@@ -61,6 +67,18 @@ Route::prefix('admin')
             ->name('dashboard');
 
         Route::resource('users', UserController::class);
+
+        Route::resource('academic-years', AcademicYearController::class);
+
+        Route::resource('semesters', SemesterController::class);
+
+        Route::resource('departments', DepartmentController::class);
+
+        Route::resource('grades', GradeController::class);
+
+        Route::resource('classrooms', ClassroomController::class);
+
+        Route::resource('subjects', SubjectController::class);
 
         Route::get('users/{user}/change-password', [UserController::class, 'changePassword'])
             ->name('users.change-password');

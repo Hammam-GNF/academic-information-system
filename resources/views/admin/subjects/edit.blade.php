@@ -1,0 +1,181 @@
+<x-app-layout>
+
+    <x-slot name="header">
+        Edit Subject
+    </x-slot>
+
+    <x-crud.form-page
+        title="Edit Subject"
+        description="Update subject information."
+    >
+
+        <x-crud.form-card>
+
+            <form
+                method="POST"
+                action="{{ route('admin.subjects.update', $subject) }}"
+                x-data="{ loading: false }"
+                x-on:submit="loading = true"
+            >
+
+                @csrf
+                @method('PUT')
+
+                <x-forms.field
+                    label="Department"
+                    for="department_id"
+                    :error="$errors->get('department_id')"
+                >
+
+                    <x-forms.select
+                        id="department_id"
+                        name="department_id"
+                        class="block w-full"
+                        required
+                    >
+
+                        @foreach ($departments as $department)
+
+                            <option
+                                value="{{ $department->id }}"
+                                @selected(old('department_id', $subject->department_id) == $department->id)
+                            >
+                                {{ $department->name }}
+                            </option>
+
+                        @endforeach
+
+                    </x-forms.select>
+
+                </x-forms.field>
+
+                <x-forms.field
+                    label="Subject Code"
+                    for="code"
+                    :error="$errors->get('code')"
+                    class="mt-4"
+                >
+
+                    <x-forms.text-input
+                        id="code"
+                        name="code"
+                        type="text"
+                        class="block w-full"
+                        :value="old('code', $subject->code)"
+                        placeholder="e.g. MAT101, BIO201, ENG301"
+                        required
+                    />
+
+                </x-forms.field>
+
+                <x-forms.field
+                    label="Subject Name"
+                    for="name"
+                    :error="$errors->get('name')"
+                    class="mt-4"
+                >
+
+                    <x-forms.text-input
+                        id="name"
+                        name="name"
+                        type="text"
+                        class="block w-full"
+                        :value="old('name', $subject->name)"
+                        placeholder="e.g. Mathematics, Biology, English"
+                        required
+                    />
+
+                </x-forms.field>
+
+                <x-forms.field
+                    label="Credit Hours (SKS)"
+                    for="credit_hours"
+                    :error="$errors->get('credit_hours')"
+                    class="mt-4"
+                >
+
+                    <x-forms.text-input
+                        id="credit_hours"
+                        name="credit_hours"
+                        type="number"
+                        min="1"
+                        max="12"
+                        class="block w-full"
+                        :value="old('credit_hours', $subject->credit_hours)"
+                        placeholder="e.g. 2 or 3"
+                        required
+                    />
+
+                </x-forms.field>
+
+                <x-forms.field
+                    label="Description"
+                    for="description"
+                    :error="$errors->get('description')"
+                    class="mt-4"
+                >
+
+                    <x-forms.textarea
+                        id="description"
+                        name="description"
+                        rows="4"
+                        class="block w-full"
+                        placeholder="Enter additional information about this subject (optional)."
+                    >{{ old('description', $subject->description) }}</x-forms.textarea>
+
+                </x-forms.field>
+
+                <x-forms.field
+                    label="Status"
+                    for="is_active"
+                    :error="$errors->get('is_active')"
+                    class="mt-4"
+                >
+
+                    <x-forms.select
+                        id="is_active"
+                        name="is_active"
+                        class="block w-full"
+                        required
+                    >
+
+                        <option
+                            value="1"
+                            @selected(old('is_active', $subject->is_active) == 1)
+                        >
+                            Active
+                        </option>
+
+                        <option
+                            value="0"
+                            @selected(old('is_active', $subject->is_active) == 0)
+                        >
+                            Inactive
+                        </option>
+
+                    </x-forms.select>
+
+                </x-forms.field>
+
+                <x-crud.form-actions>
+
+                    <x-buttons.primary>
+                        Save Subject
+                    </x-buttons.primary>
+
+                    <x-buttons.secondary
+                        type="button"
+                        onclick="window.history.back()"
+                    >
+                        Cancel
+                    </x-buttons.secondary>
+
+                </x-crud.form-actions>
+
+            </form>
+
+        </x-crud.form-card>
+
+    </x-crud.form-page>
+
+</x-app-layout>
